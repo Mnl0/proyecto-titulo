@@ -18,3 +18,5 @@ git diff [nombre archivo]
 git commit -m ["descripcion del mensaje"]
 git pull
 git push -u origin master (solo la primera vez despues solo git push)
+
+#Comentario de prueba
