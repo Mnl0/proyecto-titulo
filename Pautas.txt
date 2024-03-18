@@ -18,3 +18,7 @@ git diff [nombre archivo]
 git commit -m ["descripcion del mensaje"]
 git pull
 git push -u origin master (solo la primera vez despues solo git push)
+
+git fetch origin -> solicitud al remoto / actualizar la informacion del repositorio remoto
+git diff master origin/master -> muestra las diferencias entre el local con el remoto (repositorio)
+git diff [rama] origin/[rama] [nombreArchivo]
