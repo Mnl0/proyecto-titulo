@@ -1,24 +1,27 @@
-antes de iniciar a codear realizar un git pull para trabajar sobre el repositorio actualizado
-indicar en que se va a trabajar y en que archivo para evitar que 2 o mas trabajen en la misma tarea o archivo indicar cuando se dejo de modificar el archivo
-de preferencia trabajar sobre un archivo y cambias de archivo realizar un commit 
-que los commit sean descriptivos y no importa si son largos
-realizar commits de manera recurrente 
-despues de realizar un commit -> realizar un git pull 
-redacatar en jira los cambios que se realizan para tener una vitacora que apoye a la redaccion del informe
-realizar git pull de manera frecuente
-no ralizar git add . 
-alfinal deberiamos crear el readme
-guardar archivos antes de hacer los commits
+1. Primero realizar un fetch origin.
+2. git diff master origin/master (dependiendo de la rama a comparar origin/[nombreRama]).
+3. git status si el repositorio local esta por detras del repositorio remoto realizar un git pull origin master.
+4. indicar en que se va a trabajar (archivo) y al terminar archivar actividades en kanban jira o whiteboard.
+5. identificar una actividad principal y subdividir en tareas.
+6. una vez completada una tarea realizar un commit que este bien redactado el comentario.
+7. commit para cada actividad, tarea o funcion que se realice.
+8. no utilizar git add . para actualizar el repositorio remoto.
+9. al final hace README.
+10. recordar guardar cambios antes de hacer commit.
 
-git mas comunes
+#comandos basicos
 
-git status
+git status 
 git add [nombre archivo]
 git diff [nombre archivo]
 git commit -m ["descripcion del mensaje"]
 git pull
 git push -u origin master (solo la primera vez despues solo git push)
-
 git fetch origin -> solicitud al remoto / actualizar la informacion del repositorio remoto
 git diff master origin/master -> muestra las diferencias entre el local con el remoto (repositorio)
 git diff [rama] origin/[rama] [nombreArchivo]
+git log
+
+#script
+
+npm run dev
