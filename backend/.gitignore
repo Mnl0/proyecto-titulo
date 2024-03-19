@@ -1,0 +1,26 @@
+# Dependencias
+node_modules/
+
+# Archivos generados por npm
+package-lock.json
+npm-debug.log
+
+# Archivos temporales
+*.log
+*.pid
+*.seed
+*.pid.lock
+
+# Directorio de archivos compilados
+/dist
+
+# Variables de entorno locales
+.env
+
+# Archivos de respaldo y caché
+*.bak
+*.swp
+*.tmp
+
+# Archivos de configuración locales
+.eslintcache
