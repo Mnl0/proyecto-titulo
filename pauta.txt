@@ -33,3 +33,20 @@ npm run dev
 ejemplo: feat(parser): add ability to parse arrays
 
 tipos fix, feat, build, chore, ci, docs, style, refactor, perf, test...
+
+ejemplo revirtiendo
+revert: let us never again speak of the noodle incident
+Refs: 676104e, a215868
+
+relacionado con
+fix: correccion bug
+feat: nueva funcionalidad
+build: relacionado con el empaquetador
+chore: actulizaciones que no impactan ej: conf de librerias de terceros
+ci: config relacionadas con github
+docs: documentacion
+style: stylos ui
+refactor: refactorizacion
+perf: performance
+test: testing nuevos o correcciones
+env: configuraciones globales .env
