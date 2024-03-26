@@ -9,3 +9,16 @@ export const connection = mysql.createConnection({
 	database: process.env.DATABASE,
 	port: process.env.DB_PORT
 })
+
+
+// const query = 'SELECT * FROM cliente_prueba'
+// connection.query(query, function (err, rows, fields) {
+// 	if (err) {
+// 		console.log('error en la consulta', err)
+// 		return;
+// 	} else {
+// 		rows.forEach(row => {
+// 			console.log(row)
+// 		})
+// 	}
+// })
