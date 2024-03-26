@@ -24,3 +24,6 @@ npm-debug.log
 
 # Archivos de configuración locales
 .eslintcache
+
+#archivos de prueba
+/practica-test
