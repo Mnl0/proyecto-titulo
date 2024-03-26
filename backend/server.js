@@ -1,18 +1,10 @@
 import express from 'express'
-import mysql from 'mysql'
 import dotenv from 'dotenv'
+import { connection } from './database/connection.js'
 dotenv.config()
 
 const app = express()
 const PORT = process.env.PORT;
-const connection = mysql.createConnection({
-	host: process.env.HOST,
-	user: process.env.USER,
-	password: process.env.PASS,
-	database: process.env.DATABASE,
-	port: process.env.DB_PORT
-})
-
 
 //middleware
 app.use(express.json());
@@ -35,7 +27,6 @@ connection.query(query, function (err, rows, fields) {
 		rows.forEach(row => {
 			console.log(row)
 		})
-		connection.end()
 	}
 })
 
