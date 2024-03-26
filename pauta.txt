@@ -26,4 +26,10 @@ git log
 
 npm run dev
 
-prueba de un push desde el notebook
+#conventional commits
+
+<tipo>(alcance opcional):<descripcion>
+
+ejemplo: feat(parser): add ability to parse arrays
+
+tipos fix, feat, build, chore, ci, docs, style, refactor, perf, test...
