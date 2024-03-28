@@ -1,15 +1,21 @@
-import mysql from 'mysql'
 import dotenv from 'dotenv'
+import { Sequelize } from 'sequelize'
 dotenv.config()
 
-export const connection = mysql.createConnection({
-	host: process.env.HOST,
-	user: process.env.USER,
-	password: process.env.PASS,
-	database: process.env.DATABASE,
-	port: process.env.DB_PORT
-})
+const host = process.env.HOST;
+const user = process.env.USER;
+const password = process.env.PASS;
+const database = process.env.DATABASE;
+const port = process.env.DB_PORT;
 
+export const sequelize = new Sequelize({
+	dialect: 'mysql',
+	host: host,
+	username: user,
+	password: password,
+	database: database,
+	port: port,
+})
 
 // const query = 'SELECT * FROM cliente_prueba'
 // connection.query(query, function (err, rows, fields) {
