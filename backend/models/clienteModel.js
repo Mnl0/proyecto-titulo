@@ -1,14 +1,18 @@
 import { DataTypes } from "sequelize";
-import { sequilize } from '../database/connection.js';
+import { sequelize } from '../database/connection.js'
 
-export const Cliente = sequilize.define('cliente_prueba', {
-	id: {
-		type: DataTypes.INTEGER,
-		// allowNull: true,
-	},
-	nombre: {
+export const Cliente = sequelize.define('cliente_prueba', {
+	nombre_completo: {
 		type: DataTypes.STRING,
 		// allowNull: true,
 	},
-})
-
+},
+	{
+		timestamps: false,
+		freezeTableName: true,
+		tableName: 'cliente_pruebas',
+		defaultScope: {
+			attributes: { exclude: ['id'] }//no esta omitiendo el id predeterminado
+		}
+	}
+)

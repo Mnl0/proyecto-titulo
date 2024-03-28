@@ -2,6 +2,7 @@ import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
 import { sequelize } from './database/connection.js'
+import { Cliente } from './models/clienteModel.js'
 dotenv.config()
 
 const app = express()
@@ -17,28 +18,35 @@ app.use(cors(
 	}
 ))
 
-// app.get('/authentication', (req, res) => {
-// 	res.send('login de autenticacion')
-// })
+app.get('/authentication', (req, res) => {
+	res.send('login de autenticacion')
+})
 
-// const query = 'INSERT INTO cliente_prueba (nombre_completo) VALUES (?)'
+const query = `INSERT INTO cliente_pruebas (nombre_completo) VALUES (?)`
+app.post('/authentication', (req, res) => {
+	const { username } = req.body
+	console.log(username)
 
-// app.post('/authentication', (req, res) => {
-// 	const value = req.body.username
+	if (username.length === 0) {
+		console.log('esta vacio')
+		return
+	}
+	// Cliente.sequelize.query(query, {
+	// 	replacements: [value]
+	// }).then((newUser) => {
+	// 	console.log('valor de new user', newUser)
+	// }).catch((error) => {
+	// 	console.log('error al insertar', error)
+	// })
+	Cliente.create({ id: 3, nombre_completo: username })
+		.then((newUser) => {
+			newUser.save()
+			console.log(newUser.toJSON())
+		}).catch((error) => {
+			console.log('error al insertar', error)
+		})
+})
 
-// 	if (value === '') {
-// 		console.log('esta vacio')
-// 		return
-
-// 	}
-// 	connection.query(query, [value], function (err, result) {
-// 		if (err) {
-// 			console.log('error en la consulta', err)
-// 			return;
-// 		}
-// 		console.log('valor de resultados', result.affectedRows)
-// 	})
-// })
 try {
 	await sequelize.authenticate()
 	console.log('conexion exitosa')
