@@ -1,8 +1,8 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
-import { sequelize } from './database/connection.js'
-import { Cliente } from './models/clienteModel.js'
+import { connexionDB } from './database/connection.js'
+import { clienteRouter } from './routes/routes.js'
 dotenv.config()
 
 const app = express()
@@ -17,42 +17,15 @@ app.use(cors(
 		allowedHeaders: ['Content-Type', 'Authorization'],
 	}
 ))
+//ruta completa seria http://localhost:3000/login/auth
+app.use('/login', clienteRouter)//verificar los nombres(MVC) que sean consistentes
 
-app.get('/authentication', (req, res) => {
-	res.send('login de autenticacion')
-})
-
-const query = `INSERT INTO cliente_pruebas (nombre_completo) VALUES (?)`
-app.post('/authentication', (req, res) => {
-	const { username } = req.body
-	console.log(username)
-
-	if (username.length === 0) {
-		console.log('esta vacio')
-		return
-	}
-	// Cliente.sequelize.query(query, {
-	// 	replacements: [value]
-	// }).then((newUser) => {
-	// 	console.log('valor de new user', newUser)
-	// }).catch((error) => {
-	// 	console.log('error al insertar', error)
-	// })
-	Cliente.create({ id: 3, nombre_completo: username })
-		.then((newUser) => {
-			newUser.save()
-			console.log(newUser.toJSON())
-		}).catch((error) => {
-			console.log('error al insertar', error)
-		})
-})
-
-try {
-	await sequelize.authenticate()
+//verificar como queda mejor
+connexionDB.then(() => {
 	console.log('conexion exitosa')
-} catch (error) {
+}).catch((error) => {
 	console.error('error en la conexion', error)
-}
+})
 
 app.listen(PORT, () => {
 	console.log(`servidor corriendo en el puerto ${PORT}`)
