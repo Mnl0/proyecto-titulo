@@ -1,28 +1,37 @@
 import React, { useState } from 'react'
-import './Login.css'
-
+const host = `http://localhost:3000/api/login`
+const url = `${host}/delete`
 export const Login = () => {
 
-	const [value, setValue] = useState('')
+	const [value, setValue] = useState([])
+	const [valueDelete, setValueDelete] = useState('')
 
 	const handleSubmit = (event) => {
 		event.preventDefault()
-		// console.log(event.target.username.value)
-		setValue(event.target.username.value)
-
-		const username = value
-		fetch('http://localhost:3000/login/auth', {
-			method: 'POST',
-			headers: {
-				'Content-Type': 'application/json',
-			},
-			body: JSON.stringify({ username }),
-		})
-		console.log(username)
+		// const username = value
+		// fetch(url, {
+		// 	method: 'POST',
+		// 	headers: {
+		// 		'Content-Type': 'application/json',
+		// 	},
+		// 	body: JSON.stringify({ username }),
+		// })
+		// console.log(username)
 	}
 
 	const handleChange = (event) => {
-		// setValue(e.target.value)
+		setValue((prev) => {
+			return {
+				...prev,
+				[event.target.name]: event.target.value,
+			}
+		})
+		console.log(value)
+	}
+
+	const handleChangeDelete = (event) => {
+		setValueDelete(valueDelete);
+		console.log(valueDelete)
 	}
 
 	return (
@@ -33,15 +42,40 @@ export const Login = () => {
 				<form>
 					<input
 						type='text'
-						name='username'
-						placeholder='ingresa el nombre de usuario'
+						name='firt name'
+						placeholder='firt name'
+						onChange={(e) => handleChange(e)}
+					/>
+					<input
+						type='text'
+						name='last name'
+						placeholder='last name'
+						onChange={(e) => handleChange(e)}
+					/>
+					<input
+						type='text'
+						name='phone'
+						placeholder='phone'
+						onChange={(e) => handleChange(e)}
+					/>
+					<input
+						type='text'
+						name='email'
+						placeholder='email'
 						onChange={(e) => handleChange(e)}
 					/>
 					<button type='submit'>Enviar</button>
 				</form>
-			</section>
-			<section>
-				<h2>hola mundo</h2>
+
+				<form onSubmit={(event) => handleSubmit(event)}>
+					<input
+						type='number'
+						name='idclient'
+						placeholder='id a eliminar'
+						onChange={(e) => handleChangeDelete(e)}
+					/>
+					<button type='submit'>Enviar</button>
+				</form>
 			</section>
 		</div>
 
