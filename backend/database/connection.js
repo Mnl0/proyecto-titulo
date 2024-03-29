@@ -17,7 +17,7 @@ export const sequelize = new Sequelize({
 	port: port,
 })
 
-export const connexionDB = sequelize.authenticate()
+export const connection_DB = sequelize.authenticate()
 
 // const query = 'SELECT * FROM cliente_prueba'
 // connection.query(query, function (err, rows, fields) {

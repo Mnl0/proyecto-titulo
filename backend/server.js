@@ -1,8 +1,8 @@
 import express from 'express'
 import dotenv from 'dotenv'
 import cors from 'cors'
-import { connexionDB } from './database/connection.js'
-import { clienteRouter } from './routes/routes.js'
+import { connection_DB } from './database/connection.js'
+import { clientRouter } from './router/clientRouter.js'
 dotenv.config()
 
 const app = express()
@@ -13,15 +13,15 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cors(
 	{
 		origin: '*',
-		methods: ['GET', 'POST'],
+		methods: ['GET', 'POST', 'DELETE'],
 		allowedHeaders: ['Content-Type', 'Authorization'],
 	}
 ))
-//ruta completa seria http://localhost:3000/login/auth
-app.use('/login', clienteRouter)//verificar los nombres(MVC) que sean consistentes
+//ruta completa seria http://localhost:3000/api/login/auth
+app.use('/api/login', clientRouter)//verificar los nombres(MVC) que sean consistentes
 
 //verificar como queda mejor
-connexionDB.then(() => {
+connection_DB.then(() => {
 	console.log('conexion exitosa')
 }).catch((error) => {
 	console.error('error en la conexion', error)
