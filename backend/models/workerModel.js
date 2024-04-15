@@ -22,19 +22,24 @@ export const Worker = sequelize.define('worker', {
 	},
 	wr_contrasena: {
 		type: DataTypes.INTEGER(50),
-		allowNull: false,
+		allowNull: true,
 	},
 	wr_telefono: {
 		type: DataTypes.INTEGER(12),
-		allowNull: false,
+		allowNull: true,
+		references: {
+			model: 'client',
+			key: 'cl_id',
+
+		}
 	},
 	wr_latitud: {
 		type: DataTypes.INTEGER,
-		allowNull: false,
+		allowNull: true,
 	},
 	wr_longitud: {
 		type: DataTypes.INTEGER,
-		allowNull: false,
+		allowNull: true,
 	},
 },
 	{
