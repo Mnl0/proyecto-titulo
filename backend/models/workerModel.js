@@ -1,51 +1,49 @@
-import { DataTypes, } from "sequelize";
-import { sequelize } from '../database/connection.js'
+import { DataTypes } from "sequelize";
+import { sequelize } from "../database/connection";
 
-export const Client = sequelize.define('client', {
-	cl_id: {
+export const Worker = sequelize.define('worker', {
+	wr_id: {
 		type: DataTypes.INTEGER,
 		autoIncrement: true,
 		primaryKey: true,
 		allowNull: false,
 	},
-	cl_nombre: {
+	wr_nombre: {
 		type: DataTypes.STRING(50),
 		allowNull: true,//acepta nulos para test
 	},
-	cl_apellido: {
+	wr_apellido: {
 		type: DataTypes.STRING(50),
 		allowNull: true,
 	},
-	cl_email: {
+	wr_email: {
 		type: DataTypes.STRING(100),
 		allowNull: true,
 	},
-	cl_contrasena: {
+	wr_contrasena: {
 		type: DataTypes.INTEGER(50),
-		allowNull: true,
+		allowNull: false,
 	},
-	cl_telefono: {
+	wr_telefono: {
 		type: DataTypes.INTEGER(12),
-		allowNull: true,
+		allowNull: false,
 	},
-	cl_latitud: {
+	wr_latitud: {
 		type: DataTypes.INTEGER,
-		allowNull: true,
+		allowNull: false,
 	},
-	cl_longitud: {
+	wr_longitud: {
 		type: DataTypes.INTEGER,
-		allowNull: true,
+		allowNull: false,
 	},
 },
 	{
 		timestamps: true,
 		freezeTableName: true, //chekear como funciona esto
-		tableName: 'tb_client',
+		tableName: 'tb_worker',
 		defaultScope: {
 			// attributes: { exclude: ['id'] } //no esta omitiendo el id predeterminado
 		}
 	}
 )
-
-//probar si puedo crear las tablas de aca
-// Client.sync()
+Worker.sync()
