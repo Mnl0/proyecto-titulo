@@ -1,16 +1,16 @@
-import { DataTypes, } from "sequelize";
+import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
 
 export const Client = sequelize.define('client', {
 	cl_id: {
-		type: DataTypes.INTEGER,
-		autoIncrement: true,
+		type: DataTypes.UUID,
+		defaultValue: DataTypes.UUIDV4,
 		primaryKey: true,
-		allowNull: false,
+		allowNull: true,
 	},
 	cl_nombre: {
 		type: DataTypes.STRING(50),
-		allowNull: true,//acepta nulos para test
+		allowNull: true,// acepta nulos (test)
 	},
 	cl_apellido: {
 		type: DataTypes.STRING(50),
@@ -37,9 +37,11 @@ export const Client = sequelize.define('client', {
 		allowNull: true,
 	},
 },
+	//configuracion de una tabla
 	{
 		timestamps: true,
-		freezeTableName: true, //chekear como funciona esto
+		createdAt: 'cl_createdAt',
+		updatedAt: 'cl_updatedAt',
 		tableName: 'tb_client',
 		defaultScope: {
 			// attributes: { exclude: ['id'] } //no esta omitiendo el id predeterminado
@@ -47,5 +49,13 @@ export const Client = sequelize.define('client', {
 	}
 )
 
-//probar si puedo crear las tablas de aca
-// Client.sync()
+Client.create({ cl_nombre: 'manuel' }).then((e) => {
+	console.log(e instanceof Client)
+	console.log(e.cl_nombre)
+	console.log(e.toJSON())//usar este para imprimir tiene colores xD
+	// console.log(JSON.stringify(e, null, 4))//usar este para imprimir el objeto ta good
+	// e.update({ cl_nombre: 'eduardo' })//actualizar good
+	// e.save()
+	e.destroy()
+	console.log(e.toJSON())
+})

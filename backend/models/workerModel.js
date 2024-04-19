@@ -1,5 +1,5 @@
 import { DataTypes } from "sequelize";
-import { sequelize } from "../database/connection";
+import { sequelize } from '../database/connection.js'
 
 export const Worker = sequelize.define('worker', {
 	wr_id: {
@@ -10,7 +10,7 @@ export const Worker = sequelize.define('worker', {
 	},
 	wr_nombre: {
 		type: DataTypes.STRING(50),
-		allowNull: true,//acepta nulos para test
+		allowNull: true,
 	},
 	wr_apellido: {
 		type: DataTypes.STRING(50),
@@ -24,15 +24,6 @@ export const Worker = sequelize.define('worker', {
 		type: DataTypes.INTEGER(50),
 		allowNull: true,
 	},
-	wr_telefono: {
-		type: DataTypes.INTEGER(12),
-		allowNull: true,
-		references: {
-			model: 'client',
-			key: 'cl_id',
-
-		}
-	},
 	wr_latitud: {
 		type: DataTypes.INTEGER,
 		allowNull: true,
@@ -44,11 +35,6 @@ export const Worker = sequelize.define('worker', {
 },
 	{
 		timestamps: true,
-		freezeTableName: true, //chekear como funciona esto
 		tableName: 'tb_worker',
-		defaultScope: {
-			// attributes: { exclude: ['id'] } //no esta omitiendo el id predeterminado
-		}
 	}
 )
-Worker.sync()

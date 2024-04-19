@@ -15,18 +15,15 @@ export const sequelize = new Sequelize({
 	password: password,
 	database: database,
 	port: port,
+	freezeTableName: true, //definimos de manera general que no pluralizara las tablas
 })
 
-export const connection_DB = sequelize.authenticate()
+export const connection_DB = sequelize.authenticate().then(() => {
+	console.log('Conexion exitosa')
+	sequelize.sync()//sincronizo todo los modelos
+	//sequelize.drop()// elimina todo los modelos
+	//sequelize.sync({ alter: true }) compara y remplaza
+}).catch((error) => {
+	console.error('Error en la conexion', error)
+})
 
-// const query = 'SELECT * FROM cliente_prueba'
-// connection.query(query, function (err, rows, fields) {
-// 	if (err) {
-// 		console.log('error en la consulta', err)
-// 		return;
-// 	} else {
-// 		rows.forEach(row => {
-// 			console.log(row)
-// 		})
-// 	}
-// })
