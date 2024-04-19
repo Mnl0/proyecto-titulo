@@ -1,4 +1,5 @@
 import { Client } from '../models/clientModel.js'
+import { scrypt, randomBytes, randomUUID } from 'node:crypto'
 
 export const clientSchema = {
 	create: (req, res) => {
@@ -23,11 +24,10 @@ export const clientSchema = {
 	},
 	delete: (req, res) => {
 		const { id } = req.params
-		// console.log('este console log es de mi path delete', id)
 		if (id === '') return
 		if (id === undefined) return
 
-		const deleteQuery = 'DELETE FROM client WHERE emailclient = ?'
+		const deleteQuery = 'DELETE FROM client WHERE emailclient = ?'//cambiar por el ID
 		Client.sequelize.query(deleteQuery, {
 			replacements: [id],
 			type: Client.sequelize.QueryTypes.DELETE
@@ -36,6 +36,11 @@ export const clientSchema = {
 		}).catch((error) => {
 			res.status(500).json({ message: 'ocurrio algo inesperado', error: error })
 		})
+
+	},
+	get: (req, res) => {
+		console.log('llegue al controlador')
+		console.log(req.body)
 	}
 }
 //localhost:3000/login/authentication
