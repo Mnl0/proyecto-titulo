@@ -5,6 +5,10 @@ import { connection_DB } from './database/connection.js'
 import { clientRouter } from './router/clientRouter.js'
 import { workerRouter } from './router/workerRouter.js'
 import { categoryRouter } from './router/categoryRouter.js'
+import { necessityRouter } from './router/necessityRouter.js'
+import { jobRouter } from './router/jobRouter.js'
+import { specialtyRouter } from './router/specialtyRouter.js'
+
 dotenv.config()
 
 const app = express()
@@ -23,6 +27,9 @@ app.use(cors(
 app.use('/api/login', clientRouter)//verificar los nombres(MVC) que sean consistentes
 app.use('/api/login2', workerRouter)
 app.use('/get/cat', categoryRouter)
+app.use('/get/nec', necessityRouter)
+app.use('/get/job', jobRouter)
+app.use('/get/specialty', specialtyRouter)
 
 connection_DB;
 

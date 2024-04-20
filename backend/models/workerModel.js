@@ -4,8 +4,8 @@ import { sequelize } from '../database/connection.js'
 //deberia agregar el prefijo schema aca???
 export const workerSchema = sequelize.define('worker', {
 	wr_id: {
-		type: DataTypes.INTEGER,
-		autoIncrement: true,
+		type: DataTypes.UUID,
+		defaultValue: DataTypes.UUIDV4,
 		primaryKey: true,
 		allowNull: false,
 	},
