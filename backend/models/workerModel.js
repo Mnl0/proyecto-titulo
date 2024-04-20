@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
 
+//deberia agregar el prefijo schema aca???
 export const Worker = sequelize.define('worker', {
 	wr_id: {
 		type: DataTypes.INTEGER,
@@ -35,6 +36,8 @@ export const Worker = sequelize.define('worker', {
 },
 	{
 		timestamps: true,
+		createdAt: 'tb_createdAt',
+		updatedAt: 'tb_updatedAt',
 		tableName: 'tb_worker',
 	}
 )
