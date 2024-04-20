@@ -49,13 +49,15 @@ export const Client = sequelize.define('client', {
 	}
 )
 
-Client.create({ cl_nombre: 'manuel' }).then((e) => {
-	console.log(e instanceof Client)
-	console.log(e.cl_nombre)
-	console.log(e.toJSON())//usar este para imprimir tiene colores xD
-	// console.log(JSON.stringify(e, null, 4))//usar este para imprimir el objeto ta good
-	// e.update({ cl_nombre: 'eduardo' })//actualizar good
-	// e.save()
-	e.destroy()
-	console.log(e.toJSON())
-})
+// Client.create({ cl_nombre: 'manuel' }).then((e) => {
+// console.log(e instanceof Client)
+// console.log(e.cl_nombre)
+// 	console.log(e.toJSON())//usar este para imprimir tiene colores xD
+// console.log(JSON.stringify(e, null, 4))//usar este para imprimir el objeto ta good
+// e.update({ cl_nombre: 'eduardo' }) //actualizar good
+// e.save() //para confirmar los cambios en bd
+// e.destroy() //elimina elemento devuelto por la promesa(e)
+// e.reload() //realiza un tipo select
+// console.log(e.toJSON())
+// e.save({fiels: ['cl_nombre']})//actualiza el cambion en la bd
+// })

@@ -3,6 +3,7 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 import { connection_DB } from './database/connection.js'
 import { clientRouter } from './router/clientRouter.js'
+import { workerRouter } from './router/workerRouter.js'
 dotenv.config()
 
 const app = express()
@@ -19,13 +20,9 @@ app.use(cors(
 ))
 //ruta completa seria http://localhost:3000/api/login/auth
 app.use('/api/login', clientRouter)//verificar los nombres(MVC) que sean consistentes
+app.use('/api/login2', workerRouter)
 
-//verificar como queda mejor
-connection_DB.then(() => {
-	console.log('conexion exitosa')
-}).catch((error) => {
-	console.error('error en la conexion', error)
-})
+connection_DB;
 
 app.listen(PORT, () => {
 	console.log(`servidor corriendo en el puerto ${PORT}`)
