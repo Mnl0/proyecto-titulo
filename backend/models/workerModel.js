@@ -2,7 +2,7 @@ import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
 
 //deberia agregar el prefijo schema aca???
-export const Worker = sequelize.define('worker', {
+export const workerSchema = sequelize.define('worker', {
 	wr_id: {
 		type: DataTypes.INTEGER,
 		autoIncrement: true,
