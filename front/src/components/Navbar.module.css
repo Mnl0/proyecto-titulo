@@ -1,0 +1,94 @@
+@font-face {
+    font-family: 'Play-Regular';
+    src: url(../fonts/Play-Regular.ttf) format(truetype);
+}
+
+:root{
+    --colorActive: #006A4E;
+    --colorActive3: #008B8B;
+    --colorActive2: #5356FF;
+    --colorActive4: #e33b53;
+}
+
+.userNavbar{
+    margin: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Play-Regular';
+}
+
+.userNavbar ul{
+    background-color: #fff;
+    padding: 10px 30px;
+    display: flex;
+    border-radius: 10px;
+    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.35);
+}
+
+.userNavbar ul li{
+    list-style: none;
+    text-align: center;
+}
+
+.userNavbar ul li:not(:last-child){
+    border-right: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.userNavbar ul li a{
+    text-decoration: none;
+    display: block;
+    padding: 0 40px;
+}
+
+.userNavbar ul li a div{
+    width: 100%;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.userNavbar ul li a span{
+    color: #222;
+    transition: 0.3s;
+}
+
+.svgStyle{
+    height: 25px;
+    width: 20px;
+    color: transparent;
+    transition: 0.3s;
+}
+
+.svgStyle path{
+    stroke: #222;
+    stroke-width: 11;
+    transition: 0.3s;
+}
+
+/*Efecto hover de los links*/
+.userNavbar ul li a:hover .svgStyle{
+    transform: scale(1.5);
+}
+.userNavbar ul li a:hover .svgStyle path{
+    fill: #333;
+    stroke-width: 0;
+}
+.userNavbar ul li a:hover span{
+    color: #333;
+    font-weight: bold;
+}
+
+/*Efecto active de los links*/
+.userNavbar ul li a.active .svgStyle{
+    transform: scale(1.5);
+}
+.userNavbar ul li a.active .svgStyle path{
+    fill: var(--colorActive4);
+    stroke-width: 0;
+}
+.userNavbar ul li a.active span{
+    color: var(--colorActive4);
+    font-weight: bold;
+}
