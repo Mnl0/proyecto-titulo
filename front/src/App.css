@@ -1,0 +1,8 @@
+@font-face {
+	font-family: "Play-Regular";
+	src: url("./fonts/Play-Regular.ttf");
+}
+
+body {
+	font-family: "Play-Regular", system-ui;
+}

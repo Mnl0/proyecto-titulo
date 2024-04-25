@@ -1,10 +1,10 @@
 import React from "react";
-import estilosglobal from './GlobalNavbar.module.css';
 import { Link } from "react-router-dom";
+import estilosglobal from './GlobalNavbar.module.css';
 
 const GlobalNavbar = () => {
 
-    return(
+    return (
         <nav className={estilosglobal.topNavbar}>
             <div><Link to='/' className={estilosglobal.enlace}>LVM solutions</Link></div>
             <ul className={estilosglobal.globalLinks}>
