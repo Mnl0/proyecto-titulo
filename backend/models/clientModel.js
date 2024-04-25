@@ -21,7 +21,7 @@ export const ClientSchema = sequelize.define('client', {
 		allowNull: true,
 	},
 	cl_contrasena: {
-		type: DataTypes.INTEGER(50),
+		type: DataTypes.STRING(50),
 		allowNull: true,
 	},
 	cl_telefono: {
@@ -48,3 +48,14 @@ export const ClientSchema = sequelize.define('client', {
 		}
 	}
 )
+
+export function buscarPorEmail(obj) {
+	ClientSchema.findOne({ where: { cl_email: obj } }).then(elem => {
+		if (elem === null) {
+			console.log('not found')
+		} else {
+			console.log(elem.toJSON())
+		}
+	})
+
+}

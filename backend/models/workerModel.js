@@ -36,8 +36,8 @@ export const workerSchema = sequelize.define('worker', {
 },
 	{
 		timestamps: true,
-		createdAt: 'tb_createdAt',
-		updatedAt: 'tb_updatedAt',
+		createdAt: 'wr_createdAt',
+		updatedAt: 'wr_updatedAt',
 		tableName: 'tb_worker',
 	}
 )
