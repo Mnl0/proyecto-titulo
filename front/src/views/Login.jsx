@@ -18,14 +18,13 @@ const Login = () => {
             console.log('ver de que manera valdamos si asi o en de otra forma')
             return
         }
-        fetch('http://localhost:3000/api/login/auth', {
+        //http://localhost:3000/api/login2/auth //ruta del worker test
+        //http://localhost:3000/api/login/auth //ruta del client
+        fetch('http://localhost:3000/api/login2/auth', {
             method: "POST",
             body: JSON.stringify(formulario),
             headers: { "Content-type": "application/json" }
-        }).then(response => {
-            console.log(response)
-            console.log('esta es la respuesta una vez procesada la solicitud parece que hay que parsearlo')
-        })
+        }).then(response => console.log(response))
 
     }
 

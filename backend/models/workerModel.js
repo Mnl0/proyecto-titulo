@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
+import { funcionGenericaBuscar } from "./funcionesGenericas.js";
 
 //deberia agregar el prefijo schema aca???
 export const workerSchema = sequelize.define('worker', {
@@ -35,9 +36,26 @@ export const workerSchema = sequelize.define('worker', {
 	},
 },
 	{
-		timestamps: true,
+		timestamps: false,
 		createdAt: 'wr_createdAt',
 		updatedAt: 'wr_updatedAt',
 		tableName: 'tb_worker',
 	}
 )
+
+//verificar cual opcion es mejor
+// export function searchEmail(email) {
+// 	return new Promise((resolve, reject) => {
+// 		const searchItem = ClientSchema.findOne({ where: { cl_email: email } })
+// 		if (searchItem === null) {
+// 			reject(null)
+// 		} else {
+// 			resolve(searchItem)
+// 		}
+// 	})
+// }
+
+export function searchEmail(email) {
+	return funcionGenericaBuscar(email, workerSchema, 'wr')
+}
+

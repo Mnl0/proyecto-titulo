@@ -3,4 +3,4 @@ import { workerController } from '../controllers/workerController.js'
 
 export const workerRouter = express.Router()
 
-workerRouter.post('/auth', workerController.create)
+workerRouter.post('/auth', workerController.auth)
