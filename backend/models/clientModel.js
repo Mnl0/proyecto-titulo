@@ -50,12 +50,16 @@ export const ClientSchema = sequelize.define('client', {
 )
 
 export function buscarPorEmail(obj) {
-	ClientSchema.findOne({ where: { cl_email: obj } }).then(elem => {
-		if (elem === null) {
-			console.log('not found')
+	return ClientSchema.findOne({ where: { cl_email: obj } })
+}
+
+export function buscEmail(obj) {
+	return new Promise((resolve, reject) => {
+		const eleBuscado = ClientSchema.findOne({ where: { cl_email: obj } })
+		if (eleBuscado === null) {
+			reject(null)
 		} else {
-			console.log(elem.toJSON())
+			resolve(eleBuscado)
 		}
 	})
-
-}
+} 

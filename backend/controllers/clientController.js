@@ -1,31 +1,22 @@
-import { ClientSchema, buscarPorEmail } from '../models/clientModel.js'
+import { ClientSchema, buscEmail, buscarPorEmail } from '../models/clientModel.js'
 import { scrypt, randomBytes, randomUUID } from 'node:crypto'
 
 export const clientController = {
-	auth: (req, res) => {
-		const cl_email = req.body.email
-		console.log(cl_email)
-		const cl_password = req.body.password
-
-		buscarPorEmail(cl_email)
-
-		// if (firtName === '') return
-		// if (lastName === '') return
-		// if (phone === '') return
-		// if (email === '') {
-		// 	return res.status(400).json({ message: 'no deberia llegar al controlador sin datos mejorar validacion' })
-		// }
-		// const insertQuery = 'INSERT INTO client (nameclient, lastnameclient, phoneclient, emailclient) VALUES (?,?,?,?)'
-		// ClientSchema.sequelize.query(insertQuery, {
-		// 	replacements: [firtName, lastName, phone, email],
-		// 	type: ClientSchema.sequelize.QueryTypes.INSERT
-		// }).then((response) => {
-		// 	console.log(response)
-		// 	res.status(200).json({ message: 'usuario creado', data: response })
-		// }).catch((error) => {
-		// 	console.log(error)
-		// 	res.status(500).json({ message: 'ocurrio algo inesperado', error: error })
+	auth: async (req, res) => {
+		const { email, password } = req.body
+		// const a = await buscarPorEmail(cl_email)
+		// console.log(a.toJSON())
+		// console.log(a)
+		// buscEmail(email).then(e => {
+		// 	console.log(e.toJSON())
 		// })
+		const a = await buscEmail(email)
+		if (a === null) {
+			console.log('es null', a)
+			return res.sendStatus(400)
+		}
+
+		console.log(JSON.stringify(a, null, 4))
 	},
 	delete: (req, res) => {
 		const { id } = req.params
