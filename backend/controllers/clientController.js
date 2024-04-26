@@ -1,22 +1,30 @@
-import { ClientSchema, buscEmail, buscarPorEmail } from '../models/clientModel.js'
+import { ClientSchema, searchEmail } from '../models/clientModel.js'
 import { scrypt, randomBytes, randomUUID } from 'node:crypto'
 
 export const clientController = {
 	auth: async (req, res) => {
 		const { email, password } = req.body
-		// const a = await buscarPorEmail(cl_email)
-		// console.log(a.toJSON())
-		// console.log(a)
-		// buscEmail(email).then(e => {
-		// 	console.log(e.toJSON())
-		// })
-		const a = await buscEmail(email)
-		if (a === null) {
-			console.log('es null', a)
+		const item = await searchEmail(email)
+		if (item === null) {
 			return res.sendStatus(400)
 		}
+		const pass = item.toJSON().cl_contrasena
+		if (pass === password) {
+			const itemProfile = {
+				nombre: item.cl_nombre + " " + item.cl_apellido,
+				email: item.cl_email,
+				// id: item.cl_id,
+				telefono: item.cl_telefono,
+				latitud: item.cl_latitud,
+				longitud: item.cl_longitud,
+			}
+			return res.json(itemProfile)
+		} else {
+			return res.sendStatus(400)
+		}
+	},
+	get: async (req, res) => {
 
-		console.log(JSON.stringify(a, null, 4))
 	},
 	delete: (req, res) => {
 		const { id } = req.params

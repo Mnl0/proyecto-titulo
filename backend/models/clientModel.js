@@ -1,5 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
+import { funcionGenericaBuscar } from "./funcionesGenericas.js";
 
 export const ClientSchema = sequelize.define('client', {
 	cl_id: {
@@ -49,17 +50,17 @@ export const ClientSchema = sequelize.define('client', {
 	}
 )
 
-export function buscarPorEmail(obj) {
-	return ClientSchema.findOne({ where: { cl_email: obj } })
-}
+// export function searchEmail(email) {
+// 	return new Promise((resolve, reject) => {
+// 		const searchItem = ClientSchema.findOne({ where: { cl_email: email } })
+// 		if (searchItem === null) {
+// 			reject(null)
+// 		} else {
+// 			resolve(searchItem)
+// 		}
+// 	})
+// }
 
-export function buscEmail(obj) {
-	return new Promise((resolve, reject) => {
-		const eleBuscado = ClientSchema.findOne({ where: { cl_email: obj } })
-		if (eleBuscado === null) {
-			reject(null)
-		} else {
-			resolve(eleBuscado)
-		}
-	})
-} 
+export function searchEmail(email) {
+	return funcionGenericaBuscar(email, ClientSchema, 'cl')
+}
