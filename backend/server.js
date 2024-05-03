@@ -12,7 +12,7 @@ import { specialtyRouter } from './router/specialtyRouter.js'
 dotenv.config()
 
 const app = express()
-const PORT = process.env.PORT;
+const PORT = 3006 || process.env.PORT;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));

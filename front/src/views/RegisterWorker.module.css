@@ -1,0 +1,141 @@
+.registerWorkerSection{
+    width: 100%;
+    min-height: 85vh;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+
+.registerWorkerSection > .registerContainer{
+    display: flex;
+    flex-direction: column;
+    width: 450px;
+    background-color: #89CFF0;
+    background: linear-gradient(to right, #FFFACD 0%, #A7D8B8 50%, #89CFF0 100%);
+    padding: 10px 10px 80px 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, .5);
+}
+
+.registerWorkerSection > .registerContainer > .Greeting{
+    font-size: 2.5em;
+    font-weight: 600;
+}
+.registerWorkerSection > .registerContainer > .Greeting + p{
+    color: rgba(0, 0, 0, .7);
+    font-weight: 400;
+    font-size: .9rem;
+    margin: 4px 0 0 0;
+}
+.registerWorkerSection > .registerContainer > .Greeting + p > .linkLogin{
+    color: rgba(0, 0, 0, .7);
+}
+
+.registerWorkerSection > .registerContainer > form{
+    display: flex;
+    flex-direction: column;
+    margin: 32px 0 0 0;
+}
+/* Estilo para los inputs generales */
+.registerWorkerSection > .registerContainer > form > input[type="text"], input[type="password"], input[type="email"]{
+    padding: 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    font-size: .9rem;
+    transition: border-color 0.3s ease;
+    margin: 0 0 24px 0;
+}
+.registerWorkerSection > .registerContainer > form > input::placeholder{
+    color: #b1b1b1;
+}
+.registerWorkerSection > .registerContainer > form > div{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: rgba(0, 0, 0, .7);
+    font-weight: 400;
+    font-size: .92rem;
+}
+.registerWorkerSection > .registerContainer > form > div > .checkContainer{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.registerWorkerSection > .registerContainer > form > div > .checkContainer > label{
+    color: #222;
+    font-weight: 500;
+    margin: 0 0 0 10px;
+}
+.registerWorkerSection > .registerContainer > form > div > .linkRecovery{
+    color: rgba(0, 0, 0, .7);
+    text-decoration: none;
+    font-weight: 400;
+}
+/* Estilo para los inputs checkbox */
+.registerWorkerSection > .registerContainer > form > div > .checkContainer > input[type="checkbox"]{
+    appearance: none;
+    height: 1.2rem;
+    width: 1.2rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.registerWorkerSection > .registerContainer > form > div > .checkContainer > input[type="checkbox"]::after{
+    content: url('../icons/check-solid.svg');
+    color: #fff;
+    display: none;
+    padding: 0 1px;
+}
+.registerWorkerSection > .registerContainer > form > div > .checkContainer > input[type="checkbox"]:hover{
+    background-color: rgba(0, 0, 0, .3);
+}
+.registerWorkerSection > .registerContainer > form > div > .checkContainer > input[type="checkbox"]:checked{
+    background-color: #fff;
+}
+.registerWorkerSection > .registerContainer > form > div > .checkContainer > input[type="checkbox"]:checked::after{
+    display: block;
+}
+
+/* Estilo cuando el input está enfocado */
+input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, input[type="checkbox"]:focus, textarea:focus {
+    border-color: #66afe9;
+    border-width: 2px;
+    outline: none;
+}
+/* Ocultar el placeholder cuando el input está enfocado */
+input[type="text"]:focus::placeholder, input[type="email"]:focus::placeholder, input[type="password"]:focus::placeholder, textarea:focus::placeholder {
+    opacity: 0;
+}
+
+/* Estilo para lel boton */
+.registerWorkerSection > .registerContainer > form > button{
+    padding: 16px;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    margin: 24px 0 0 0;
+    background-color: #1E90FF ;
+    color: #fff;
+    font-weight: 600;
+    letter-spacing: 2px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+.registerWorkerSection > .registerContainer > form > button:hover{
+    background-color: #3b9eff;
+}
+.registerWorkerSection > .registerContainer > form > button:last-child{
+    background-color: #222;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.registerWorkerSection > .registerContainer > form > button:last-child:hover{
+    background-color: #3b3b3b;
+}
+.registerWorkerSection > .registerContainer > form > button:last-child > svg{
+    width: 1.5rem;
+    height: 1.5rem;
+    margin: 0 0 0 10px;
+}
