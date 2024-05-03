@@ -3,61 +3,51 @@ import estilos from './Login.module.css';
 import { useState } from "react";
 
 const Login = () => {
-    const [formulario, setFormulario] = useState()
 
-    function handleChance(evnt) {
-        setFormulario({
-            ...formulario,
-            [evnt.target.name]: evnt.target.value
-        })
-    }
+    const [inputValues, setInputValues] = useState({});
 
-    function handleSubmit(evnt) {
-        evnt.preventDefault()
-        if (!handleValidation) {
-            console.log('ver de que manera valdamos si asi o en de otra forma')
-            return
+    const handleValues = (e) => {
+        setInputValues(prevState => ({
+            ...prevState,
+            [e.target.name]: e.target.value
+        }));
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try{
+            const response = await fetch('http://localhost:3006/api/login/auth', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(inputValues)
+            });
+
+            if(response.ok){
+                const user = await response.json();
+                console.log('Usuario autenticado', user);
+                alert('Bienvenido ' + user.nombre)
+            }else{
+                console.error('Error de autenticación', response.statusText);
+            }
+
+        }catch(error){
+            console.error('Error en el fecth login: ', error);
         }
-        //http://localhost:3000/api/login2/auth //ruta del worker test
-        //http://localhost:3000/api/login/auth //ruta del client
-        fetch('http://localhost:3000/api/login2/auth', {
-            method: "POST",
-            body: JSON.stringify(formulario),
-            headers: { "Content-type": "application/json" }
-        }).then(response => console.log(response))
+    };
 
-    }
-
-    function handleValidation() {
-        const { email, password } = formulario;
-        if (typeof email !== 'string' || typeof password !== 'string') {
-            console.log('error en el parametro de los datos')//aca deberia de pintarse los inpurt de colo r rojo
-            return false
-        }
-        return true
-    }
     return (
         <section className={estilos.loginSection}>
             <div className={estilos.loginContainer}>
                 <p className={estilos.saludo}>Te damos la bienvenida nuevamente</p>
-                <p>¿No tienes una cuenta? <Link className={estilos.linkRegister}>Registrarse</Link></p>
-                <form onSubmit={(evnt) => handleSubmit(evnt)}>
-                    <input
-                        type="email"
-                        name="email"
-                        placeholder="Correo electrónico"
-                        autoComplete="off"
-                        onChange={(evnt) => handleChance(evnt)}
-                    />
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Contraseña"
-                        onChange={(evnt) => handleChance(evnt)}
-                    />
+                <p>¿No tienes una cuenta? <Link to='/register' className={estilos.linkRegister}>Registrarse</Link></p>
+                <form onSubmit={handleSubmit}>
+                    <input onChange={handleValues} type="email" name="email" placeholder="Correo electrónico" autoComplete="off"/>
+                    <input onChange={handleValues} type="password" name="password" placeholder="Contraseña"/>
                     <div>
                         <div className={estilos.checkContainer}>
-                            <input type="checkbox" name="recordar" className="chkRecordar" id="chkRecordar" />
+                            <input type="checkbox" name="recordar" className="chkRecordar" id="chkRecordar" />   
                             <label htmlFor="chkRecordar">Recordar Sesión</label>
                         </div>
                         <Link className={estilos.linkRecuperar}>¿Olvidaste tu contraseña?</Link>
