@@ -2,19 +2,18 @@ import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
 import { funcionGenericaBuscar } from "./funcionesGenericas.js";
 
-//deberia agregar el prefijo schema aca???
-export const workerSchema = sequelize.define('worker', {
+export const WorkerSchema = sequelize.define('worker', {
 	wr_id: {
 		type: DataTypes.UUID,
 		defaultValue: DataTypes.UUIDV4,
 		primaryKey: true,
 		allowNull: false,
 	},
-	wr_nombre: {
+	wr_firtName: {
 		type: DataTypes.STRING(50),
 		allowNull: true,
 	},
-	wr_apellido: {
+	wr_lastName: {
 		type: DataTypes.STRING(50),
 		allowNull: true,
 	},
@@ -22,20 +21,29 @@ export const workerSchema = sequelize.define('worker', {
 		type: DataTypes.STRING(100),
 		allowNull: true,
 	},
-	wr_contrasena: {
-		type: DataTypes.INTEGER(50),
+	wr_password: {
+		type: DataTypes.STRING(200),
 		allowNull: true,
 	},
-	wr_latitud: {
-		type: DataTypes.INTEGER,
+	wr_cellphone: {
+		type: DataTypes.INTEGER(12),
 		allowNull: true,
 	},
-	wr_longitud: {
-		type: DataTypes.INTEGER,
+	wr_latitude: {
+		type: DataTypes.DOUBLE,
 		allowNull: true,
 	},
+	wr_longitude: {
+		type: DataTypes.DOUBLE,
+		allowNull: true,
+	},
+	wr_passwordSinScriptar: {
+		type: DataTypes.STRING(50),
+		allowNull: true,
+	}
 },
 	{
+		/*=====se debe agregar el timestamps true cuando se puede eliminar de manera correcta cualquier elemento de esta tabla error con fk*/
 		timestamps: false,
 		createdAt: 'wr_createdAt',
 		updatedAt: 'wr_updatedAt',
@@ -56,6 +64,16 @@ export const workerSchema = sequelize.define('worker', {
 // }
 
 export function searchEmail(email) {
-	return funcionGenericaBuscar(email, workerSchema, 'wr')
+	return funcionGenericaBuscar(email, WorkerSchema, 'wr')
 }
 
+export function create(worker) {
+	return new Promise((resolve, reject) => {
+		const newWorker = WorkerSchema.create(worker);
+		if (newWorker) {
+			resolve(newWorker);
+		} else {
+			reject(null);
+		}
+	})
+}

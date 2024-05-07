@@ -1,4 +1,5 @@
 import { ClientSchema, create, searchEmail } from '../models/clientModel.js'
+/*eliminar el ClientSchema*/
 import { randomBytes, scryptSync, timingSafeEqual } from 'node:crypto'
 
 export const clientController = {
@@ -30,7 +31,7 @@ export const clientController = {
 	create: async (req, res) => {
 		/*==========Enviar del body el tipo cl o wr y pasar como argumento al searchEmail=====================*/
 		const { cl_email, cl_firtName, cl_password, cl_lastName, cl_cellphone, cl_latitude, cl_longitude } = req.body;
-
+		/*=============agregar las validaciones de todos los campos =========*/
 		const item = await searchEmail(cl_email);
 		if (item) {
 			return res.sendStatus(409)
@@ -50,16 +51,16 @@ export const clientController = {
 			cl_longitude
 		}
 
-		const response = await create(newItem);
-		if (response === null) {
+		const data = await create(newItem);
+		if (data === null) {
 			/*===========corroborar los mensajes de error =========================*/
-			return res.sendStatus(409)
+			return res.sendStatus(409);
 		}
-		delete response.cl_password;
-		delete response.cl_passwordSinScriptar;
-		delete response.cl_updatedAt;
-		delete response.cl_createdAt;
-		res.json(response.toJSON())
+		delete data.cl_password;
+		delete data.cl_passwordSinScriptar;
+		delete data.cl_updatedAt;
+		delete data.cl_createdAt;
+		res.json(data.toJSON());
 
 	},
 	delete: (req, res) => {

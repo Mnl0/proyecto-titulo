@@ -24,8 +24,9 @@ app.use(cors(
 	}
 ))
 //ruta completa seria http://localhost:3000/api/login/auth
-app.use('/api/login', clientRouter)
-app.use('/api/login2', workerRouter)
+app.use('/api/client', clientRouter)
+app.use('/api/worker', workerRouter)
+
 app.use('/get/cat', categoryRouter)
 app.use('/get/nec', necessityRouter)
 app.use('/get/job', jobRouter)
