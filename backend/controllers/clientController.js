@@ -24,7 +24,6 @@ export const clientController = {
 			delete itemProfile.cl_id;
 			res.json(itemProfile)
 		} else {
-			console.log('no se pudo logear')
 			res.sendStatus(400)
 		}
 	},

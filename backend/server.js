@@ -27,8 +27,8 @@ app.use(cors(
 app.use('/api/client', clientRouter)
 app.use('/api/worker', workerRouter)
 
-app.use('/get/cat', categoryRouter)
-app.use('/get/nec', necessityRouter)
+app.use('/get/category', categoryRouter)
+app.use('/get/necessity', necessityRouter)
 app.use('/get/job', jobRouter)
 app.use('/get/specialty', specialtyRouter)
 

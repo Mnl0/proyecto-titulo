@@ -1,22 +1,32 @@
 import { searchEmail, create } from "../models/workerModel.js";
-import { scryptSync, randomBytes } from 'node:crypto'
+import { scryptSync, randomBytes, timingSafeEqual } from 'node:crypto'
 
 //deberia usar Schema como prefijo en los modelos???
 export const workerController = {
 	auth: async (req, res) => {
-		const emailBuscar = "email@email.com"
-		const password = '12345'
-		const item = await searchEmail(emailBuscar)
+		const { wr_email, wr_password } = req.body;
+
+		const item = await searchEmail(wr_email)
 		if (item === null) {
 			return res.sendStatus(400)
 		}
-		const pass = item.toJSON().wr_contrasena
-		//fijarse en el tipo de dato
-		if (pass.toString() === password) {
-			return res.json(item)//eliminar atributos que no sirven
+
+		const [salt, key] = item.wr_password.split(':');
+		const hashedBuffer = scryptSync(wr_password, salt, 64);
+		const keyBuffer = Buffer.from(key, 'hex');
+		const match = timingSafeEqual(hashedBuffer, keyBuffer);
+
+		if (match) {
+			const itemProfile = {
+				...item.toJSON()
+			}
+			/*=========verificar si es necesario eliminar este id puede servir en el front===================*/
+			delete itemProfile.wr_id;
+			res.json(itemProfile)
 		} else {
-			return res.sendStatus(400)
+			res.sendStatus(400)
 		}
+
 	},
 	create: async (req, res) => {
 		const { wr_firtName, wr_lastName, wr_email, wr_password, wr_cellphone, wr_latitude, wr_longitude } = req.body;
