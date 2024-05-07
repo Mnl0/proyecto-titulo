@@ -9,11 +9,11 @@ export const ClientSchema = sequelize.define('client', {
 		primaryKey: true,
 		allowNull: true,
 	},
-	cl_nombre: {
+	cl_firtName: {
 		type: DataTypes.STRING(50),
 		allowNull: true,// acepta nulos (test)
 	},
-	cl_apellido: {
+	cl_lastName: {
 		type: DataTypes.STRING(50),
 		allowNull: true,
 	},
@@ -21,24 +21,29 @@ export const ClientSchema = sequelize.define('client', {
 		type: DataTypes.STRING(100),
 		allowNull: true,
 	},
-	cl_contrasena: {
-		type: DataTypes.STRING(50),
+	cl_password: {
+		type: DataTypes.STRING(200),
 		allowNull: true,
 	},
-	cl_telefono: {
+	cl_cellphone: {
 		type: DataTypes.INTEGER(12),
 		allowNull: true,
 	},
-	cl_latitud: {
-		type: DataTypes.INTEGER,
+	cl_latitude: {
+		type: DataTypes.DOUBLE,
 		allowNull: true,
 	},
-	cl_longitud: {
-		type: DataTypes.INTEGER,
+	cl_longitude: {
+		type: DataTypes.DOUBLE,
 		allowNull: true,
 	},
+	cl_passwordSinScriptar: {
+		type: DataTypes.STRING(50),
+		allowNull: true,
+	}
+	/*=====agregar direccion????=======*/
 },
-	//configuracion de una tabla
+	/*========configuracion tabla================*/
 	{
 		timestamps: true,
 		createdAt: 'cl_createdAt',
@@ -63,4 +68,15 @@ export const ClientSchema = sequelize.define('client', {
 
 export function searchEmail(email) {
 	return funcionGenericaBuscar(email, ClientSchema, 'cl')
+}
+
+export function create(client) {
+	return new Promise((resolve, reject) => {
+		const newClient = ClientSchema.create(client);
+		if (newClient) {
+			resolve(newClient);
+		} else {
+			reject(null);
+		}
+	})
 }

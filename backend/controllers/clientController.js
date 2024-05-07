@@ -1,29 +1,65 @@
-import { ClientSchema, searchEmail } from '../models/clientModel.js'
-import { scrypt, randomBytes, randomUUID } from 'node:crypto'
+import { ClientSchema, create, searchEmail } from '../models/clientModel.js'
+import { randomBytes, scryptSync, timingSafeEqual } from 'node:crypto'
 
 export const clientController = {
 	auth: async (req, res) => {
-		const { email, password } = req.body
-		const item = await searchEmail(email)
+		const { cl_email, cl_password } = req.body
+
+		const item = await searchEmail(cl_email)
 		if (item === null) {
 			return res.sendStatus(400)
 		}
-		const pass = item.toJSON().cl_contrasena
-		if (pass === password) {
+
+		const [salt, key] = item.cl_password.split(':');
+		const hashedBuffer = scryptSync(cl_password, salt, 64);
+		const keyBuffer = Buffer.from(key, 'hex');
+		const match = timingSafeEqual(hashedBuffer, keyBuffer);
+
+		if (match) {
 			const itemProfile = {
-				nombre: item.cl_nombre + " " + item.cl_apellido,
-				email: item.cl_email,
-				// id: item.cl_id,
-				telefono: item.cl_telefono,
-				latitud: item.cl_latitud,
-				longitud: item.cl_longitud,
+				...item.toJSON()
 			}
-			return res.json(itemProfile)
+			/*=========verificar si es necesario eliminar este id puede servir en el front===================*/
+			delete itemProfile.cl_id;
+			res.json(itemProfile)
 		} else {
-			return res.sendStatus(400)
+			console.log('no se pudo logear')
+			res.sendStatus(400)
 		}
 	},
-	get: async (req, res) => {
+	create: async (req, res) => {
+		/*==========Enviar del body el tipo cl o wr y pasar como argumento al searchEmail=====================*/
+		const { cl_email, cl_firtName, cl_password, cl_lastName, cl_cellphone, cl_latitude, cl_longitude } = req.body;
+
+		const item = await searchEmail(cl_email);
+		if (item) {
+			return res.sendStatus(409)
+		}
+		const salt = randomBytes(16).toString('hex');
+		const hashedPassword = scryptSync(cl_password, salt, 64).toString('hex');
+
+		const newItem = {
+			/*=================ver si vamos a solicitar mas datos para registrarse============================*/
+			cl_email,
+			cl_firtName,
+			cl_password: `${salt}:${hashedPassword}`,
+			cl_passwordSinScriptar: cl_password,
+			cl_lastName,
+			cl_cellphone,
+			cl_latitude,
+			cl_longitude
+		}
+
+		const response = await create(newItem);
+		if (response === null) {
+			/*===========corroborar los mensajes de error =========================*/
+			return res.sendStatus(409)
+		}
+		delete response.cl_password;
+		delete response.cl_passwordSinScriptar;
+		delete response.cl_updatedAt;
+		delete response.cl_createdAt;
+		res.json(response.toJSON())
 
 	},
 	delete: (req, res) => {
