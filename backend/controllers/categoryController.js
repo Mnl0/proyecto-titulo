@@ -1,7 +1,11 @@
-import { CategorySchema } from "../models/categoryModel.js";
+import { CategorySchema, getAll } from "../models/categoryModel.js";
 
 export const categoryController = {
-	get: (req, res) => {
-		console.log('llegue al controller category mediante un get')
+	get: async (req, res) => {
+		const data = await getAll();
+		// console.log(data)
+		console.log(JSON.stringify(data, null, 4))
+		res.send(JSON.stringify(data, null, 4));
+
 	}
 }
