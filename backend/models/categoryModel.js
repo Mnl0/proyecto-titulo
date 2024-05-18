@@ -43,7 +43,6 @@ crear()
 
 export async function getAll() {
 	return await CategorySchema.findAll();
-
 }
 
 async function get(elem) {
