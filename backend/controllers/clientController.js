@@ -1,30 +1,30 @@
-import { ClientSchema, create, searchEmail } from '../models/clientModel.js'
-/*eliminar el ClientSchema*/
+import { create, searchEmail } from '../models/clientModel.js'
 import { randomBytes, scryptSync, timingSafeEqual } from 'node:crypto'
 
 export const clientController = {
 	auth: async (req, res) => {
-		const { cl_email, cl_password } = req.body
+		try{
+			const { cl_email, cl_password } = req.body
+			const item = await searchEmail(req.body.cl_email);
+			//if (item === null || item === undefined || item === '' || typeof item !== 'string') {console.log('hola mundo 400 1');return res.status(400).json();}
+			if(!item) return res.status(400).json();
 
-		const item = await searchEmail(cl_email)
-		if (item === null) {
-			return res.sendStatus(400)
-		}
+			const [salt, key] = item.cl_password.split(':');
+			const hashedBuffer = scryptSync(cl_password, salt, 64);
+			const keyBuffer = Buffer.from(key, 'hex');
+			const match = timingSafeEqual(hashedBuffer, keyBuffer);
+			if(!match) return res.status(400).json();
 
-		const [salt, key] = item.cl_password.split(':');
-		const hashedBuffer = scryptSync(cl_password, salt, 64);
-		const keyBuffer = Buffer.from(key, 'hex');
-		const match = timingSafeEqual(hashedBuffer, keyBuffer);
-
-		if (match) {
 			const itemProfile = {
-				...item.toJSON()
+				fullName: item.cl_firtName + ' ' + item.cl_lastName,
+				email: item.cl_email,
+				latitude: item.cl_latitude,
+				longitude: item.cl_longitude
 			}
-			/*=========verificar si es necesario eliminar este id puede servir en el front===================*/
-			delete itemProfile.cl_id;
-			res.json(itemProfile)
-		} else {
-			res.sendStatus(400)
+			res.status(200).json(itemProfile)
+			
+		}catch(ex){
+			res.status(500).json({ message: 'Ocurrió algo inesperado', ex });
 		}
 	},
 	create: async (req, res) => {

@@ -1,7 +1,7 @@
 
-export function funcionGenericaBuscar(arg, schema, pref) {
+export  function funcionGenericaBuscar(email, schema, pref) {
 	return new Promise((resolve, reject) => {
-		const searchItem = schema.findOne({ where: { [`${pref}_email`]: arg } })
+		const searchItem = schema.findOne({ where: { [`${pref}_email`]: email } })
 		if (searchItem === null) {
 			reject(null)
 		} else {

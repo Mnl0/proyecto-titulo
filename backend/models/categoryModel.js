@@ -35,7 +35,7 @@ async function crear() {
 	}
 	await CategorySchema.create(newCategory);
 }
-crear()
+//crear()
 //cat_name: "Gasfiteria",
 //cat_name: "Albanileria",
 //cat_name: "Electricista",

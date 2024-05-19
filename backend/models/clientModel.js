@@ -37,7 +37,7 @@ export const ClientSchema = sequelize.define('client', {
 		type: DataTypes.DOUBLE,
 		allowNull: true,
 	},
-	cl_passwordSinScriptar: {
+	cl_passwordSinScriptar: {	// ???????????????????????????????????????????????????? es innecesario
 		type: DataTypes.STRING(50),
 		allowNull: true,
 	}
@@ -65,9 +65,15 @@ export const ClientSchema = sequelize.define('client', {
 // 		}
 // 	})
 // }
-
+/*
 export function searchEmail(email) {
 	return funcionGenericaBuscar(email, ClientSchema, 'cl')
+}
+*/
+export async function searchEmail(email) {
+	const searchedItem = await funcionGenericaBuscar(email, ClientSchema, 'cl');
+	if(!searchedItem) return false;
+	return searchedItem.dataValues;
 }
 
 export function create(client) {
