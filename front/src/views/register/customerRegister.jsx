@@ -1,21 +1,21 @@
-import styles from './RegisterWorker.module.css';
+import styles from './customerRegister.module.css';
 import { Link } from "react-router-dom";
 
-const RegisterWorker = () => {
+const RegisterCustomer = () => {
 
     const handleValues = (e) => {}
     const handleSubmit = async (e) => {}
 
     return (
-        <section className={styles.registerWorkerSection}>
+        <section className={styles.registerCustomerSection}>
             <div className={styles.registerContainer}>
-                <p className={styles.Greeting}>Registro de Trabajador</p>
+                <p className={styles.Greeting}>Registro de Cliente</p>
                 <p>¿Ya tienes una cuenta? <Link to='/login' className={styles.linkLogin}>Iniciar Sesión</Link></p>
                 <form onSubmit={handleSubmit}>
                     <input onChange={handleValues} type="email" name="email" placeholder="Correo electrónico" autoComplete="off"/>
                     <input onChange={handleValues} type="password" name="password" placeholder="Contraseña"/>
                     <div>
-                        <div >
+                        <div>
                             <input type="checkbox" name="recordar"  id="chkRecordar" className={styles.checkContainer} />   
                             <label htmlFor="chkRecordar">Recordar Sesión</label>
                         </div>
@@ -29,4 +29,4 @@ const RegisterWorker = () => {
     )
 }
 
-export default RegisterWorker;
+export default RegisterCustomer;

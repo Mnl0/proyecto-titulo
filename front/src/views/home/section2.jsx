@@ -1,14 +1,13 @@
 import React from "react";
-import esilos from './SectionLandingPage2.module.css'
-import imgLanding2 from '../img/img13.jpeg';
+import esilos from './section2.module.css';
+import imgSection2 from './image.png';
 import { Link } from "react-router-dom";
 
-const SectionLandingPage2 = () => {
-
+const Section2 = () => {
     return (
         <div className={esilos.landingPageMain2}>
             <div className={esilos.imgContainer}>
-                <img src={imgLanding2} alt="Imagen Pagina home" />
+                <img src={imgSection2} alt="Imagen Pagina home" />
             </div>
             <div className={esilos.textContainer}>
                 <h2>Consigue clientes, muestra tu trabajo y organiza tu tiempo</h2>
@@ -19,4 +18,4 @@ const SectionLandingPage2 = () => {
     )
 }
 
-export default SectionLandingPage2;
+export default Section2;

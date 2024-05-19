@@ -1,20 +1,25 @@
 import './App.css';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import Login from './views/Login.jsx'
-import Home from './views/Home.jsx';
-import GlobalNavbar from './components/GlobalNavbar.jsx'
-import Register from './views/Register.jsx';
+import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Home from './views/home/home.jsx';
+import CustomerPanel from './views/customerPanel/customerPanel.jsx';
+import NavbarGlobal from './views/partials/navbarGlobal.jsx';
+import Login from './views/login/login.jsx';
+import Register from './views/register/register.jsx';
+
 function App() {
   return (
-    <BrowserRouter>
-      <GlobalNavbar />
-      <Routes>
-        <Route path='/login' element={<Login />} />
-        <Route path='/' element={<Home />} />
-        <Route path='/Register' element={<Register />} />
-      </Routes>
-    </BrowserRouter>
-  )
+    <div className="App">
+        <BrowserRouter>
+          <NavbarGlobal />
+          <Routes>
+            <Route path='/' element={<Home />} />
+            <Route path='/login' element={<Login />} />
+            <Route path='/Register' element={<Register />} />
+            <Route path='/panel' element={<CustomerPanel />} />
+          </Routes>
+        </BrowserRouter>
+    </div>
+  );
 }
 
 export default App;

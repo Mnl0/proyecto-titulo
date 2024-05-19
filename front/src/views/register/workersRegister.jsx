@@ -1,15 +1,15 @@
-import styles from './RegisterCustomer.module.css';
+import styles from './workersRegister.module.css';
 import { Link } from "react-router-dom";
 
-const RegisterCustomer = () => {
+const RegisterWorker = () => {
 
     const handleValues = (e) => {}
     const handleSubmit = async (e) => {}
 
     return (
-        <section className={styles.registerCustomerSection}>
+        <section className={styles.registerWorkerSection}>
             <div className={styles.registerContainer}>
-                <p className={styles.Greeting}>Registro de Cliente</p>
+                <p className={styles.Greeting}>Registro de Trabajador</p>
                 <p>¿Ya tienes una cuenta? <Link to='/login' className={styles.linkLogin}>Iniciar Sesión</Link></p>
                 <form onSubmit={handleSubmit}>
                     <input onChange={handleValues} type="email" name="email" placeholder="Correo electrónico" autoComplete="off"/>
@@ -29,4 +29,4 @@ const RegisterCustomer = () => {
     )
 }
 
-export default RegisterCustomer;
+export default RegisterWorker;

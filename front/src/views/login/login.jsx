@@ -1,10 +1,14 @@
-import { Link } from "react-router-dom";
-import estilos from './Login.module.css';
+import { Link, useNavigate } from "react-router-dom";
+import estilos from './login.module.css';
 import { useState } from "react";
+import { useAuth } from './authContext.jsx';  // importar authcontext desde su ubicación
 
 const Login = () => {
 
     const [inputValues, setInputValues] = useState({});
+
+    const navigate = useNavigate();
+    const { login } = useAuth();
 
     const handleValues = (e) => {
         setInputValues(prevState => ({
@@ -16,7 +20,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            const response = await fetch('http://localhost:3006/api/login/auth', {
+            const response = await fetch('http://localhost:3000/api/client/auth/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -26,8 +30,10 @@ const Login = () => {
 
             if(response.ok){
                 const user = await response.json();
+                login(user);  // Actualiza el contexto con los datos del usuario
                 console.log('Usuario autenticado', user);
-                alert('Bienvenido ' + user.nombre)
+                navigate('/panel');  // Redirecciona al usuario
+                
             }else{
                 console.error('Error de autenticación', response.statusText);
             }
@@ -43,8 +49,8 @@ const Login = () => {
                 <p className={estilos.saludo}>Te damos la bienvenida nuevamente</p>
                 <p>¿No tienes una cuenta? <Link to='/register' className={estilos.linkRegister}>Registrarse</Link></p>
                 <form onSubmit={handleSubmit}>
-                    <input onChange={handleValues} type="email" name="email" placeholder="Correo electrónico" autoComplete="off"/>
-                    <input onChange={handleValues} type="password" name="password" placeholder="Contraseña"/>
+                    <input onChange={handleValues} type="email" name="cl_email" placeholder="Correo electrónico" autoComplete="off"/>
+                    <input onChange={handleValues} type="password" name="cl_password" placeholder="Contraseña"/>
                     <div>
                         <div className={estilos.checkContainer}>
                             <input type="checkbox" name="recordar" className="chkRecordar" id="chkRecordar" />   

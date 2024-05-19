@@ -1,38 +1,43 @@
-.loginSection{
+.registerCustomerSection{
     width: 100%;
     min-height: 85vh;
     display: flex;
     align-items: center;
-    justify-content: center;
+    justify-content: start;
 }
 
-.loginSection > .loginContainer{
+.registerCustomerSection > .registerContainer{
     display: flex;
     flex-direction: column;
     width: 450px;
+    background-color: #f64f59;
+    background: linear-gradient(to right, #93e7fa, #d1aee2, #ff9eae);
+    padding: 10px 10px 80px 10px;
+    border-radius: 8px;
+    box-shadow: 0 0 16px rgba(0, 0, 0, .5);
 }
 
-.loginContainer > .saludo{
+.registerCustomerSection > .registerContainer > .Greeting{
     font-size: 2.5em;
     font-weight: 600;
 }
-.loginContainer > .saludo + p{
+.registerCustomerSection > .registerContainer > .Greeting + p{
     color: rgba(0, 0, 0, .7);
     font-weight: 400;
     font-size: .9rem;
     margin: 4px 0 0 0;
 }
-.loginContainer > .saludo + p > .linkRegister{
+.registerCustomerSection > .registerContainer > .Greeting + p > .linkLogin{
     color: rgba(0, 0, 0, .7);
 }
 
-.loginContainer > form{
+.registerCustomerSection > .registerContainer > form{
     display: flex;
     flex-direction: column;
     margin: 32px 0 0 0;
 }
 /* Estilo para los inputs generales */
-.loginContainer > form > input[type="text"], input[type="password"], input[type="email"]{
+.registerCustomerSection > .registerContainer > form > input[type="text"], input[type="password"], input[type="email"]{
     padding: 10px;
     border: 2px solid #ccc;
     border-radius: 4px;
@@ -40,10 +45,10 @@
     transition: border-color 0.3s ease;
     margin: 0 0 24px 0;
 }
-.loginContainer > form > input::placeholder{
+.registerCustomerSection > .registerContainer > form > input::placeholder{
     color: #b1b1b1;
 }
-.loginContainer > form > div{
+.registerCustomerSection > .registerContainer > form > div{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -51,23 +56,23 @@
     font-weight: 400;
     font-size: .92rem;
 }
-.loginContainer > form > div > .checkContainer{
+.registerCustomerSection > .registerContainer > form > div > .checkContainer{
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.loginContainer > form > div > .checkContainer > label{
+.registerCustomerSection > .registerContainer > form > div > .checkContainer > label{
     color: #222;
     font-weight: 500;
     margin: 0 0 0 10px;
 }
-.loginContainer > form > div > .linkRecuperar{
+.registerCustomerSection > .registerContainer > form > div > .linkRecovery{
     color: rgba(0, 0, 0, .7);
     text-decoration: none;
     font-weight: 400;
 }
 /* Estilo para los inputs checkbox */
-.loginContainer > form > div > .checkContainer > input[type="checkbox"]{
+.registerCustomerSection > .registerContainer > form > div > .checkContainer > input[type="checkbox"]{
     appearance: none;
     height: 1.2rem;
     width: 1.2rem;
@@ -75,19 +80,19 @@
     border-radius: 4px;
     cursor: pointer;
 }
-.loginContainer > form > div > .checkContainer > input[type="checkbox"]::after{
-    content: url('../icons/check-solid.svg');
+.registerCustomerSection > .registerContainer > form > div > .checkContainer > input[type="checkbox"]::after{
+    content: url('../../icons/check-solid.svg');
     color: #fff;
     display: none;
     padding: 0 1px;
 }
-.loginContainer > form > div > .checkContainer > input[type="checkbox"]:hover{
+.registerCustomerSection > .registerContainer > form > div > .checkContainer > input[type="checkbox"]:hover{
     background-color: rgba(0, 0, 0, .3);
 }
-.loginContainer > form > div > .checkContainer > input[type="checkbox"]:checked{
+.registerCustomerSection > .registerContainer > form > div > .checkContainer > input[type="checkbox"]:checked{
     background-color: #fff;
 }
-.loginContainer > form > div > .checkContainer > input[type="checkbox"]:checked::after{
+.registerCustomerSection > .registerContainer > form > div > .checkContainer > input[type="checkbox"]:checked::after{
     display: block;
 }
 
@@ -103,7 +108,7 @@ input[type="text"]:focus::placeholder, input[type="email"]:focus::placeholder, i
 }
 
 /* Estilo para lel boton */
-.loginContainer > form > button{
+.registerCustomerSection > .registerContainer > form > button{
     padding: 16px;
     border: none;
     border-radius: 4px;
@@ -116,20 +121,20 @@ input[type="text"]:focus::placeholder, input[type="email"]:focus::placeholder, i
     cursor: pointer;
     transition: background-color 0.3s ease;
 }
-.loginContainer > form > button:hover{
+.registerCustomerSection > .registerContainer > form > button:hover{
     background-color: #3b9eff;
 }
-.loginContainer > form > button:last-child{
+.registerCustomerSection > .registerContainer > form > button:last-child{
     background-color: #222;
     font-size: 1rem;
     display: flex;
     align-items: center;
     justify-content: center;
 }
-.loginContainer > form > button:last-child:hover{
+.registerCustomerSection > .registerContainer > form > button:last-child:hover{
     background-color: #3b3b3b;
 }
-.loginContainer > form > button:last-child > svg{
+.registerCustomerSection > .registerContainer > form > button:last-child > svg{
     width: 1.5rem;
     height: 1.5rem;
     margin: 0 0 0 10px;

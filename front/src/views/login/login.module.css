@@ -76,7 +76,7 @@
     cursor: pointer;
 }
 .loginContainer > form > div > .checkContainer > input[type="checkbox"]::after{
-    content: url('../icons/check-solid.svg');
+    content: url('../../icons/check-solid.svg');
     color: #fff;
     display: none;
     padding: 0 1px;
