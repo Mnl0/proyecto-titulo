@@ -1,29 +1,31 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
 import { funcionGenericaBuscar } from "./funcionesGenericas.js";
-import { scryptSync, timingSafeEqual } from 'node:crypto'
+import { randomBytes, scryptSync, timingSafeEqual } from 'node:crypto'
+
 export const ClientSchema = sequelize.define('client', {
 	cl_id: {
 		type: DataTypes.UUID,
 		defaultValue: DataTypes.UUIDV4,
 		primaryKey: true,
-		allowNull: true,
+		allowNull: false,
 	},
 	cl_firtName: {
 		type: DataTypes.STRING(50),
-		allowNull: true,// acepta nulos (test)
+		allowNull: false,// acepta nulos (test)
 	},
 	cl_lastName: {
 		type: DataTypes.STRING(50),
-		allowNull: true,
+		allowNull: false,
 	},
 	cl_email: {
 		type: DataTypes.STRING(100),
-		allowNull: true,
+		allowNull: false,
+		unique: true,
 	},
 	cl_password: {
 		type: DataTypes.STRING(200),
-		allowNull: true,
+		allowNull: false,
 	},
 	cl_cellphone: {
 		type: DataTypes.INTEGER(12),
@@ -37,7 +39,8 @@ export const ClientSchema = sequelize.define('client', {
 		type: DataTypes.DOUBLE,
 		allowNull: true,
 	},
-	cl_passwordSinScriptar: {	// ???????????????????????????????????????????????????? es innecesario
+	//********para poder ingresar mientras a las cuentas de clientes de prueba*********//
+	cl_passwordSinScriptar: {
 		type: DataTypes.STRING(50),
 		allowNull: true,
 	},
@@ -55,21 +58,12 @@ export const ClientSchema = sequelize.define('client', {
 	}
 )
 
-// export function searchEmail(email) {
-// 	return new Promise((resolve, reject) => {
-// 		const searchItem = ClientSchema.findOne({ where: { cl_email: email } })
-// 		if (searchItem === null) {
-// 			reject(null)
-// 		} else {
-// 			resolve(searchItem)
-// 		}
-// 	})
-// }
-/*
+/*===una vez que el fron envie el tipo modificar
 export function searchEmail(email) {
 	return funcionGenericaBuscar(email, ClientSchema, 'cl')
 }
 */
+
 export async function searchEmail(email) {
 	const searchedItem = await funcionGenericaBuscar(email, ClientSchema, 'cl');
 	if (!searchedItem) return false;
@@ -93,4 +87,10 @@ export function validatePassword(password, hash) {
 	const keyBuffer = Buffer.from(key, 'hex');
 	return timingSafeEqual(hashedBuffer, keyBuffer);
 
+}
+
+export function hashingPassword(password) {
+	const salt = randomBytes(16).toString('hex');
+	const hashedPassword = scryptSync(password, salt, 64).toString('hex');
+	return [hashedPassword, salt]
 }

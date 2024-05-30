@@ -1,5 +1,4 @@
-import { create, searchEmail, validatePassword } from '../models/clientModel.js'
-import { randomBytes, scryptSync, timingSafeEqual } from 'node:crypto'
+import { create, hashingPassword, searchEmail, validatePassword } from '../models/clientModel.js'
 
 export const clientController = {
 	auth: async (req, res) => {
@@ -8,7 +7,6 @@ export const clientController = {
 			const item = await searchEmail(req.body.cl_email);
 
 			if (!item) return res.status(400).json();
-
 
 			const result = validatePassword(cl_password, item.cl_password);
 			if (!result) return res.status(400).json();
@@ -25,33 +23,29 @@ export const clientController = {
 			res.status(500).json({ message: 'Ocurrió algo inesperado', ex });
 		}
 	},
+	/*==========Enviar del body el tipo cl o wr y pasar como argumento al searchEmail=====================*/
 	create: async (req, res) => {
-		/*==========Enviar del body el tipo cl o wr y pasar como argumento al searchEmail=====================*/
-		const { cl_email, cl_firtName, cl_password, cl_lastName, cl_cellphone, cl_latitude, cl_longitude } = req.body;
-		/*=============agregar las validaciones de todos los campos =========*/
+		const { cl_email, cl_firtName, cl_password, cl_lastName, cl_cellphone, cl_direccion } = req.body;
+
 		const item = await searchEmail(cl_email);
 		if (item) {
 			return res.sendStatus(409)
 		}
-		//===sacar esto de aca
-		const salt = randomBytes(16).toString('hex');
-		const hashedPassword = scryptSync(cl_password, salt, 64).toString('hex');
+
+		const [salt, hashedPassword] = hashingPassword(cl_password);
 
 		const newItem = {
-			/*=================ver si vamos a solicitar mas datos para registrarse============================*/
 			cl_email,
 			cl_firtName,
 			cl_password: `${salt}:${hashedPassword}`,
 			cl_passwordSinScriptar: cl_password,
 			cl_lastName,
 			cl_cellphone,
-			cl_latitude,
-			cl_longitude
+			cl_direccion,
 		}
 
 		const data = await create(newItem);
 		if (data === null) {
-			/*===========corroborar los mensajes de error =========================*/
 			return res.sendStatus(409);
 		}
 		delete data.cl_password;
@@ -84,4 +78,3 @@ export const clientController = {
 		console.log(req.body)
 	}
 }
-//localhost:3000/login/authentication
