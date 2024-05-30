@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
 import { funcionGenericaBuscar } from "./funcionesGenericas.js";
-
+import { scryptSync, timingSafeEqual } from 'node:crypto'
 export const ClientSchema = sequelize.define('client', {
 	cl_id: {
 		type: DataTypes.UUID,
@@ -40,8 +40,11 @@ export const ClientSchema = sequelize.define('client', {
 	cl_passwordSinScriptar: {	// ???????????????????????????????????????????????????? es innecesario
 		type: DataTypes.STRING(50),
 		allowNull: true,
+	},
+	cl_direccion: {
+		type: DataTypes.STRING(20),
+		allowNull: true,
 	}
-	/*=====agregar direccion????=======*/
 },
 	/*========configuracion tabla================*/
 	{
@@ -49,9 +52,6 @@ export const ClientSchema = sequelize.define('client', {
 		createdAt: 'cl_createdAt',
 		updatedAt: 'cl_updatedAt',
 		tableName: 'tb_client',
-		defaultScope: {
-			// attributes: { exclude: ['id'] } //no esta omitiendo el id predeterminado
-		}
 	}
 )
 
@@ -72,7 +72,7 @@ export function searchEmail(email) {
 */
 export async function searchEmail(email) {
 	const searchedItem = await funcionGenericaBuscar(email, ClientSchema, 'cl');
-	if(!searchedItem) return false;
+	if (!searchedItem) return false;
 	return searchedItem.dataValues;
 }
 
@@ -85,4 +85,12 @@ export function create(client) {
 			reject(null);
 		}
 	})
+}
+
+export function validatePassword(password, hash) {
+	const [salt, key] = hash.split(':');
+	const hashedBuffer = scryptSync(password, salt, 64);
+	const keyBuffer = Buffer.from(key, 'hex');
+	return timingSafeEqual(hashedBuffer, keyBuffer);
+
 }
