@@ -12,7 +12,7 @@ export const ClientSchema = sequelize.define('client', {
 	},
 	cl_firtName: {
 		type: DataTypes.STRING(50),
-		allowNull: false,// acepta nulos (test)
+		allowNull: false,
 	},
 	cl_lastName: {
 		type: DataTypes.STRING(50),
@@ -45,7 +45,7 @@ export const ClientSchema = sequelize.define('client', {
 		allowNull: true,
 	},
 	cl_direccion: {
-		type: DataTypes.STRING(20),
+		type: DataTypes.STRING(50),
 		allowNull: true,
 	}
 },
@@ -65,9 +65,7 @@ export function searchEmail(email) {
 */
 
 export async function searchEmail(email) {
-	const searchedItem = await funcionGenericaBuscar(email, ClientSchema, 'cl');
-	if (!searchedItem) return false;
-	return searchedItem.dataValues;
+	return await funcionGenericaBuscar(email, ClientSchema, 'cl');
 }
 
 export function create(client) {
@@ -86,11 +84,31 @@ export function validatePassword(password, hash) {
 	const hashedBuffer = scryptSync(password, salt, 64);
 	const keyBuffer = Buffer.from(key, 'hex');
 	return timingSafeEqual(hashedBuffer, keyBuffer);
-
 }
 
 export function hashingPassword(password) {
 	const salt = randomBytes(16).toString('hex');
 	const hashedPassword = scryptSync(password, salt, 64).toString('hex');
 	return [hashedPassword, salt]
+}
+
+export async function searchBeforeRecover(client) {
+	return await ClientSchema.findOne({
+		where: {
+			cl_email: client.cl_email,
+			cl_firtName: client.cl_firtName,
+			cl_cellphone: client.cl_cellphone
+		}
+	})
+}
+
+export async function updatePassword(client) {
+	const [hashedPassword, salt] = hashingPassword(client.cl_password);
+	const newPassword = `${salt}${hashedPassword}`;
+	return await ClientSchema.update(
+		{ cl_password: newPassword, cl_passwordSinScriptar: client.cl_password }, {
+		where: {
+			cl_id: client.cl_id,
+		}
+	})
 }

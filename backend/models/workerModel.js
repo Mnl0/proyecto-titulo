@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
 import { funcionGenericaBuscar } from "./funcionesGenericas.js";
+import { scryptSync, randomBytes, timingSafeEqual } from 'node:crypto'
 
 export const WorkerSchema = sequelize.define('worker', {
 	wr_id: {
@@ -11,19 +12,20 @@ export const WorkerSchema = sequelize.define('worker', {
 	},
 	wr_firtName: {
 		type: DataTypes.STRING(50),
-		allowNull: true,
+		allowNull: false,
 	},
 	wr_lastName: {
 		type: DataTypes.STRING(50),
-		allowNull: true,
+		allowNull: false,
 	},
 	wr_email: {
 		type: DataTypes.STRING(100),
-		allowNull: true,
+		allowNull: false,
+		unique: true,
 	},
 	wr_password: {
 		type: DataTypes.STRING(200),
-		allowNull: true,
+		allowNull: false,
 	},
 	wr_cellphone: {
 		type: DataTypes.INTEGER(12),
@@ -37,7 +39,12 @@ export const WorkerSchema = sequelize.define('worker', {
 		type: DataTypes.DOUBLE,
 		allowNull: true,
 	},
+	//********para poder ingresar mientras a las cuentas de clientes de prueba*********//
 	wr_passwordSinScriptar: {
+		type: DataTypes.STRING(50),
+		allowNull: true,
+	},
+	wr_direccion: {
 		type: DataTypes.STRING(50),
 		allowNull: true,
 	}
@@ -51,18 +58,6 @@ export const WorkerSchema = sequelize.define('worker', {
 	}
 )
 
-//verificar cual opcion es mejor
-// export function searchEmail(email) {
-// 	return new Promise((resolve, reject) => {
-// 		const searchItem = ClientSchema.findOne({ where: { cl_email: email } })
-// 		if (searchItem === null) {
-// 			reject(null)
-// 		} else {
-// 			resolve(searchItem)
-// 		}
-// 	})
-// }
-
 export function searchEmail(email) {
 	return funcionGenericaBuscar(email, WorkerSchema, 'wr')
 }
@@ -74,6 +69,40 @@ export function create(worker) {
 			resolve(newWorker);
 		} else {
 			reject(null);
+		}
+	})
+}
+
+export function validatePassword(password, hash) {
+	const [salt, key] = hash.split(':');
+	const hashedBuffer = scryptSync(password, salt, 64);
+	const keyBuffer = Buffer.from(key, 'hex');
+	return timingSafeEqual(hashedBuffer, keyBuffer);
+}
+
+export function hashingPassword(password) {
+	const salt = randomBytes(16).toString('hex');
+	const hashedPassword = scryptSync(password, salt, 64).toString('hex');
+	return [hashedPassword, salt]
+}
+
+export async function searchBeforeRecover(worker) {
+	return await WorkerSchema.findOne({
+		where: {
+			wr_email: worker.wr_email,
+			wr_firtName: worker.wr_firtName,
+			wr_cellphone: worker.wr_cellphone
+		}
+	})
+}
+
+export async function updatePassword(worker) {
+	const [hashedPassword, salt] = hashingPassword(worker.wr_password);
+	const newPassword = `${salt}${hashedPassword}`;
+	return await WorkerSchema.update(
+		{ wr_password: newPassword, wr_passwordSinScriptar: worker.wr_password }, {
+		where: {
+			wr_id: worker.wr_id
 		}
 	})
 }

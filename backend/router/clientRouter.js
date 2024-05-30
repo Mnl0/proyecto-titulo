@@ -8,6 +8,8 @@ import { clientController } from '../controllers/clientController.js';
 export const clientRouter = express.Router();
 clientRouter.post('/auth', clientController.auth);
 clientRouter.post('/create', clientController.create);
+clientRouter.post('/validateRecover', clientController.validateIfRecoverPass);
+clientRouter.post('/recover', clientController.recoverPass);
 
 clientRouter.delete('/delete/:id', clientController.delete)//puede
 
