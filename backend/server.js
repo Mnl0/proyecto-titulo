@@ -23,7 +23,8 @@ app.use(cors(
 		allowedHeaders: ['Content-Type', 'Authorization'],
 	}
 ))
-//ruta completa seria http://localhost:3000/api/login/auth
+//ruta completa seria
+//http://localhost:3000/api/[controller]/[metodo]
 app.use('/api/client', clientRouter)
 app.use('/api/worker', workerRouter)
 app.use('/api/category', categoryRouter)

@@ -1,19 +1,17 @@
-import { create, searchEmail } from '../models/clientModel.js'
+import { create, searchEmail, validatePassword } from '../models/clientModel.js'
 import { randomBytes, scryptSync, timingSafeEqual } from 'node:crypto'
 
 export const clientController = {
 	auth: async (req, res) => {
-		try{
-			const { cl_email, cl_password } = req.body
+		try {
+			const { cl_password } = req.body
 			const item = await searchEmail(req.body.cl_email);
-			//if (item === null || item === undefined || item === '' || typeof item !== 'string') {console.log('hola mundo 400 1');return res.status(400).json();}
-			if(!item) return res.status(400).json();
 
-			const [salt, key] = item.cl_password.split(':');
-			const hashedBuffer = scryptSync(cl_password, salt, 64);
-			const keyBuffer = Buffer.from(key, 'hex');
-			const match = timingSafeEqual(hashedBuffer, keyBuffer);
-			if(!match) return res.status(400).json();
+			if (!item) return res.status(400).json();
+
+
+			const result = validatePassword(cl_password, item.cl_password);
+			if (!result) return res.status(400).json();
 
 			const itemProfile = {
 				fullName: item.cl_firtName + ' ' + item.cl_lastName,
@@ -22,8 +20,8 @@ export const clientController = {
 				longitude: item.cl_longitude
 			}
 			res.status(200).json(itemProfile)
-			
-		}catch(ex){
+
+		} catch (ex) {
 			res.status(500).json({ message: 'Ocurrió algo inesperado', ex });
 		}
 	},
@@ -35,6 +33,7 @@ export const clientController = {
 		if (item) {
 			return res.sendStatus(409)
 		}
+		//===sacar esto de aca
 		const salt = randomBytes(16).toString('hex');
 		const hashedPassword = scryptSync(cl_password, salt, 64).toString('hex');
 
@@ -62,6 +61,8 @@ export const clientController = {
 		res.json(data.toJSON());
 
 	},
+
+	//=====no delete cambiar por desactivar=======//
 	delete: (req, res) => {
 		const { id } = req.params
 		if (id === '') return
