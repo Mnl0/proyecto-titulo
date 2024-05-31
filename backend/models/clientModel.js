@@ -1,7 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
-import { funcionGenericaBuscar } from "./funcionesGenericas.js";
-import { randomBytes, scryptSync, timingSafeEqual } from 'node:crypto'
+import { createForModel, passwordHashedGeneral, searchEmailForModel, searchBeforeRecoverForModel, validatePasswordGeneral, updatePasswordForModel } from '../util/function.js';
 
 export const ClientSchema = sequelize.define('client', {
 	cl_id: {
@@ -58,58 +57,26 @@ export const ClientSchema = sequelize.define('client', {
 	}
 )
 
-/*===una vez que el fron envie el tipo modificar
-export function searchEmail(email) {
-	return funcionGenericaBuscar(email, ClientSchema, 'cl')
-}
-*/
-
-//pasar el tipo atravez del body
 export async function searchEmail(email) {
-	return await funcionGenericaBuscar(email, ClientSchema, 'cl');
+	return await searchEmailForModel(email, ClientSchema, 'cl');
 }
 
-export function create(client) {
-	return new Promise((resolve, reject) => {
-		const newClient = ClientSchema.create(client);
-		if (newClient) {
-			resolve(newClient);
-		} else {
-			reject(null);
-		}
-	})
+export async function createClient(client) {
+	return await createForModel(ClientSchema, client);
 }
 
-export function validatePassword(password, hash) {
-	const [salt, key] = hash.split(':');
-	const hashedBuffer = scryptSync(password, salt, 64);
-	const keyBuffer = Buffer.from(key, 'hex');
-	return timingSafeEqual(hashedBuffer, keyBuffer);
+export function checkPassword(password, hash) {
+	return validatePasswordGeneral(password, hash);
 }
 
 export function hashingPassword(password) {
-	const salt = randomBytes(16).toString('hex');
-	const hashedPassword = scryptSync(password, salt, 64).toString('hex');
-	return [hashedPassword, salt]
+	return passwordHashedGeneral(password);
 }
 
 export async function searchBeforeRecover(client) {
-	return await ClientSchema.findOne({
-		where: {
-			cl_email: client.cl_email,
-			cl_firtName: client.cl_firtName,
-			cl_cellphone: client.cl_cellphone
-		}
-	})
+	return await searchBeforeRecoverForModel(client, ClientSchema, 'cl');
 }
 
 export async function updatePassword(client) {
-	const [hashedPassword, salt] = hashingPassword(client.cl_password);
-	const newPassword = `${salt}${hashedPassword}`;
-	return await ClientSchema.update(
-		{ cl_password: newPassword, cl_passwordSinScriptar: client.cl_password }, {
-		where: {
-			cl_id: client.cl_id,
-		}
-	})
+	return await updatePasswordForModel(client, ClientSchema, 'cl');
 }

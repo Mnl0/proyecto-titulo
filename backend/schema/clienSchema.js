@@ -5,7 +5,7 @@ export const createClient = object({
 	cl_firtName: string().required(),
 	cl_password: string().required(),
 	cl_lastName: string().optional(),
-	cl_cellphone: number().optional(),
+	cl_cellphone: string().optional(),
 	cl_direccion: string().required(),
 });
 

@@ -1,7 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
-import { funcionGenericaBuscar } from "./funcionesGenericas.js";
-import { scryptSync, randomBytes, timingSafeEqual } from 'node:crypto'
+import { createForModel, searchBeforeRecoverForModel, searchEmailForModel, updatePasswordForModel, validatePasswordGeneral } from "../util/function.js";
+
 
 export const WorkerSchema = sequelize.define('worker', {
 	wr_id: {
@@ -59,50 +59,25 @@ export const WorkerSchema = sequelize.define('worker', {
 )
 
 export function searchEmail(email) {
-	return funcionGenericaBuscar(email, WorkerSchema, 'wr')
+	return searchEmailForModel(email, WorkerSchema, 'wr')
 }
 
-export function create(worker) {
-	return new Promise((resolve, reject) => {
-		const newWorker = WorkerSchema.create(worker);
-		if (newWorker) {
-			resolve(newWorker);
-		} else {
-			reject(null);
-		}
-	})
+export async function create(worker) {
+	return await createForModel(WorkerSchema, worker);
 }
 
 export function validatePassword(password, hash) {
-	const [salt, key] = hash.split(':');
-	const hashedBuffer = scryptSync(password, salt, 64);
-	const keyBuffer = Buffer.from(key, 'hex');
-	return timingSafeEqual(hashedBuffer, keyBuffer);
+	return validatePasswordGeneral(password, hash);
 }
 
 export function hashingPassword(password) {
-	const salt = randomBytes(16).toString('hex');
-	const hashedPassword = scryptSync(password, salt, 64).toString('hex');
-	return [hashedPassword, salt]
+	return validatePasswordGeneral(password, hash);
 }
 
 export async function searchBeforeRecover(worker) {
-	return await WorkerSchema.findOne({
-		where: {
-			wr_email: worker.wr_email,
-			wr_firtName: worker.wr_firtName,
-			wr_cellphone: worker.wr_cellphone
-		}
-	})
+	return await searchBeforeRecoverForModel(worker, WorkerSchema, 'wr');
 }
 
 export async function updatePassword(worker) {
-	const [hashedPassword, salt] = hashingPassword(worker.wr_password);
-	const newPassword = `${salt}${hashedPassword}`;
-	return await WorkerSchema.update(
-		{ wr_password: newPassword, wr_passwordSinScriptar: worker.wr_password }, {
-		where: {
-			wr_id: worker.wr_id
-		}
-	})
+	return await updatePasswordForModel(worker, WorkerSchema, 'wr');
 }

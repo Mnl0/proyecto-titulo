@@ -1,14 +1,19 @@
-import { create, hashingPassword, searchEmail, validatePassword, searchBeforeRecover, updatePassword } from '../models/clientModel.js'
+import { hashingPassword, searchEmail, checkPassword, searchBeforeRecover, updatePassword } from '../models/clientModel.js'
 
 export const clientController = {
+
 	auth: async (req, res) => {
 		const { cl_password, cl_email } = req.validateBody
 		const item = await searchEmail(cl_email);
 
-		if (!item) return res.status(400).json();
+		if (!item) {
+			return res.status(400).json();
+		}
 
-		const result = validatePassword(cl_password, item.cl_password);
-		if (!result) return res.status(400).json();
+		const result = checkPassword(cl_password, item.cl_password);
+		if (!result) {
+			return res.status(400).json();
+		}
 
 		const itemProfile = {
 			...item.toJSON()
@@ -26,6 +31,7 @@ export const clientController = {
 
 		const [salt, hashedPassword] = hashingPassword(cl_password);
 
+
 		const newItem = {
 			cl_email,
 			cl_firtName,
@@ -36,7 +42,7 @@ export const clientController = {
 			cl_direccion,
 		}
 
-		const data = await create(newItem);
+		const data = await createClient(newItem);
 		if (data === null) {
 			return res.sendStatus(409);
 		}
@@ -49,7 +55,7 @@ export const clientController = {
 	},
 
 	validateIfRecoverPass: async (req, res) => {
-		const clientRecover = await searchBeforeRecover(req.body);
+		const clientRecover = await searchBeforeRecover(req.validateBody);
 		if (!clientRecover) {
 			return res.sendStatus(400);
 		}
@@ -57,7 +63,7 @@ export const clientController = {
 	},
 
 	recoverPass: async (req, res) => {
-		const newPass = await updatePassword(req.body);
+		const newPass = await updatePassword(req.validateBody);
 		if (newPass === 0) {
 			return res.sendStatus(400);
 		}
