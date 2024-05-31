@@ -64,6 +64,7 @@ export function searchEmail(email) {
 }
 */
 
+//pasar el tipo atravez del body
 export async function searchEmail(email) {
 	return await funcionGenericaBuscar(email, ClientSchema, 'cl');
 }

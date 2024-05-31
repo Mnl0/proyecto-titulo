@@ -2,7 +2,7 @@ import { searchEmail, create, validatePassword, hashingPassword, searchBeforeRec
 
 export const workerController = {
 	auth: async (req, res) => {
-		const { wr_email, wr_password } = req.body;
+		const { wr_email, wr_password } = req.validateBody;
 
 		const item = await searchEmail(wr_email)
 		if (!item) {
@@ -22,7 +22,7 @@ export const workerController = {
 
 	},
 	create: async (req, res) => {
-		const { wr_firtName, wr_lastName, wr_email, wr_password, wr_cellphone, wr_direccion } = req.body;
+		const { wr_firtName, wr_lastName, wr_email, wr_password, wr_cellphone, wr_direccion } = req.validateBody;
 
 		const item = await searchEmail(wr_email);
 		if (!item) {
@@ -53,7 +53,7 @@ export const workerController = {
 	},
 
 	validateIfRecoverPass: async (req, res) => {
-		const workerRecover = searchBeforeRecover(req.body);
+		const workerRecover = searchBeforeRecover(req.validateBody);
 		if (!workerRecover) {
 			return res.sendStatus(400);
 		}
@@ -61,7 +61,7 @@ export const workerController = {
 	},
 
 	recoverPass: async (req, res) => {
-		const newPass = await updatePassword(req.body);
+		const newPass = await updatePassword(req.validateBody);
 		if (newPass === 0) {
 			return res.sendStatus(400);
 		}
