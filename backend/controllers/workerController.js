@@ -39,7 +39,6 @@ export const workerController = {
 			wr_lastName,
 			wr_cellphone,
 			wr_direccion,
-			wr_direccion,
 		}
 
 		const data = await create(newItem);

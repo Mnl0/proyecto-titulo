@@ -2,9 +2,8 @@ import { create, hashingPassword, searchEmail, validatePassword, searchBeforeRec
 
 export const clientController = {
 	auth: async (req, res) => {
-		const { cl_password } = req.body
-		/*=========evitar NULL con yup o una validacion==== */
-		const item = await searchEmail(req.body.cl_email);
+		const { cl_password, cl_email } = req.validateBody
+		const item = await searchEmail(cl_email);
 
 		if (!item) return res.status(400).json();
 
@@ -18,7 +17,7 @@ export const clientController = {
 	},
 	/*==========Enviar del body el tipo cl o wr y pasar como argumento al searchEmail=====================*/
 	create: async (req, res) => {
-		const { cl_email, cl_firtName, cl_password, cl_lastName, cl_cellphone, cl_direccion } = req.body;
+		const { cl_email, cl_firtName, cl_password, cl_lastName, cl_cellphone, cl_direccion } = req.validateBody;
 
 		const item = await searchEmail(cl_email);
 		if (item) {

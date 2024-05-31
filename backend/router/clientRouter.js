@@ -1,15 +1,15 @@
 import express from 'express';
 import { clientController } from '../controllers/clientController.js';
-// import { funcionGenericaSchemas } from '../middleware/schemaMiddleware.js';
-// import { authClient } from '../schema/clienSchema.js';
+import { middlewareValidateBody } from '../middleware/schemaMiddleware.js';
+import { authClient, createClient, recoverPass, validateRecover } from '../schema/clienSchema.js';
 
 //ejemplo ruta
 //http://localhost:3000/api/[controller]/[metodo]
 export const clientRouter = express.Router();
-clientRouter.post('/auth', clientController.auth);
-clientRouter.post('/create', clientController.create);
-clientRouter.post('/validateRecover', clientController.validateIfRecoverPass);
-clientRouter.post('/recover', clientController.recoverPass);
+clientRouter.post('/auth', middlewareValidateBody(authClient), clientController.auth);
+clientRouter.post('/create', middlewareValidateBody(createClient), clientController.create);
+clientRouter.post('/validateRecover', middlewareValidateBody(validateRecover), clientController.validateIfRecoverPass);
+clientRouter.post('/recover', middlewareValidateBody(recoverPass), clientController.recoverPass);
 
 clientRouter.delete('/delete/:id', clientController.delete)//puede
 
