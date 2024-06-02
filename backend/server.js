@@ -1,6 +1,5 @@
 import express from 'express'
 import dotenv from 'dotenv'
-import cors from 'cors'
 import { connection_DB } from './database/connection.js'
 import { clientRouter } from './router/clientRouter.js'
 import { workerRouter } from './router/workerRouter.js'
@@ -15,14 +14,16 @@ const app = express()
 const PORT = process.env.PORT;
 
 app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cors(
-	{
-		origin: '*',
-		methods: ['GET', 'POST', 'DELETE'],
-		allowedHeaders: ['Content-Type', 'Authorization'],
-	}
-))
+//true o false
+app.use(express.urlencoded({ extended: true }));
+
+app.use((req, res, next) => {
+	res.header('Access-Control-Allow-Origin', '*');
+	res.header('Access-Control-Allow-Headers', 'Content-Type');
+	res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+	next();
+});
+
 //ruta completa seria
 //http://localhost:3000/api/[controller]/[metodo]
 app.use('/api/client', clientRouter)
