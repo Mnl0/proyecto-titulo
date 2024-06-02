@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
-import { createForModel, passwordHashedGeneral, searchEmailForModel, searchBeforeRecoverForModel, validatePasswordGeneral, updatePasswordForModel } from '../util/function.js';
+import { createForModel, passwordHashedGeneral, searchBeforeRecoverForModel, validatePasswordGeneral, updatePasswordForModel, searchForModel } from '../util/function.js';
 
 export const ClientSchema = sequelize.define('client', {
 	cl_id: {
@@ -57,8 +57,8 @@ export const ClientSchema = sequelize.define('client', {
 	}
 )
 
-export async function searchEmail(email) {
-	return await searchEmailForModel(email, ClientSchema, 'cl');
+export async function searchForEmail(email, nameColumn) {
+	return await searchForModel(email, ClientSchema, 'cl', nameColumn);
 }
 
 export async function createClient(client) {
@@ -79,4 +79,8 @@ export async function searchBeforeRecover(client) {
 
 export async function updatePassword(client) {
 	return await updatePasswordForModel(client, ClientSchema, 'cl');
+}
+
+export async function searchForId(id, nameColumn) {
+	return await searchForModel(id, ClientSchema, 'cl', nameColumn);
 }

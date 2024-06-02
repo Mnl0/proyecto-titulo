@@ -1,11 +1,11 @@
-import { hashingPassword, searchEmail, checkPassword, searchBeforeRecover, updatePassword } from '../models/clientModel.js'
+import { hashingPassword, checkPassword, searchBeforeRecover, updatePassword, searchForEmail, searchForId } from '../models/clientModel.js'
 
 export const clientController = {
 
 	auth: async (req, res) => {
 		const { cl_password, cl_email } = req.validateBody
-		const item = await searchEmail(cl_email);
 
+		const item = await searchForEmail(cl_email, 'email');
 		if (!item) {
 			return res.status(400).json();
 		}
@@ -24,13 +24,12 @@ export const clientController = {
 	create: async (req, res) => {
 		const { cl_email, cl_firtName, cl_password, cl_lastName, cl_cellphone, cl_direccion } = req.validateBody;
 
-		const item = await searchEmail(cl_email);
+		const item = await searchForEmail(cl_email, 'email');
 		if (item) {
 			return res.sendStatus(409)
 		}
 
 		const [salt, hashedPassword] = hashingPassword(cl_password);
-
 
 		const newItem = {
 			cl_email,
@@ -70,6 +69,18 @@ export const clientController = {
 		res.sendStatus(200);
 	},
 
+	getProfile: async (req, res) => {
+		const { id } = req.params
+		const item = await searchForId(id, 'id');
+		if (!item) {
+			return res.sendStatus(400);
+		}
+		res.status(200).send(item.toJSON());
+	},
+
+	editProfile: async (req, res) => {
+		console.log('llegue al controlador para editar el perfil')
+	},
 	//=====no delete cambiar por desactivar=======//
 	delete: (req, res) => {
 		const { id } = req.params
@@ -87,8 +98,5 @@ export const clientController = {
 		})
 
 	},
-	get: (req, res) => {
-		console.log('llegue al controlador')
-		console.log(req.body)
-	}
+
 }

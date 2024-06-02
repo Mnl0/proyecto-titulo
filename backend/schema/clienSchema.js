@@ -23,3 +23,7 @@ export const validateRecover = object({
 export const recoverPass = object({
 	cl_password: string().required(),
 })
+
+export const idParams = object({
+	id: string().required()
+})

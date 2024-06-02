@@ -1,9 +1,8 @@
 import { randomBytes, scryptSync, timingSafeEqual } from 'node:crypto'
 
-
-export function searchEmailForModel(email, schema, pref) {
+export function searchForModel(value, schema, pref, nameColumn) {
 	return new Promise((resolve, reject) => {
-		const searchItem = schema.findOne({ where: { [`${pref}_email`]: email } })
+		const searchItem = schema.findOne({ where: { [`${pref}_${nameColumn}`]: value } })
 		if (!searchItem) {
 			reject(null)
 		} else {
@@ -49,7 +48,6 @@ export async function searchBeforeRecoverForModel(user, schema, pref) {
 export async function updatePasswordForModel(user, schema, pref) {
 	const [hashedPassword, salt] = passwordHashedGeneral(user[`${pref}_password`]);
 	const newPassword = `${salt}:${hashedPassword}`;
-	console.log(newPassword)
 	return await schema.update(
 		{
 			[`${pref}_password`]: newPassword,
