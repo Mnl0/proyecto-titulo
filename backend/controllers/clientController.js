@@ -1,4 +1,7 @@
-import { hashingPassword, checkPassword, searchBeforeRecover, updatePassword, searchForEmail, searchForId } from '../models/clientModel.js'
+import { hashingPassword, checkPassword, searchBeforeRecover, updatePassword, searchForEmail, searchForId, updateProfile, addImageOrEdit, addImageOrEditInBd } from '../models/clientModel.js'
+import fs from 'node:fs';
+import path from 'node:path';
+
 
 export const clientController = {
 
@@ -70,7 +73,7 @@ export const clientController = {
 	},
 
 	getProfile: async (req, res) => {
-		const { id } = req.params
+		const { id } = req.params;
 		const item = await searchForId(id, 'id');
 		if (!item) {
 			return res.sendStatus(400);
@@ -78,8 +81,31 @@ export const clientController = {
 		res.status(200).send(item.toJSON());
 	},
 
+	addImageOrEdit: async (req, res) => {
+		const { id } = req.params;
+		let header = req.headers['content-type'];
+		const headerAccept = ['image/jpeg', 'image/png', 'image/jpg'];
+		if (!headerAccept.includes(header)) {
+			return res.sendStatus(400);
+		}
+		let image = req.body;
+		let state = addImageOrEdit(image, id);
+		if (!state) {
+			return res.sendStatus(400);
+		}
+		res.status(200).send();
+	},
+
 	editProfile: async (req, res) => {
-		console.log('llegue al controlador para editar el perfil')
+		// esto me servara para validar que me estan enviando una imagen
+		// let header = req.headers['content-type']; -> puede servir para validar
+		// let boundary = header.split('boundary=')[1];
+		// let body = '';
+		// let a = await updateProfile(id)
+		let image = req.body;
+		let a = await addImageOrEditInBd(image)
+		console.log(a)
+		res.status(200).send(a);
 	},
 	//=====no delete cambiar por desactivar=======//
 	delete: (req, res) => {

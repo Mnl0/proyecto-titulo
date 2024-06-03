@@ -13,6 +13,12 @@ clientRouter.post('/recover', middlewareValidateBody(recoverPass), clientControl
 
 clientRouter.get('/profile/:id', middlewareValidateParams(idParams), clientController.getProfile);
 
+// clientRouter.put('/editProfile/:id', clientController.editProfile);
+//aca solo recibo la imgane
+clientRouter.put('/addImageOrEdit/:id', clientController.addImageOrEdit);
+//aca edito los demas datos
+clientRouter.put('/editProfile', clientController.editProfile);
+
 clientRouter.delete('/delete/:id', clientController.delete)//puede
 
 //el usuario eliminar su propia cuenta ?

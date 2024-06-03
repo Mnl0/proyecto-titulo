@@ -1,6 +1,9 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
 import { createForModel, passwordHashedGeneral, searchBeforeRecoverForModel, validatePasswordGeneral, updatePasswordForModel, searchForModel } from '../util/function.js';
+import path from 'node:path';
+import fs from 'node:fs';
+import { __dirname } from '../server.js';
 
 export const ClientSchema = sequelize.define('client', {
 	cl_id: {
@@ -46,8 +49,13 @@ export const ClientSchema = sequelize.define('client', {
 	cl_direccion: {
 		type: DataTypes.STRING(50),
 		allowNull: true,
-	}
+	},
+	cl_imageProfile: {
+		type: DataTypes.BLOB('long'),
+		allowNull: true,
+	},
 },
+
 	/*========configuracion tabla================*/
 	{
 		timestamps: true,
@@ -83,4 +91,31 @@ export async function updatePassword(client) {
 
 export async function searchForId(id, nameColumn) {
 	return await searchForModel(id, ClientSchema, 'cl', nameColumn);
+}
+
+export async function updateProfile(id) {
+	return await searchForId(id, 'id');
+}
+
+export function addImageOrEdit(image, id) {
+	try {
+		const imageBuffer = Buffer.from(image, 'base64');
+		const folderStorageImage = path.join(__dirname, 'storage');
+		if (!fs.existsSync(folderStorageImage)) {
+			fs.mkdirSync(folderStorageImage);
+		}
+		fs.writeFileSync(`${folderStorageImage}/${id}.jpg`, imageBuffer);
+		return true;
+	} catch (err) {
+		return { success: false, error: err };
+	}
+	//falta tomar la url de la imagen y guardarla en la bd?
+}
+
+export async function addImageOrEditInBd(image) {
+	//update en la columna blob
+	const imageBuffer = Buffer.from(image, 'base64');
+	return await ClientSchema.update({ cl_imageProfile: imageBuffer }, {
+		where: { cl_id: '061259d7-2f63-48e5-b882-3b3836a963f7' }
+	})
 }
