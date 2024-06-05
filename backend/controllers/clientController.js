@@ -89,7 +89,7 @@ export const clientController = {
 			return res.sendStatus(400);
 		}
 		let image = req.body;
-		let state = addImageOrEdit(image, id);
+		let state = addImageOrEdit(image, id, 'cl');
 		if (!state) {
 			return res.sendStatus(400);
 		}
@@ -100,12 +100,11 @@ export const clientController = {
 		// esto me servara para validar que me estan enviando una imagen
 		// let header = req.headers['content-type']; -> puede servir para validar
 		// let boundary = header.split('boundary=')[1];
-		// let body = '';
-		// let a = await updateProfile(id)
-		let image = req.body;
-		let a = await addImageOrEditInBd(image)
-		console.log(a)
-		res.status(200).send(a);
+		const image = req.body;
+		//identificar antes que el buffer no pase los limites ni este vacio hacer un schema
+		const { id } = req.params;
+		let newFoto = await addImageOrEditInBd(image, id, 'cl');
+		res.status(200).send(newFoto);
 	},
 	//=====no delete cambiar por desactivar=======//
 	delete: (req, res) => {

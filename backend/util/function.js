@@ -58,3 +58,10 @@ export async function updatePasswordForModel(user, schema, pref) {
 		}
 	})
 }
+
+export async function updateImageForModel(image, id, pref, schema) {
+	const imageBuffer = Buffer.from(image, 'base64');
+	return await schema.update({ [`${pref}_imageProfile`]: imageBuffer }, {
+		where: { [`${pref}_id`]: id }
+	})
+}

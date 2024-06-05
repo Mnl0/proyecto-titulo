@@ -25,3 +25,14 @@ export function middlewareValidateParams(schema) {
 		next();
 	}
 }
+
+export function middlewareValidateHeader() {
+	return (req, res, next) => {
+		let header = req.headers['content-type'];
+		const headerAccept = ['image/jpeg', 'image/png', 'image/jpg'];
+		if (!headerAccept.includes(header)) {
+			return res.sendStatus(400);
+		}
+		next();
+	}
+}
