@@ -1,0 +1,28 @@
+.globalContainer{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+}
+
+.globalContainer > .imgContainer{
+    width: 180px;
+    height: 180px;
+    border-radius: 50%;
+    background-color: beige;
+    margin: 0 0 20px 0;
+    border: 2px solid #fff; /* Color del borde */
+    box-shadow: 0 0 0 5px rgba(0, 0, 0, 0.4); /* Sombra */
+}
+
+.imgContainer > .imgAvatar{
+    width: 100%;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.editorContainer{
+    display: flex;
+    flex-flow: column nowrap;
+}
