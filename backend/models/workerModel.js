@@ -1,6 +1,7 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
-import { funcionGenericaBuscar } from "./funcionesGenericas.js";
+import { createForModel, searchBeforeRecoverForModel, searchEmailForModel, updatePasswordForModel, validatePasswordGeneral } from "../util/function.js";
+
 
 export const WorkerSchema = sequelize.define('worker', {
 	wr_id: {
@@ -11,19 +12,20 @@ export const WorkerSchema = sequelize.define('worker', {
 	},
 	wr_firtName: {
 		type: DataTypes.STRING(50),
-		allowNull: true,
+		allowNull: false,
 	},
 	wr_lastName: {
 		type: DataTypes.STRING(50),
-		allowNull: true,
+		allowNull: false,
 	},
 	wr_email: {
 		type: DataTypes.STRING(100),
-		allowNull: true,
+		allowNull: false,
+		unique: true,
 	},
 	wr_password: {
 		type: DataTypes.STRING(200),
-		allowNull: true,
+		allowNull: false,
 	},
 	wr_cellphone: {
 		type: DataTypes.INTEGER(12),
@@ -37,7 +39,12 @@ export const WorkerSchema = sequelize.define('worker', {
 		type: DataTypes.DOUBLE,
 		allowNull: true,
 	},
+	//********para poder ingresar mientras a las cuentas de clientes de prueba*********//
 	wr_passwordSinScriptar: {
+		type: DataTypes.STRING(50),
+		allowNull: true,
+	},
+	wr_direccion: {
 		type: DataTypes.STRING(50),
 		allowNull: true,
 	}
@@ -51,29 +58,26 @@ export const WorkerSchema = sequelize.define('worker', {
 	}
 )
 
-//verificar cual opcion es mejor
-// export function searchEmail(email) {
-// 	return new Promise((resolve, reject) => {
-// 		const searchItem = ClientSchema.findOne({ where: { cl_email: email } })
-// 		if (searchItem === null) {
-// 			reject(null)
-// 		} else {
-// 			resolve(searchItem)
-// 		}
-// 	})
-// }
-
 export function searchEmail(email) {
-	return funcionGenericaBuscar(email, WorkerSchema, 'wr')
+	return searchEmailForModel(email, WorkerSchema, 'wr')
 }
 
-export function create(worker) {
-	return new Promise((resolve, reject) => {
-		const newWorker = WorkerSchema.create(worker);
-		if (newWorker) {
-			resolve(newWorker);
-		} else {
-			reject(null);
-		}
-	})
+export async function create(worker) {
+	return await createForModel(WorkerSchema, worker);
+}
+
+export function validatePassword(password, hash) {
+	return validatePasswordGeneral(password, hash);
+}
+
+export function hashingPassword(password) {
+	return validatePasswordGeneral(password, hash);
+}
+
+export async function searchBeforeRecover(worker) {
+	return await searchBeforeRecoverForModel(worker, WorkerSchema, 'wr');
+}
+
+export async function updatePassword(worker) {
+	return await updatePasswordForModel(worker, WorkerSchema, 'wr');
 }

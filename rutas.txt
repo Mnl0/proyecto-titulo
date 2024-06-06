@@ -1,2 +1,15 @@
 http://localhost:3000/api/login/auth
 a esta ruta apunta el create del clientController
+
+listado de rutas utilizadas
+
+http://localhost:3000/api/worker/create --method POST
+http://localhost:3000/api/worker/auth --method POST
+http://localhost:3000/api/client/auth --method POST
+http://localhost:3000/api/client/create --method POST
+http://localhost:3000/api/client/validateRecover --method POST
+http://localhost:3000/api/worker/validateRecover --method POST
+http://localhost:3000/api/worker/recover --method POST
+http://localhost:3000/api/client/recover --method POST
+http://localhost:3000/api/client/profile/061259d7-2f63-48e5-b882-3b3836a963f7 --method GET
+http://localhost:3000/api/client/editProfile/061259d7-2f63-48e5-b882-3b3836a963f7 --method GET

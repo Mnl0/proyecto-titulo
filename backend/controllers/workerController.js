@@ -1,58 +1,48 @@
-import { searchEmail, create } from "../models/workerModel.js";
-import { scryptSync, randomBytes, timingSafeEqual } from 'node:crypto'
+import { searchEmail, create, validatePassword, hashingPassword, searchBeforeRecover, updatePassword } from "../models/workerModel.js";
 
-//deberia usar Schema como prefijo en los modelos???
 export const workerController = {
 	auth: async (req, res) => {
-		const { wr_email, wr_password } = req.body;
+		const { wr_email, wr_password } = req.validateBody;
 
 		const item = await searchEmail(wr_email)
-		if (item === null) {
+		if (!item) {
 			return res.sendStatus(400)
 		}
 
-		const [salt, key] = item.wr_password.split(':');
-		const hashedBuffer = scryptSync(wr_password, salt, 64);
-		const keyBuffer = Buffer.from(key, 'hex');
-		const match = timingSafeEqual(hashedBuffer, keyBuffer);
+		const result = validatePassword(wr_password, item.wr_password);
 
-		if (match) {
-			const itemProfile = {
-				...item.toJSON()
-			}
-			/*=========verificar si es necesario eliminar este id puede servir en el front===================*/
-			delete itemProfile.wr_id;
-			res.json(itemProfile)
-		} else {
-			res.sendStatus(400)
-		}
+		if (!result) {
+			return res.sendStatus(400)
+		};
+
+		const itemProfile = {
+			...item.toJSON()
+		};
+		res.json(itemProfile)
 
 	},
 	create: async (req, res) => {
-		const { wr_firtName, wr_lastName, wr_email, wr_password, wr_cellphone, wr_latitude, wr_longitude } = req.body;
-		/*======agregar las validaciones de todos los campos======*/
+		const { wr_firtName, wr_lastName, wr_email, wr_password, wr_cellphone, wr_direccion } = req.validateBody;
+
 		const item = await searchEmail(wr_email);
-		if (item) {
+		if (!item) {
 			return res.sendStatus(409);
 		}
-		const salt = randomBytes(16).toString('hex');
-		const hashedPassword = scryptSync(wr_password, salt, 64).toString('hex');
+
+		const [salt, hashedPassword] = hashingPassword(wr_password)
 
 		const newItem = {
-			/*=================ver si vamos a solicitar mas datos para registrarse============================*/
 			wr_email,
 			wr_firtName,
 			wr_password: `${salt}:${hashedPassword}`,
 			wr_passwordSinScriptar: wr_password,
 			wr_lastName,
 			wr_cellphone,
-			wr_latitude,
-			wr_longitude
+			wr_direccion,
 		}
 
 		const data = await create(newItem);
 		if (data === null) {
-			/*======verificar los codigos de respues======*/
 			return res.sendStatus(409);
 		}
 		delete data.wr_password;
@@ -60,5 +50,21 @@ export const workerController = {
 		delete data.wr_updatedAt;
 		delete data.wr_createdAt;
 		res.json(data.toJSON());
+	},
+
+	validateIfRecoverPass: async (req, res) => {
+		const workerRecover = searchBeforeRecover(req.validateBody);
+		if (!workerRecover) {
+			return res.sendStatus(400);
+		}
+		res.status(200).send(workerRecover.wr_id);
+	},
+
+	recoverPass: async (req, res) => {
+		const newPass = await updatePassword(req.validateBody);
+		if (newPass === 0) {
+			return res.sendStatus(400);
+		}
+		res.sendStatus(200);
 	}
 }

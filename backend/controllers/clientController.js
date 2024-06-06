@@ -1,58 +1,51 @@
-import { create, searchEmail } from '../models/clientModel.js'
-import { randomBytes, scryptSync, timingSafeEqual } from 'node:crypto'
+import { hashingPassword, checkPassword, searchBeforeRecover, updatePassword, searchForEmail, searchForId, updateProfile, addImageOrEdit, addImageOrEditInBd } from '../models/clientModel.js'
+import fs from 'node:fs';
+import path from 'node:path';
+
 
 export const clientController = {
+
 	auth: async (req, res) => {
-		try{
-			const { cl_email, cl_password } = req.body
-			const item = await searchEmail(req.body.cl_email);
-			//if (item === null || item === undefined || item === '' || typeof item !== 'string') {console.log('hola mundo 400 1');return res.status(400).json();}
-			if(!item) return res.status(400).json();
+		const { cl_password, cl_email } = req.validateBody
 
-			const [salt, key] = item.cl_password.split(':');
-			const hashedBuffer = scryptSync(cl_password, salt, 64);
-			const keyBuffer = Buffer.from(key, 'hex');
-			const match = timingSafeEqual(hashedBuffer, keyBuffer);
-			if(!match) return res.status(400).json();
-
-			const itemProfile = {
-				fullName: item.cl_firtName + ' ' + item.cl_lastName,
-				email: item.cl_email,
-				latitude: item.cl_latitude,
-				longitude: item.cl_longitude
-			}
-			res.status(200).json(itemProfile)
-			
-		}catch(ex){
-			res.status(500).json({ message: 'Ocurrió algo inesperado', ex });
+		const item = await searchForEmail(cl_email, 'email');
+		if (!item) {
+			return res.status(400).json();
 		}
+
+		const result = checkPassword(cl_password, item.cl_password);
+		if (!result) {
+			return res.status(400).json();
+		}
+
+		const itemProfile = {
+			...item.toJSON()
+		}
+		res.status(200).json(itemProfile)
 	},
+	/*==========Enviar del body el tipo cl o wr y pasar como argumento al searchEmail=====================*/
 	create: async (req, res) => {
-		/*==========Enviar del body el tipo cl o wr y pasar como argumento al searchEmail=====================*/
-		const { cl_email, cl_firtName, cl_password, cl_lastName, cl_cellphone, cl_latitude, cl_longitude } = req.body;
-		/*=============agregar las validaciones de todos los campos =========*/
-		const item = await searchEmail(cl_email);
+		const { cl_email, cl_firtName, cl_password, cl_lastName, cl_cellphone, cl_direccion } = req.validateBody;
+
+		const item = await searchForEmail(cl_email, 'email');
 		if (item) {
 			return res.sendStatus(409)
 		}
-		const salt = randomBytes(16).toString('hex');
-		const hashedPassword = scryptSync(cl_password, salt, 64).toString('hex');
+
+		const [salt, hashedPassword] = hashingPassword(cl_password);
 
 		const newItem = {
-			/*=================ver si vamos a solicitar mas datos para registrarse============================*/
 			cl_email,
 			cl_firtName,
 			cl_password: `${salt}:${hashedPassword}`,
 			cl_passwordSinScriptar: cl_password,
 			cl_lastName,
 			cl_cellphone,
-			cl_latitude,
-			cl_longitude
+			cl_direccion,
 		}
 
-		const data = await create(newItem);
+		const data = await createClient(newItem);
 		if (data === null) {
-			/*===========corroborar los mensajes de error =========================*/
 			return res.sendStatus(409);
 		}
 		delete data.cl_password;
@@ -62,6 +55,58 @@ export const clientController = {
 		res.json(data.toJSON());
 
 	},
+
+	validateIfRecoverPass: async (req, res) => {
+		const clientRecover = await searchBeforeRecover(req.validateBody);
+		if (!clientRecover) {
+			return res.sendStatus(400);
+		}
+		res.status(200).send(clientRecover.cl_id);
+	},
+
+	recoverPass: async (req, res) => {
+		const newPass = await updatePassword(req.validateBody);
+		if (newPass === 0) {
+			return res.sendStatus(400);
+		}
+		res.sendStatus(200);
+	},
+
+	getProfile: async (req, res) => {
+		const { id } = req.params;
+		const item = await searchForId(id, 'id');
+		if (!item) {
+			return res.sendStatus(400);
+		}
+		res.status(200).send(item.toJSON());
+	},
+
+	addImageOrEdit: async (req, res) => {
+		const { id } = req.params;
+		let header = req.headers['content-type'];
+		const headerAccept = ['image/jpeg', 'image/png', 'image/jpg'];
+		if (!headerAccept.includes(header)) {
+			return res.sendStatus(400);
+		}
+		let image = req.body;
+		let state = addImageOrEdit(image, id, 'cl');
+		if (!state) {
+			return res.sendStatus(400);
+		}
+		res.status(200).send();
+	},
+
+	editProfile: async (req, res) => {
+		// esto me servara para validar que me estan enviando una imagen
+		// let header = req.headers['content-type']; -> puede servir para validar
+		// let boundary = header.split('boundary=')[1];
+		const image = req.body;
+		//identificar antes que el buffer no pase los limites ni este vacio hacer un schema
+		const { id } = req.params;
+		let newFoto = await addImageOrEditInBd(image, id, 'cl');
+		res.status(200).send(newFoto);
+	},
+	//=====no delete cambiar por desactivar=======//
 	delete: (req, res) => {
 		const { id } = req.params
 		if (id === '') return
@@ -78,9 +123,5 @@ export const clientController = {
 		})
 
 	},
-	get: (req, res) => {
-		console.log('llegue al controlador')
-		console.log(req.body)
-	}
+
 }
-//localhost:3000/login/authentication
