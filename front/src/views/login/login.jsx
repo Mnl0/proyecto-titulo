@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import estilos from './login.module.css';
 import { useState } from "react";
-import { useAuth } from './authContext.jsx';  // importar authcontext desde su ubicación
+import { useAuth } from '../components/authContext.jsx';  // importar authcontext desde su ubicación
 
 const Login = () => {
     const userTest = {

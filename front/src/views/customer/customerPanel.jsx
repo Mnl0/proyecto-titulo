@@ -2,7 +2,7 @@ import React, { useEffect, useState} from "react";
 import styles from "./customerPanel.module.css";
 //import { FaUser, FaPowerOff } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { useAuth } from '../login/authContext.jsx';
+import { useAuth } from '../components/authContext.jsx';
 import SelectGlass from '../components/selects/selectGlass.jsx';
 import { ButtonGoogle } from "../components/buttons/buttonGoogle.jsx";
 import MyAvatarEditor from "../components/avatarEditor/avatarEditor.jsx";
