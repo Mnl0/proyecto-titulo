@@ -46,11 +46,16 @@ export const clientController = {
 		if (data === null) {
 			return res.sendStatus(409);
 		}
-		delete data.password;
-		delete data.passwordSinScriptar;
-		delete data.updatedAt;
-		delete data.createdAt;
-		res.json(data.toJSON());
+
+		const objCreate = {
+			firstName: data.cl_firstName,
+			lastName: data.cl_lastName,
+			email: data.cl_email,
+			cellPhone: data.cl_cellPhone,
+			address: data.cl_address,
+			id: data.cl_id
+		}
+		res.status(200).json(objCreate);
 
 	},
 
