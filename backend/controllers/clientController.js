@@ -23,7 +23,7 @@ export const clientController = {
 	},
 	/*==========Enviar del body el tipo cl o wr y pasar como argumento al searchEmail=====================*/
 	create: async (req, res) => {
-		const { email, firstName, password, lastName, cellphone, address } = req.validateBody;
+		const { email, firstName, password, lastName, cellPhone, address } = req.validateBody;
 
 		const item = await searchForEmail(email, 'email');
 		if (item) {
@@ -33,13 +33,13 @@ export const clientController = {
 		const [salt, hashedPassword] = hashingPassword(password);
 
 		const newItem = {
-			email,
-			firstName,
-			password: `${salt}:${hashedPassword}`,
-			passwordSinScriptar: password,
-			lastName,
-			cellphone,
-			address,
+			cl_email: email,
+			cl_firstName: firstName,
+			cl_password: `${salt}:${hashedPassword}`,
+			cl_passwordSinScriptar: password,
+			cl_lastName: lastName,
+			cl_cellPhone: cellPhone,
+			cl_address: address,
 		}
 
 		const data = await createClient(newItem);

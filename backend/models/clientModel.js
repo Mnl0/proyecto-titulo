@@ -9,7 +9,7 @@ export const ClientSchema = sequelize.define('client', {
 		primaryKey: true,
 		allowNull: false,
 	},
-	cl_firtName: {
+	cl_firstName: {
 		type: DataTypes.STRING(50),
 		allowNull: false,
 	},
@@ -26,7 +26,7 @@ export const ClientSchema = sequelize.define('client', {
 		type: DataTypes.STRING(200),
 		allowNull: false,
 	},
-	cl_cellphone: {
+	cl_cellPhone: {
 		type: DataTypes.INTEGER(12),
 		allowNull: true,
 	},
@@ -43,7 +43,7 @@ export const ClientSchema = sequelize.define('client', {
 		type: DataTypes.STRING(50),
 		allowNull: true,
 	},
-	cl_direccion: {
+	cl_address: {
 		type: DataTypes.STRING(50),
 		allowNull: true,
 	},
