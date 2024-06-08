@@ -2,7 +2,7 @@ import { object, string } from 'yup';
 
 export const createClient = object({
 	email: string().required(),
-	firtName: string().required(),
+	firstName: string().required(),
 	password: string().required(),
 	lastName: string().optional(),
 	cellPhone: string().optional(),
@@ -16,7 +16,7 @@ export const authClient = object({
 
 export const validateRecover = object({
 	email: string().required(),
-	firtName: string().required(),
+	firstName: string().required(),
 	cellphone: string().required()
 })
 
