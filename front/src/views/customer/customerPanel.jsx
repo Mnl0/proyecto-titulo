@@ -2,10 +2,10 @@ import React, { useEffect, useState} from "react";
 import styles from "./customerPanel.module.css";
 //import { FaUser, FaPowerOff } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import { useAuth } from '../login/authContext.jsx';
+import { useAuth } from '../components/authContext.jsx';
 import SelectGlass from '../components/selects/selectGlass.jsx';
 import { ButtonGoogle } from "../components/buttons/buttonGoogle.jsx";
-import AvatarEditor from "../components/avatarEditor/avatarEditor.jsx";
+import MyAvatarEditor from "../components/avatarEditor/avatarEditor.jsx";
 import TableUsers from '../components/listUsers/listUsers.jsx';
 
 const CustomerPanel = () => {
@@ -98,7 +98,7 @@ const CustomerPanel = () => {
                         </div>
                     ) : (
                         <div className={styles.userDataContainer}>
-                            <AvatarEditor />
+                            <MyAvatarEditor />
                             <h2 className={styles.userName}>{user.name}</h2>
                             <p className={styles.userEmail}>{user.email}</p>
                         </div>

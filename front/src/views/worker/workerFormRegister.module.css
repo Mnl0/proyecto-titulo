@@ -1,0 +1,103 @@
+@font-face {
+	font-family: "Play-Regular";
+	src: url("../../fonts/Play-Regular.ttf");
+}
+
+.global{
+    width: 100%;
+    height: 90vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-image: url('../../img/business-card-2918333_1280.jpg');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+
+.card {
+    width: 400px;
+    padding: 1.9rem 1.2rem;
+    text-align: center;
+    background: #2a2b38;
+    background: linear-gradient(315deg, #ffbc00, #ff0058);
+    background: rgba(255,255,255,.2);
+    box-shadow: 0 0 10px rgba(0,0,0,0.25);
+    backdrop-filter: blur(10px);
+    border-radius: 8px;
+    border-radius: 5px;
+    font-family: 'Play-Regular', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+/*Inputs*/
+.field {
+    display: flex;
+    align-items: center;
+    background-color: #1f2029;
+    border-radius: 4px;
+    height: auto;
+    padding: 10px;
+    margin-bottom: 20px;
+}
+
+.inputIcon {
+    height: 1.5em;
+    width: 1.5em;
+    fill: #ffeba7;
+}
+
+.inputField {
+    background: none;
+    border: none !important;
+    outline: none !important;
+    width: 100%;
+    color: #d3d3d3;
+    margin: 0 0 0 10px !important;
+}
+
+/*Text*/
+.title {
+    margin-bottom: 1rem;
+    font-size: 1.5em;
+    font-weight: 500;
+    color: #9f8326;
+}
+
+/*Buttons*/
+.btn {
+    margin: 1rem;
+    border: none;
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: .8em;
+    text-transform: uppercase;
+    padding: 0.6em 1.2em;
+    background-color: #ffeba7;
+    color: #5e6681;
+    box-shadow: 0 8px 24px 0 rgb(255 235 167 / 20%);
+    transition: all .3s ease-in-out;
+    cursor: pointer;
+}
+
+.btnLink {
+    color: #9f8326;
+    display: block;
+    font-size: .75em;
+    transition: color .3s ease-out;
+}
+
+/*Hover & focus*/
+.field input:focus::placeholder {
+    opacity: 0;
+    transition: opacity .3s;
+}
+
+.btn:hover {
+    background-color: #5e6681;
+    color: #ffeba7;
+    box-shadow: 0 8px 24px 0 rgb(16 39 112 / 20%);
+}
+
+.btnLink:hover {
+    color: #ffeba7;
+}

@@ -4,7 +4,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/
 import userMaleAvatar from './userMaleAvatar.jpeg'; // Ajusta la ruta según sea necesario
 import style from './avatarEditor.module.css';
 
-const AvatarEditor4 = () => {
+const MyAvatarEditor = () => {
   const editorRef = useRef(null);
   const [imageURL, setImageURL] = useState(userMaleAvatar); // Estado para almacenar la URL de la imagen
   const [open, setOpen] = useState(false); // Estado para controlar el diálogo
@@ -47,26 +47,26 @@ const AvatarEditor4 = () => {
     }
   };
 
-    const uploadImage = async (imageData) => {
-        try {
-            const response = await fetch('https://tu-servidor.com/api/upload', {
-                method: 'POST',
-                headers: {
-                'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ image: imageData })
-            });
+  const uploadImage = async (imageData) => {
+      try {
+          const response = await fetch('https://tu-servidor.com/api/upload', {
+              method: 'POST',
+              headers: {
+              'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ image: imageData })
+          });
 
-            if (!response.ok) {
-                throw new Error('Error en la carga de la imagen en el servidor(Fetch)');
-            }
+          if (!response.ok) {
+              throw new Error('Error en la carga de la imagen en el servidor(Fetch)');
+          }
 
-            const data = await response.json();
-            console.log('Imagen cargada exitosamente', data);
-        } catch (error) {
-            console.error('Error al cargar la imagen(Fetch):', error);
-        }
-    };
+          const data = await response.json();
+          console.log('Imagen cargada exitosamente', data);
+      } catch (error) {
+          console.error('Error al cargar la imagen(Fetch):', error);
+      }
+  };
 
   return (
     <div className={style.globalContainer}>
@@ -106,4 +106,4 @@ const AvatarEditor4 = () => {
   );
 };  
 
-export default AvatarEditor4;
+export default MyAvatarEditor;
