@@ -36,7 +36,7 @@ export function validatePasswordGeneral(password, hash) {
 export function passwordHashedGeneral(password) {
 	const salt = randomBytes(16).toString('hex');
 	const hashedPassword = scryptSync(password, salt, 64).toString('hex');
-	return [hashedPassword, salt]
+	return [salt, hashedPassword]
 }
 
 export async function searchBeforeRecoverForModel(user, schema, pref) {
