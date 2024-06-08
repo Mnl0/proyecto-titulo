@@ -10,8 +10,7 @@ export const clientController = {
 			return res.status(400).json();
 		}
 
-		const result = checkPassword(password, item.password);
-		console.log(result)
+		const result = checkPassword(password, item.cl_password);
 		if (!result) {
 			return res.status(400).json();
 		}
