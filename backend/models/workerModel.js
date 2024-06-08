@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
-import { addImageOrEditInServerForModel, createForModel, getImageFromServerForModel, searchBeforeRecoverForModel, searchForModel, updateImageForModel, updatePasswordForModel, validatePasswordGeneral } from "../util/function.js";
+import { addImageOrEditInServerForModel, createForModel, getImageFromServerForModel, passwordHashedGeneral, searchBeforeRecoverForModel, searchForModel, updateImageForModel, updatePasswordForModel, validatePasswordGeneral } from "../util/function.js";
 
 export const WorkerSchema = sequelize.define('worker', {
 	wr_id: {
@@ -9,7 +9,7 @@ export const WorkerSchema = sequelize.define('worker', {
 		primaryKey: true,
 		allowNull: false,
 	},
-	wr_firtName: {
+	wr_firstName: {
 		type: DataTypes.STRING(50),
 		allowNull: false,
 	},
@@ -26,7 +26,7 @@ export const WorkerSchema = sequelize.define('worker', {
 		type: DataTypes.STRING(200),
 		allowNull: false,
 	},
-	wr_cellphone: {
+	wr_cellPhone: {
 		type: DataTypes.INTEGER(12),
 		allowNull: true,
 	},
@@ -43,7 +43,7 @@ export const WorkerSchema = sequelize.define('worker', {
 		type: DataTypes.STRING(50),
 		allowNull: true,
 	},
-	wr_direccion: {
+	wr_address: {
 		type: DataTypes.STRING(50),
 		allowNull: true,
 	},
@@ -61,8 +61,8 @@ export const WorkerSchema = sequelize.define('worker', {
 	}
 )
 
-export function searchEmail(email) {
-	return searchForModel(email, WorkerSchema, 'wr')
+export function searchEmail(email, nameColumn) {
+	return searchForModel(email, WorkerSchema, 'wr', nameColumn)
 }
 
 export async function create(worker) {
@@ -74,7 +74,7 @@ export function validatePassword(password, hash) {
 }
 
 export function hashingPassword(password) {
-	return validatePasswordGeneral(password, hash);
+	return passwordHashedGeneral(password);
 }
 
 export async function searchBeforeRecover(worker) {

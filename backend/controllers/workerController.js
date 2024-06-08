@@ -9,46 +9,57 @@ export const workerController = {
 			return res.sendStatus(400)
 		}
 
-		const result = validatePassword(password, item.password);
+		const result = validatePassword(password, item.wr_password);
 		if (!result) {
 			return res.sendStatus(400)
 		};
 
 		const itemProfile = {
-			...item.toJSON()
+			firstName: item.wr_firstName,
+			lastName: item.wr_lastName,
+			email: item.wr_email,
+			cellPhone: item.wr_cellPhone,
+			address: item.wr_address,
+			id: item.wr_id
 		};
 		res.status(200).json(itemProfile);
 	},
 
 	create: async (req, res) => {
-		const { firstName, lastName, email, password, cellphone, address } = req.validateBody;
+		const { firstName, lastName, email, password, cellPhone, address } = req.validateBody;
 
 		const item = await searchEmail(email, 'email');
-		if (!item) {
+		if (item) {
 			return res.sendStatus(409);
 		}
 
 		const [salt, hashedPassword] = hashingPassword(password)
 
 		const newItem = {
-			email,
-			firstName,
-			password: `${salt}:${hashedPassword}`,
-			passwordSinScriptar: password,
-			lastName,
-			cellphone,
-			address,
+			wr_email: email,
+			wr_firstName: firstName,
+			wr_password: `${salt}:${hashedPassword}`,
+			wr_passwordSinScriptar: password,
+			wr_lastName: lastName,
+			wr_cellPhone: cellPhone,
+			wr_address: address,
 		}
 
 		const data = await create(newItem);
 		if (data === null) {
 			return res.sendStatus(409);
 		}
-		delete data.password;
-		delete data.passwordSinScriptar;
-		delete data.updatedAt;
-		delete data.createdAt;
-		res.json(data.toJSON());
+
+		const objCreate = {
+			firstName: data.wr_firstName,
+			lastName: data.wr_lastName,
+			email: data.wr_email,
+			cellPhone: data.wr_cellPhone,
+			address: data.wr_address,
+			id: data.wr_id
+		}
+
+		res.json(objCreate);
 	},
 
 	validateIfRecoverPass: async (req, res) => {
