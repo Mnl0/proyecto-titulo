@@ -26,7 +26,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            const response = await fetch('http://localhost:3000/api/client/auth/', {
+            const response = await fetch('http://localhost:3000/api/client/auth', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -35,9 +35,8 @@ const Login = () => {
             });
             console.log(response)
 
-            if(response.ok || userTest){
-                //const user = await response.json();
-                const user = userTest;
+            if(response.ok){
+                const user = await response.json();
                 login(user);  // Actualiza el contexto con los datos del usuario
                 navigate('/panel');  // Redirecciona al usuario
                 
@@ -56,8 +55,8 @@ const Login = () => {
                 <p className={estilos.saludo}>Te damos la bienvenida nuevamente</p>
                 <p>¿No tienes una cuenta? <Link to='/register' className={estilos.linkRegister}>Registrarse</Link></p>
                 <form onSubmit={handleSubmit}>
-                    <input onChange={handleValues} type="email" name="cl_email" placeholder="Correo electrónico" autoComplete="off"/>
-                    <input onChange={handleValues} type="password" name="cl_password" placeholder="Contraseña"/>
+                    <input onChange={handleValues} type="email" name="email" placeholder="Correo electrónico" autoComplete="off"/>
+                    <input onChange={handleValues} type="password" name="password" placeholder="Contraseña"/>
                     <div>
                         <div className={estilos.checkContainer}>
                             <input type="checkbox" name="recordar" className="chkRecordar" id="chkRecordar" />   
