@@ -21,7 +21,7 @@ export const workerController = {
 	},
 
 	create: async (req, res) => {
-		const { firtName, lastName, email, password, cellphone, address } = req.validateBody;
+		const { firstName, lastName, email, password, cellphone, address } = req.validateBody;
 
 		const item = await searchEmail(email, 'email');
 		if (!item) {
@@ -32,7 +32,7 @@ export const workerController = {
 
 		const newItem = {
 			email,
-			firtName,
+			firstName,
 			password: `${salt}:${hashedPassword}`,
 			passwordSinScriptar: password,
 			lastName,
