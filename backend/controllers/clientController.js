@@ -3,14 +3,14 @@ import { hashingPassword, checkPassword, searchBeforeRecover, updatePassword, se
 export const clientController = {
 
 	auth: async (req, res) => {
-		const { cl_password, cl_email } = req.validateBody
+		const { password, email } = req.validateBody
 
-		const item = await searchForEmail(cl_email, 'email');
+		const item = await searchForEmail(email, 'email');
 		if (!item) {
 			return res.status(400).json();
 		}
 
-		const result = checkPassword(cl_password, item.cl_password);
+		const result = checkPassword(password, item.password);
 		console.log(result)
 		if (!result) {
 			return res.status(400).json();
@@ -23,33 +23,33 @@ export const clientController = {
 	},
 	/*==========Enviar del body el tipo cl o wr y pasar como argumento al searchEmail=====================*/
 	create: async (req, res) => {
-		const { cl_email, cl_firtName, cl_password, cl_lastName, cl_cellphone, cl_direccion } = req.validateBody;
+		const { email, firtName, password, lastName, cellphone, address } = req.validateBody;
 
-		const item = await searchForEmail(cl_email, 'email');
+		const item = await searchForEmail(email, 'email');
 		if (item) {
 			return res.sendStatus(409)
 		}
 
-		const [salt, hashedPassword] = hashingPassword(cl_password);
+		const [salt, hashedPassword] = hashingPassword(password);
 
 		const newItem = {
-			cl_email,
-			cl_firtName,
-			cl_password: `${salt}:${hashedPassword}`,
-			cl_passwordSinScriptar: cl_password,
-			cl_lastName,
-			cl_cellphone,
-			cl_direccion,
+			email,
+			firtName,
+			password: `${salt}:${hashedPassword}`,
+			passwordSinScriptar: password,
+			lastName,
+			cellphone,
+			address,
 		}
 
 		const data = await createClient(newItem);
 		if (data === null) {
 			return res.sendStatus(409);
 		}
-		delete data.cl_password;
-		delete data.cl_passwordSinScriptar;
-		delete data.cl_updatedAt;
-		delete data.cl_createdAt;
+		delete data.password;
+		delete data.passwordSinScriptar;
+		delete data.updatedAt;
+		delete data.createdAt;
 		res.json(data.toJSON());
 
 	},
@@ -59,7 +59,7 @@ export const clientController = {
 		if (!clientRecover) {
 			return res.sendStatus(400);
 		}
-		res.status(200).send(clientRecover.cl_id);
+		res.status(200).send(clientRecover.id);
 	},
 
 	recoverPass: async (req, res) => {
