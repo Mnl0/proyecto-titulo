@@ -1,4 +1,7 @@
 import { randomBytes, scryptSync, timingSafeEqual } from 'node:crypto'
+import path from 'node:path';
+import fs from 'node:fs';
+import { __dirname } from '../server.js';
 
 export function searchForModel(value, schema, pref, nameColumn) {
 	return new Promise((resolve, reject) => {
@@ -22,6 +25,7 @@ export function createForModel(schema, user) {
 	})
 }
 
+//=============chechear de manera asyncrona ===============\\
 export function validatePasswordGeneral(password, hash) {
 	const [salt, key] = hash.split(':');
 	const hashedBuffer = scryptSync(password, salt, 64);
@@ -64,4 +68,27 @@ export async function updateImageForModel(image, id, pref, schema) {
 	return await schema.update({ [`${pref}_imageProfile`]: imageBuffer }, {
 		where: { [`${pref}_id`]: id }
 	})
+}
+
+export function addImageOrEditInServerForModel(image, id, pref,) {
+	try {
+		const folderStorageImage = createDirectoryStorage();
+		fs.writeFileSync(`${folderStorageImage}/${pref}_${id}.png`, image);
+		return true;
+	} catch (err) {
+		return { success: false, error: err };
+	}
+}
+
+function createDirectoryStorage() {
+	const folderStorageImage = path.join(__dirname, 'storage');
+	if (!fs.existsSync(folderStorageImage)) {
+		fs.mkdirSync(folderStorageImage);
+	}
+	return folderStorageImage;
+}
+
+export function getImageFromServerForModel(id, pref) {
+	const folderStorageImage = createDirectoryStorage();
+	return path.join(folderStorageImage, `${pref}_${id}.png`);
 }

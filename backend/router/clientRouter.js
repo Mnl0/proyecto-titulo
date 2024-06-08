@@ -14,8 +14,8 @@ clientRouter.post('/recover', middlewareValidateBody(recoverPass), clientControl
 clientRouter.get('/profile/:id', middlewareValidateParams(idParams), clientController.getProfile);
 
 // clientRouter.put('/editProfile/:id', clientController.editProfile);
-clientRouter.put('/addImageOrEdit/:id', clientController.addImageOrEdit);
-clientRouter.put('/editProfile/:id', middlewareValidateHeader(), clientController.editProfile);
+clientRouter.put('/addImageOrEditInServer/:id', middlewareValidateHeader(), clientController.addImageOrEditInServer);
+clientRouter.put('/addImageOrEditInDb/:id', middlewareValidateHeader(), clientController.addImageOrEditInDb);
 
 clientRouter.delete('/delete/:id', clientController.delete)//puede
 

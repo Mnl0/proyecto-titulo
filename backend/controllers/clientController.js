@@ -1,4 +1,4 @@
-import { hashingPassword, checkPassword, searchBeforeRecover, updatePassword, searchForEmail, searchForId, updateProfile, addImageOrEdit, addImageOrEditInBd } from '../models/clientModel.js'
+import { hashingPassword, checkPassword, searchBeforeRecover, updatePassword, searchForEmail, searchForId, addImageOrEditInBd, addImageOrEditInServer, getImageFromServer } from '../models/clientModel.js'
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -14,6 +14,7 @@ export const clientController = {
 		}
 
 		const result = checkPassword(cl_password, item.cl_password);
+		console.log(result)
 		if (!result) {
 			return res.status(400).json();
 		}
@@ -81,31 +82,53 @@ export const clientController = {
 		res.status(200).send(item.toJSON());
 	},
 
-	addImageOrEdit: async (req, res) => {
+	addImageOrEditInServer: async (req, res) => {
 		const { id } = req.params;
-		let header = req.headers['content-type'];
-		const headerAccept = ['image/jpeg', 'image/png', 'image/jpg'];
-		if (!headerAccept.includes(header)) {
-			return res.sendStatus(400);
-		}
 		let image = req.body;
-		let state = addImageOrEdit(image, id, 'cl');
+		let state = addImageOrEditInServer(image, id, 'cl');
 		if (!state) {
 			return res.sendStatus(400);
 		}
-		res.status(200).send();
+		const imageFront = getImageFromServer(id, 'cl');
+		res.status(200).sendfile(imageFront);
 	},
 
-	editProfile: async (req, res) => {
-		// esto me servara para validar que me estan enviando una imagen
-		// let header = req.headers['content-type']; -> puede servir para validar
-		// let boundary = header.split('boundary=')[1];
-		const image = req.body;
-		//identificar antes que el buffer no pase los limites ni este vacio hacer un schema
+	addImageOrEditInDb: async (req, res) => {
 		const { id } = req.params;
+		let image = req.body;
 		let newFoto = await addImageOrEditInBd(image, id, 'cl');
 		res.status(200).send(newFoto);
 	},
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	//=====no delete cambiar por desactivar=======//
 	delete: (req, res) => {
 		const { id } = req.params

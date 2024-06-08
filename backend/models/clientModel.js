@@ -1,6 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
-import { createForModel, passwordHashedGeneral, searchBeforeRecoverForModel, validatePasswordGeneral, updatePasswordForModel, searchForModel, updateImageForModel } from '../util/function.js';
+import { createForModel, passwordHashedGeneral, searchBeforeRecoverForModel, validatePasswordGeneral, updatePasswordForModel, searchForModel, updateImageForModel, addImageOrEditInServerForModel, getImageFromServerForModel } from '../util/function.js';
 import path from 'node:path';
 import fs from 'node:fs';
 import { __dirname } from '../server.js';
@@ -97,19 +97,12 @@ export async function updateProfile(id) {
 	return await searchForId(id, 'id');
 }
 
-export function addImageOrEdit(image, id, pref) {
-	try {
-		const imageBuffer = Buffer.from(image, 'base64');
-		const folderStorageImage = path.join(__dirname, 'storage');
-		if (!fs.existsSync(folderStorageImage)) {
-			fs.mkdirSync(folderStorageImage);
-		}
-		fs.writeFileSync(`${folderStorageImage}/${id}_${pref}.jpg`, imageBuffer);
-		return true;
-	} catch (err) {
-		return { success: false, error: err };
-	}
-	//falta tomar la url de la imagen y guardarla en la bd?
+export function addImageOrEditInServer(image, id, pref) {
+	return addImageOrEditInServerForModel(image, id, pref);
+}
+
+export function getImageFromServer(id, pref) {
+	return getImageFromServerForModel(id, pref);
 }
 
 export async function addImageOrEditInBd(image, id, pref) {

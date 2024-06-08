@@ -13,3 +13,5 @@ http://localhost:3000/api/worker/recover --method POST
 http://localhost:3000/api/client/recover --method POST
 http://localhost:3000/api/client/profile/061259d7-2f63-48e5-b882-3b3836a963f7 --method GET
 http://localhost:3000/api/client/editProfile/061259d7-2f63-48e5-b882-3b3836a963f7 --method GET
+http://localhost:3000/api/client/addImageOrEditInServer/32c5ce0c-ffa5-4ad7-9ddb-945980b640b1
+http://localhost:3000/api/client/addImageOrEditInDb/061259d7-2f63-48e5-b882-3b3836a963f7
