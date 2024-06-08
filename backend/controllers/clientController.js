@@ -1,4 +1,4 @@
-import { hashingPassword, checkPassword, searchBeforeRecover, updatePassword, searchForEmail, searchForId, addImageOrEditInBd, addImageOrEditInServer, getImageFromServer } from '../models/clientModel.js'
+import { hashingPassword, checkPassword, searchBeforeRecover, updatePassword, searchForEmail, searchForId, addImageOrEditInBd, addImageOrEditInServer, getImageFromServer, createClient } from '../models/clientModel.js'
 
 export const clientController = {
 
