@@ -1,9 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
 import { createForModel, passwordHashedGeneral, searchBeforeRecoverForModel, validatePasswordGeneral, updatePasswordForModel, searchForModel, updateImageForModel, addImageOrEditInServerForModel, getImageFromServerForModel } from '../util/function.js';
-import path from 'node:path';
-import fs from 'node:fs';
-import { __dirname } from '../server.js';
 
 export const ClientSchema = sequelize.define('client', {
 	cl_id: {

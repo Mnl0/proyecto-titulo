@@ -1,7 +1,4 @@
 import { hashingPassword, checkPassword, searchBeforeRecover, updatePassword, searchForEmail, searchForId, addImageOrEditInBd, addImageOrEditInServer, getImageFromServer } from '../models/clientModel.js'
-import fs from 'node:fs';
-import path from 'node:path';
-
 
 export const clientController = {
 

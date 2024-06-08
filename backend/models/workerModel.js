@@ -1,7 +1,6 @@
 import { DataTypes } from "sequelize";
 import { sequelize } from '../database/connection.js'
-import { createForModel, searchBeforeRecoverForModel, searchEmailForModel, updatePasswordForModel, validatePasswordGeneral } from "../util/function.js";
-
+import { addImageOrEditInServerForModel, createForModel, getImageFromServerForModel, searchBeforeRecoverForModel, searchForModel, updateImageForModel, updatePasswordForModel, validatePasswordGeneral } from "../util/function.js";
 
 export const WorkerSchema = sequelize.define('worker', {
 	wr_id: {
@@ -47,7 +46,11 @@ export const WorkerSchema = sequelize.define('worker', {
 	wr_direccion: {
 		type: DataTypes.STRING(50),
 		allowNull: true,
-	}
+	},
+	wr_imageProfile: {
+		type: DataTypes.BLOB('long'),
+		allowNull: true,
+	},
 },
 	{
 		/*=====se debe agregar el timestamps true cuando se puede eliminar de manera correcta cualquier elemento de esta tabla error con fk*/
@@ -59,7 +62,7 @@ export const WorkerSchema = sequelize.define('worker', {
 )
 
 export function searchEmail(email) {
-	return searchEmailForModel(email, WorkerSchema, 'wr')
+	return searchForModel(email, WorkerSchema, 'wr')
 }
 
 export async function create(worker) {
@@ -80,4 +83,20 @@ export async function searchBeforeRecover(worker) {
 
 export async function updatePassword(worker) {
 	return await updatePasswordForModel(worker, WorkerSchema, 'wr');
+}
+
+export async function searchForId(id, nameColumn) {
+	return await searchForModel(id, WorkerSchema, 'wr', nameColumn);
+}
+
+export function addImageOrEditInServer(image, id, pref) {
+	return addImageOrEditInServerForModel(image, id, pref);
+}
+
+export function getImageFromServer(id, pref) {
+	return getImageFromServerForModel(id, pref);
+}
+
+export async function addImageOrEditInBd(image, id, pref) {
+	return await updateImageForModel(image, id, pref, WorkerSchema);
 }
