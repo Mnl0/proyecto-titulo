@@ -2,14 +2,14 @@ import { searchEmail, create, validatePassword, hashingPassword, searchBeforeRec
 
 export const workerController = {
 	auth: async (req, res) => {
-		const { wr_email, wr_password } = req.validateBody;
+		const { email, password } = req.validateBody;
 
-		const item = await searchEmail(wr_email, 'email');
+		const item = await searchEmail(email, 'email');
 		if (!item) {
 			return res.sendStatus(400)
 		}
 
-		const result = validatePassword(wr_password, item.wr_password);
+		const result = validatePassword(password, item.password);
 		if (!result) {
 			return res.sendStatus(400)
 		};
@@ -21,33 +21,33 @@ export const workerController = {
 	},
 
 	create: async (req, res) => {
-		const { wr_firtName, wr_lastName, wr_email, wr_password, wr_cellphone, wr_direccion } = req.validateBody;
+		const { firtName, lastName, email, password, cellphone, address } = req.validateBody;
 
-		const item = await searchEmail(wr_email, 'email');
+		const item = await searchEmail(email, 'email');
 		if (!item) {
 			return res.sendStatus(409);
 		}
 
-		const [salt, hashedPassword] = hashingPassword(wr_password)
+		const [salt, hashedPassword] = hashingPassword(password)
 
 		const newItem = {
-			wr_email,
-			wr_firtName,
-			wr_password: `${salt}:${hashedPassword}`,
-			wr_passwordSinScriptar: wr_password,
-			wr_lastName,
-			wr_cellphone,
-			wr_direccion,
+			email,
+			firtName,
+			password: `${salt}:${hashedPassword}`,
+			passwordSinScriptar: password,
+			lastName,
+			cellphone,
+			address,
 		}
 
 		const data = await create(newItem);
 		if (data === null) {
 			return res.sendStatus(409);
 		}
-		delete data.wr_password;
-		delete data.wr_passwordSinScriptar;
-		delete data.wr_updatedAt;
-		delete data.wr_createdAt;
+		delete data.password;
+		delete data.passwordSinScriptar;
+		delete data.updatedAt;
+		delete data.createdAt;
 		res.json(data.toJSON());
 	},
 
@@ -56,7 +56,7 @@ export const workerController = {
 		if (!workerRecover) {
 			return res.sendStatus(400);
 		}
-		res.status(200).send(workerRecover.wr_id);
+		res.status(200).send(workerRecover.id);
 	},
 
 	recoverPass: async (req, res) => {

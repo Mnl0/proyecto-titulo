@@ -1,26 +1,26 @@
-import { object, string, number } from 'yup';
+import { object, string } from 'yup';
 
 export const createWorker = object({
-	wr_email: string().required(),
-	wr_firtName: string().required(),
-	wr_password: string().required(),
-	wr_lastName: string().optional(),
-	wr_cellphone: number().optional(),
-	wr_direccion: string().optional(),
+	email: string().required(),
+	firtName: string().required(),
+	password: string().required(),
+	lastName: string().optional(),
+	cellPhone: string().optional(),
+	address: string().optional(),
 })
 
 export const auth = object({
-	wr_email: string().required(),
-	wr_password: string().required(),
+	email: string().required(),
+	password: string().required(),
 })
 
 export const validateIfRecover = object({
-	wr_email: string().required(),
-	wr_firtName: string().required(),
-	wr_cellphone: string().required()
+	email: string().required(),
+	firtName: string().required(),
+	cellphone: string().required()
 })
 
 export const recoverPass = object({
-	wr_password: string().required()
+	password: string().required()
 })
 

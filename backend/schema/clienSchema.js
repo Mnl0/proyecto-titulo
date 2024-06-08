@@ -1,4 +1,4 @@
-import { object, string, number } from 'yup';
+import { object, string } from 'yup';
 
 export const createClient = object({
 	email: string().required(),
