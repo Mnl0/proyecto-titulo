@@ -50,7 +50,7 @@ export async function searchBeforeRecoverForModel(user, schema, pref) {
 }
 
 export async function updatePasswordForModel(user, schema, pref) {
-	const [hashedPassword, salt] = passwordHashedGeneral(user[`${pref}_password`]);
+	const [salt, hashedPassword] = passwordHashedGeneral(user[`${pref}_password`]);
 	const newPassword = `${salt}:${hashedPassword}`;
 	return await schema.update(
 		{
