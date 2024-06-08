@@ -16,7 +16,12 @@ export const clientController = {
 		}
 
 		const itemProfile = {
-			...item.toJSON()
+			firstName: item.cl_firstName,
+			lastName: item.cl_lastName,
+			email: item.cl_email,
+			cellPhone: item.cl_cellPhone,
+			address: item.cl_address,
+			id: item.cl_id
 		}
 		res.status(200).json(itemProfile)
 	},
