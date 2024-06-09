@@ -4,7 +4,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/
 import userMaleAvatar from './userMaleAvatar.jpeg'; // Ajusta la ruta según sea necesario
 import style from './avatarEditor.module.css';
 
-const MyAvatarEditor = () => {
+const MyAvatarEditor = ({user}) => {
   const editorRef = useRef(null);
   const [imageURL, setImageURL] = useState(userMaleAvatar); // Estado para almacenar la URL de la imagen
   const [open, setOpen] = useState(false); // Estado para controlar el diálogo
@@ -49,14 +49,17 @@ const MyAvatarEditor = () => {
 
   const uploadImage = async (imageData) => {
       try {
-          const response = await fetch('https://tu-servidor.com/api/upload', {
-              method: 'POST',
+        const image = imageData
+        const id = user.id
+          const response = await fetch('http://localhost:3000/api/client/addImageOrEditInServer/'+id, {
+              method: 'PUT',
               headers: {
-              'Content-Type': 'application/json',
+              'Content-Type': 'image/png',
               },
-              body: JSON.stringify({ image: imageData })
+              body: selectedFile
           });
 
+          console.log('http//localhost:3000/api/client/addImageOrEditInServer/'+id)
           if (!response.ok) {
               throw new Error('Error en la carga de la imagen en el servidor(Fetch)');
           }

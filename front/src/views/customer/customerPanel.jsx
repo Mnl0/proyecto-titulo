@@ -13,7 +13,7 @@ const CustomerPanel = () => {
     const [showTable, setShowTable] = useState(false); // Estado para controlar la visibilidad de TableUsers
     const [loading, setLoading] = useState(false); // Estado para controlar el estado de carga
     const [errorMessage, setErrorMessage] = useState(""); // Estado para almacenar mensajes de error
-    const [category, setCategory] = useState("zzz"); // Estado para almacenar la categoría seleccionada
+    const [category, setCategory] = useState(""); // Estado para almacenar la categoría seleccionada
     const [dataTestFront, setDataTestFront] = useState([]);
 
     const [userLocation, setUserLocation] = useState({
@@ -52,8 +52,6 @@ const CustomerPanel = () => {
 
     const handleSearch = async () => {
         setLoading(true); // Iniciar el estado de carga
-        console.log(category)
-        console.log(user)
         try {
             // Simular una llamada a la base de datos para obtener trabajadores con la categoría seleccionada
             //const response = await fetch(`https://api.example.com/workers?category=${category}`);
@@ -98,7 +96,7 @@ const CustomerPanel = () => {
                         </div>
                     ) : (
                         <div className={styles.userDataContainer}>
-                            <MyAvatarEditor />
+                            <MyAvatarEditor user={user}/>
                             <h2 className={styles.userName}>{user.name}</h2>
                             <p className={styles.userEmail}>{user.email}</p>
                         </div>
