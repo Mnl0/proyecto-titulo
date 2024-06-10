@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import AvatarEditor from 'react-avatar-editor';
 import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/material';
 import userMaleAvatar from './userMaleAvatar.jpeg'; // Ajusta la ruta según sea necesario
@@ -9,7 +9,19 @@ const MyAvatarEditor = ({user}) => {
   const [imageURL, setImageURL] = useState(userMaleAvatar); // Estado para almacenar la URL de la imagen
   const [open, setOpen] = useState(false); // Estado para controlar el diálogo
   const [selectedFile, setSelectedFile] = useState(null); // Estado para almacenar el archivo seleccionado
+  const [imgUser, setImgUser] = useState('');
 
+  useEffect(()=>{
+    const img = new Image();
+    const userImageURL = user.imgURL ? `http://localhost:3000/storage/${user.imgURL}.png` : userMaleAvatar;
+    img.src = userImageURL;
+    img.onload = () => setImgUser(userImageURL);
+    img.onerror = () => setImgUser(userMaleAvatar);
+  }, [])
+
+  useEffect(() => {
+    setImageURL(imgUser)
+  }, [imgUser])
 
   const handleClickOpen = () => {
     setOpen(true); // Abrir el diálogo
@@ -19,24 +31,27 @@ const MyAvatarEditor = ({user}) => {
     setOpen(false); // Cerrar el diálogo sin guardar
   };
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (editorRef.current) {
         // Obtener el canvas con la imagen editada
         const canvas = editorRef.current.getImage();
         const dataURL = canvas.toDataURL(); // Convertir a data URL
-        console.log(dataURL); // Puedes guardar el dataURL o hacer algo con la imagen editada
+        //console.log(dataURL); // Puedes guardar el dataURL o hacer algo con la imagen editada
 
         // Si deseas la imagen escalada al tamaño del canvas
         const canvasScaled = editorRef.current.getImageScaledToCanvas();
         const dataURLScaled = canvasScaled.toDataURL();
-        console.log(dataURLScaled); // Puedes guardar el dataURL escalado o hacer algo con él
+        //console.log(dataURLScaled); // Puedes guardar el dataURL escalado o hacer algo con él
+      
+        const blob = base64ToBlob(dataURLScaled, 'image/png');  // Convertir base64 a Blob
+        const success = await uploadImage(blob);  // Enviar la imagen al servidor
 
-        // Guardar el dataURL en el estado
-        setImageURL(dataURLScaled);
+        if(success){
+          const blobUrl = URL.createObjectURL(blob); // Crear una URL a partir del Blob
+          await setImageURL(blobUrl);
+        }
+        
         setOpen(false); // Cerrar el diálogo después de guardar
-
-        // Enviar la imagen al servidor
-        uploadImage(dataURLScaled);
     }
   };
 
@@ -47,25 +62,33 @@ const MyAvatarEditor = ({user}) => {
     }
   };
 
-  const uploadImage = async (imageData) => {
+  const base64ToBlob = (base64, mimeType) => {
+    const byteString = atob(base64.split(',')[1]);
+    const ab = new ArrayBuffer(byteString.length);
+    const ia = new Uint8Array(ab);
+    for (let i = 0; i < byteString.length; i++) {
+      ia[i] = byteString.charCodeAt(i);
+    }
+    return new Blob([ab], { type: mimeType });
+  };
+
+  const uploadImage = async (blob) => {
       try {
-        const image = imageData
-        const id = user.id
-          const response = await fetch('http://localhost:3000/api/client/addImageOrEditInServer/'+id, {
+          const response = await fetch('http://localhost:3000/api/client/addImageOrEditInServer/'+user.id, {
               method: 'PUT',
               headers: {
               'Content-Type': 'image/png',
               },
-              body: selectedFile
+              body: blob
           });
+          
 
-          console.log('http//localhost:3000/api/client/addImageOrEditInServer/'+id)
           if (!response.ok) {
               throw new Error('Error en la carga de la imagen en el servidor(Fetch)');
           }
 
-          const data = await response.json();
-          console.log('Imagen cargada exitosamente', data);
+          console.log('Imagen cargada exitosamente');
+          return true;
       } catch (error) {
           console.error('Error al cargar la imagen(Fetch):', error);
       }
@@ -73,7 +96,6 @@ const MyAvatarEditor = ({user}) => {
 
   return (
     <div className={style.globalContainer}>
-      {/*imageURL && <img src={imageURL} alt="Edited Avatar" style={{ borderRadius: '50%' }} />*/} {/* Mostrar la imagen si existe */}
       <div className={style.imgContainer}><img onClick={handleClickOpen} className={style.imgAvatar} src={imageURL} alt="Edited Avatar" style={{ borderRadius: '50%' }} /></div>
       <Dialog open={open} onClose={handleClose}>
         <DialogTitle>Editar Imagen de Perfil</DialogTitle>
@@ -91,6 +113,7 @@ const MyAvatarEditor = ({user}) => {
                         borderRadius={125} // Hacer el área de recorte circular
                         color={[255, 255, 255, 0.6]} // RGBA
                         scale={1.2}
+                        //scale={1} // No aplicar escala inicial
                         rotate={0}
                     />
                 )}

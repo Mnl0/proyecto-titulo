@@ -33,7 +33,7 @@ const Login = () => {
                 },
                 body: JSON.stringify(inputValues)
             });
-            console.log(response)
+            //console.log(response)
 
             if(response.ok){
                 const user = await response.json();

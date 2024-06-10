@@ -22,7 +22,7 @@ const CustomerFormRegister = () => {
     const handleSubmit = async (e) => { //implementar fetch para registrar cliente
         e.preventDefault();
         try{
-            //console.log('front: ', inputValues)
+            console.log('front: ', inputValues)
             const response = await fetch('http://localhost:3000/api/client/create', {
                 method: 'POST',
                 headers: {
@@ -30,7 +30,7 @@ const CustomerFormRegister = () => {
                 },
                 body: JSON.stringify(inputValues)
             });
-            //console.log(response)
+            
             console.log('RESPUESTA', response);
 
             if(response.ok){
