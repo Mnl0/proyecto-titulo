@@ -5,10 +5,10 @@ import stylesNavbarGlobal from './navbarGlobal.module.css';
 const GlobalNavbar = () => {
     return (
         <nav className={stylesNavbarGlobal.topNavbar}>
-            <div><Link to='/' className={stylesNavbarGlobal.enlace}>LVM solutions</Link></div>
+            <div><Link to='/home' className={stylesNavbarGlobal.enlace}>WorkWise</Link></div>
             <ul className={stylesNavbarGlobal.globalLinks}>
                 <li>
-                    <Link to="/" className={stylesNavbarGlobal.enlace}>Home</Link>
+                    <Link to="/home" className={stylesNavbarGlobal.enlace}>Home</Link>
                 </li>
                 <li>
                     <Link to="/about" className={stylesNavbarGlobal.enlace}>About</Link>

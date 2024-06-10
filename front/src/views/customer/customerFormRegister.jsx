@@ -5,7 +5,7 @@ import { useAuth } from '../components/authContext.jsx';  // importar authcontex
 import { Link, useNavigate } from "react-router-dom";
 
 
-const CustomerFormRegister = () => {
+const CustomerRegister = () => {
     const [inputValues, setInputValues] = useState({});
 
     const navigate = useNavigate();
@@ -36,7 +36,7 @@ const CustomerFormRegister = () => {
             if(response.ok){
                 const user = await response.json();
                 login(user);  // Actualiza el contexto con los datos del usuario
-                navigate('/panel');  // Redirecciona al usuario
+                navigate('/customerpanel');  // Redirecciona al usuario
                 
             }else{
                 console.error('Error de autenticación', response.statusText);
@@ -102,4 +102,4 @@ const CustomerFormRegister = () => {
     )
 }
 
-export default CustomerFormRegister;
+export default CustomerRegister;
