@@ -11,7 +11,7 @@ clientRouter.post('/create', middlewareValidateBody(createClient), clientControl
 clientRouter.post('/validateRecover', middlewareValidateBody(validateRecover), clientController.validateIfRecoverPass);
 clientRouter.post('/recover', middlewareValidateBody(recoverPass), clientController.recoverPass);
 
-clientRouter.get('/profile/:id', middlewareValidateParams(idParams), clientController.getProfile);
+clientRouter.get('/profile/:id', middlewareValidateParams(idParams), clientController.getProfileOnlyDb);
 
 // clientRouter.put('/editProfile/:id', clientController.editProfile);
 clientRouter.put('/addImageOrEditInServer/:id', middlewareValidateHeader(), clientController.addImageOrEditInServer);

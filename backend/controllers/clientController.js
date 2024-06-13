@@ -57,7 +57,8 @@ export const clientController = {
 			email: data.cl_email,
 			cellPhone: data.cl_cellPhone,
 			address: data.cl_address,
-			id: data.cl_id
+			id: data.cl_id,
+			imageProfile: data.cl_imageProfile
 		}
 		res.status(200).json(objCreate);
 
@@ -79,13 +80,18 @@ export const clientController = {
 		res.sendStatus(200);
 	},
 
-	getProfile: async (req, res) => {
+	getProfileOnlyDb: async (req, res) => {
 		const { id } = req.params;
 		const item = await searchForId(id, 'id');
 		if (!item) {
 			return res.sendStatus(400);
 		}
 		res.status(200).send(item.toJSON());
+	},
+	/*=======considerar obtener los datos y la imagen del servidor*/
+	getProfileImgServer: async (req, res) => {
+		const imageFront = getImageFromServer(id, 'cl');
+
 	},
 
 	addImageOrEditInServer: async (req, res) => {
@@ -95,15 +101,19 @@ export const clientController = {
 		if (!state) {
 			return res.sendStatus(400);
 		}
-		const imageFront = getImageFromServer(id, 'cl');
-		res.status(200).sendfile(imageFront);
+		res.status(200);
 	},
 
 	addImageOrEditInDb: async (req, res) => {
 		const { id } = req.params;
 		let image = req.body;
 		let newFoto = await addImageOrEditInBd(image, id, 'cl');
-		res.status(200).send(newFoto);
+		if (newFoto === 0) {
+			return res.sendStatus(400);
+		}
+		let imageProfile = await searchForId(id, 'id');
+		console.log(imageProfile.cl_imageProfile)
+		res.status(200).send(imageProfile.cl_imageProfile);
 	},
 
 

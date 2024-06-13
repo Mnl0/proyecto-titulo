@@ -4,9 +4,9 @@ export const createWorker = object({
 	email: string().required(),
 	firstName: string().required(),
 	password: string().required(),
-	lastName: string().optional(),
-	cellPhone: string().optional(),
-	address: string().optional(),
+	lastName: string().required(),
+	cellPhone: string().required(),
+	address: string().required(),
 })
 
 export const auth = object({

@@ -22,7 +22,7 @@ export const connection_DB = sequelize.authenticate().then(() => {
 	console.log('Conexion exitosa')
 	sequelize.sync()//sincronizo todo los modelos
 	//sequelize.drop()// elimina todo los modelos
-	//sequelize.sync({ alter: true }) //compara y remplaza
+	//sequelize.sync({ alter: true }) //compara y actualiza los modelos
 }).catch((error) => {
 	console.error('Error en la conexion', error)
 })

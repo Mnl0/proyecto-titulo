@@ -4,7 +4,7 @@ export const createClient = object({
 	email: string().required(),
 	firstName: string().required(),
 	password: string().required(),
-	lastName: string().optional(),
+	lastName: string().required(),
 	cellPhone: string().optional(),
 	address: string().required(),
 });
