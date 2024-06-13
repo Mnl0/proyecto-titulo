@@ -84,6 +84,7 @@ export const workerController = {
 		if (!item) {
 			return res.sendStatus(400);
 		}
+		//devolver imagen si es que tiene una con su id
 		res.status(200).send(item.toJSON());
 	},
 
