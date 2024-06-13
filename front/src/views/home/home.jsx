@@ -1,12 +1,35 @@
-import Section1 from "./section1";
-import Section2 from "./section2";
+import { useState } from "react";
+import styles from "./home.module.css";
+import UIhome from "./uihome.jsx";
+import CustomerLogin from '../customer/customerLogin.jsx';
+import WorkerLogin from '../worker/workerLogin.jsx';
 
 const Home = () => {
+    const [formToShow, setFormToShow] = useState(null);
+
+    const handleCustomerLogin = () => {
+        setFormToShow("customer");
+    }
+
+    const handleWorkerLogin = () => {
+        setFormToShow("worker");
+    }
 
     return (
-        <div>
-            <Section1 />
-            <Section2 />
+        <div className={styles.globalHome}>
+            <div className={styles.nine}>
+                <h1>Bienvenido a WorkWise<span>LVM Solutions</span></h1>
+            </div>
+
+            {
+                formToShow === "customer" ? <CustomerLogin /> :
+                formToShow === "worker" ? <WorkerLogin /> : (
+                    <div>
+                        <UIhome onClick={handleCustomerLogin} title="Iniciar como Cliente"/>
+                        <UIhome onClick={handleWorkerLogin} title="Iniciar como Trabajador" />
+                    </div>
+                )
+            }
         </div>
     )
 }

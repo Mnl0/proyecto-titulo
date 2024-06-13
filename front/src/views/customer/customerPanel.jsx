@@ -13,8 +13,13 @@ const CustomerPanel = () => {
     const [showTable, setShowTable] = useState(false); // Estado para controlar la visibilidad de TableUsers
     const [loading, setLoading] = useState(false); // Estado para controlar el estado de carga
     const [errorMessage, setErrorMessage] = useState(""); // Estado para almacenar mensajes de error
-    const [category, setCategory] = useState("zzz"); // Estado para almacenar la categoría seleccionada
+    const [category, setCategory] = useState(""); // Estado para almacenar la categoría seleccionada
     const [dataTestFront, setDataTestFront] = useState([]);
+    const [categories, setCategories] = useState([]);
+
+    useEffect(() => {
+        console.log(category)
+    }, [category])
 
     const [userLocation, setUserLocation] = useState({
         ltd: -36.8341573,
@@ -30,13 +35,12 @@ const CustomerPanel = () => {
     }, []);
 
     const okey = (location) => {
-        console.log('location: ', location)
         let uLoc = {
             ltd: location.coords.latitude,
             lng: location.coords.longitude
         }
         setUserLocation(uLoc);
-        console.log(userLocation)   //Usar para el mapa.
+        //console.log(userLocation)   //Usar para el mapa.
     }
     
     const error = (err) => {
@@ -50,10 +54,22 @@ const CustomerPanel = () => {
         console.log(msg);
     }
 
+    useEffect(() => {
+        const fetchCategories = async () => {
+          try {
+            const response = await fetch('http://localhost:3000/api/category/getAll');
+            if (!response.ok) throw new Error('No se pudieron cargar las categorías');
+            const data = await response.json();
+            setCategories(data);
+          } catch (error) {
+            console.error('Error al obtener las categorías:', error);
+          }
+        };
+        fetchCategories();
+      }, []);
+
     const handleSearch = async () => {
         setLoading(true); // Iniciar el estado de carga
-        console.log(category)
-        console.log(user)
         try {
             // Simular una llamada a la base de datos para obtener trabajadores con la categoría seleccionada
             //const response = await fetch(`https://api.example.com/workers?category=${category}`);
@@ -88,33 +104,34 @@ const CustomerPanel = () => {
     };
 
     return (
-        <div className={styles.panelContainer}>
-            <div className={styles.card}>
-                {
-                    user === null ? (
-                        <div>
-                            <h2>Lo sentimos, debes iniciar sesión.</h2>
-                            <Link to='/login'>Iniciar Sesión</Link>
+        <div >
+            {
+                user === null ? (
+                    <div>
+                        <h2>Lo sentimos, debes iniciar sesión.</h2>
+                        <Link to='/login'>Iniciar Sesión</Link>
+                    </div>
+                ) : (
+                    <div className={styles.panelContainer}>
+                        <div className={styles.card}>
+                            <div className={styles.userDataContainer}>
+                                <MyAvatarEditor user={user}/>
+                                <h2 className={styles.userName}>{user.name}</h2>
+                                <p className={styles.userEmail}>{user.email}</p>
+                            </div>
                         </div>
-                    ) : (
-                        <div className={styles.userDataContainer}>
-                            <MyAvatarEditor />
-                            <h2 className={styles.userName}>{user.name}</h2>
-                            <p className={styles.userEmail}>{user.email}</p>
+
+                        <div className={styles.looker}>
+                            <h2 className={styles.title}>Bienvenid@, buscas un Trabajador?</h2>
+                            <SelectGlass onSelect={setCategory} categories={categories} />
+                            <ButtonGoogle clicEvent={handleSearch}/> {/* Botón para buscar trabajadores */}
+                            {loading && <p>Cargando...</p>} {/* Mostrar mensaje de carga si loading es true */}
+                            {!loading && errorMessage && <p>{errorMessage}</p>} {/* Mostrar mensaje de error si hay un error */}
+                            {showTable && !loading && !errorMessage && <TableUsers people={dataTestFront} />} {/* Mostrar TableUsers solo si showTable es true y no hay ni carga ni error */}
                         </div>
-                    ) 
-                }
-
-            </div>
-
-            <div className={styles.looker}>
-                <h2 className={styles.title}>Bienvenid@, buscas un Trabajador?</h2>
-                <SelectGlass onSelect={setCategory} />
-                <ButtonGoogle clicEvent={handleSearch}/> {/* Botón para buscar trabajadores */}
-                {loading && <p>Cargando...</p>} {/* Mostrar mensaje de carga si loading es true */}
-                {!loading && errorMessage && <p>{errorMessage}</p>} {/* Mostrar mensaje de error si hay un error */}
-                {showTable && !loading && !errorMessage && <TableUsers people={dataTestFront} />} {/* Mostrar TableUsers solo si showTable es true y no hay ni carga ni error */}
-            </div>
+                    </div>
+                ) 
+            }
         </div>
     )
 }

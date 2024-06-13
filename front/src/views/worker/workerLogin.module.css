@@ -3,25 +3,29 @@
 	src: url("../../fonts/Play-Regular.ttf");
 }
 
-.global{
+:root{
+    --primary-worker-color: #83B4FF;
+}
+
+.globalworker{
     width: 100%;
     height: 90vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    background-image: url('../../img/business-card-2918333_1280.jpg');
+    /*background-image: url('../../img/business-card-2918333_1280.jpg');*/
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
     padding: 20px 0 0 0;
 }
 
-.card {
+.globalworker > .card {
     width: 400px;
     padding: 0 1.2rem 1rem 1.2rem;
     text-align: center;
     background: #2a2b38;
-    background: linear-gradient(315deg, #ffbc00, #ff0058);
+    background: linear-gradient(315deg, var(--primary-worker-color), #ff0058);
     background: rgba(255,255,255,.2);
     box-shadow: 0 0 10px rgba(0,0,0,0.25);
     backdrop-filter: blur(10px);
@@ -31,7 +35,7 @@
 }
 
 /*Inputs*/
-.field {
+.globalworker .field {
     display: flex;
     align-items: center;
     background-color: #1f2029;
@@ -41,13 +45,13 @@
     margin-bottom: 20px;
 }
 
-.inputIcon {
+.globalworker .inputIcon {
     height: 1.5em;
     width: 1.5em;
-    fill: #ffeba7;
+    fill: var(--primary-worker-color);
 }
 
-.inputField {
+.globalworker .inputField {
     background: none;
     border: none !important;
     outline: none !important;
@@ -57,15 +61,15 @@
 }
 
 /*Text*/
-.title {
+.globalworker .title {
     margin-bottom: 1rem;
     font-size: 1.5em;
     font-weight: 500;
-    color: #9f8326;
+    color: var(--primary-worker-color);
 }
 
 /*Buttons*/
-.btn {
+.globalworker .btn {
     margin: 1rem;
     border: none;
     border-radius: 4px;
@@ -73,32 +77,32 @@
     font-size: .8em;
     text-transform: uppercase;
     padding: 0.6em 1.2em;
-    background-color: #ffeba7;
+    background-color: var(--primary-worker-color);
     color: #5e6681;
     box-shadow: 0 8px 24px 0 rgb(255 235 167 / 20%);
     transition: all .3s ease-in-out;
     cursor: pointer;
 }
 
-.btnLink {
-    color: #9f8326;
+.globalworker .btnLink {
+    color: var(--primary-worker-color);
     display: block;
     font-size: .75em;
     transition: color .3s ease-out;
 }
 
 /*Hover & focus*/
-.field input:focus::placeholder {
+.globalworker .field input:focus::placeholder {
     opacity: 0;
     transition: opacity .3s;
 }
 
-.btn:hover {
+.globalworker .btn:hover {
     background-color: #5e6681;
-    color: #ffeba7;
+    color: var(--primary-worker-color);
     box-shadow: 0 8px 24px 0 rgb(16 39 112 / 20%);
 }
 
-.btnLink:hover {
-    color: #ffeba7;
+.globalworker .btnLink:hover {
+    color: var(--primary-worker-color);
 }
