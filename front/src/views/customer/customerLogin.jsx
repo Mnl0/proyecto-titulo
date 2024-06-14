@@ -20,7 +20,6 @@ const CustomerRegister = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            console.log(inputValues)
             const response = await fetch('http://localhost:3000/api/client/auth', {
                 method: 'POST',
                 headers: {
@@ -44,7 +43,7 @@ const CustomerRegister = () => {
     };
 
     return (
-        <div className={stylescustomer.globalcustomer}>
+        <div className={`${stylescustomer.globalcustomer} ${stylescustomer.fadeIn}`}>
             <div className={stylescustomer.cardcustomer}>
                 <h4 className={stylescustomer.title}>Iniciar como Cliente</h4>
                 <form onSubmit={handleSubmit}>
@@ -61,7 +60,8 @@ const CustomerRegister = () => {
                         <input onChange={handleValues} id="password" placeholder="Contraseña" className={stylescustomer.inputField} name="password" type="password" />
                     </div>
 
-                    <button  className={stylescustomer.btn} type="submit">Iniciar Sesión</button>
+                    <button  className={`${stylescustomer.btn} ${stylescustomer.success}`} type="submit">Iniciar Sesión</button>
+                    <Link to="/registercustomer"  className={stylescustomer.btn} type="submit">Crear Cuenta</Link>
                     <a href="#" className={stylescustomer.btnLink}>Olvidaste tu contraseña?</a>
                 </form>
             </div>

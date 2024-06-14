@@ -2,13 +2,13 @@ import React from "react";
 import { Link } from "react-router-dom";
 import stylesNavbarGlobal from './navbarGlobal.module.css';
 
-const GlobalNavbar = () => {
+const GlobalNavbar = ({ onNavClick }) => {
     return (
         <nav className={stylesNavbarGlobal.topNavbar}>
-            <div><Link to='/home' className={stylesNavbarGlobal.enlace}>WorkWise</Link></div>
+            <div><Link to='/' onClick={onNavClick} className={stylesNavbarGlobal.enlace}>WorkWise</Link></div>
             <ul className={stylesNavbarGlobal.globalLinks}>
                 <li>
-                    <Link to="/home" className={stylesNavbarGlobal.enlace}>Home</Link>
+                    <Link to="/" onClick={onNavClick} className={stylesNavbarGlobal.enlace}>Home</Link>
                 </li>
                 <li>
                     <Link to="/about" className={stylesNavbarGlobal.enlace}>About</Link>

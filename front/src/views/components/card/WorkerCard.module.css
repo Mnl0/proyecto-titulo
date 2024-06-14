@@ -1,0 +1,105 @@
+:root{
+    --primary-card-color: #1679AB;
+}
+
+.card {
+    width: 220px;
+    height: 300px;
+    background: rgb(38, 38, 38);
+    box-shadow: 7px 5px 10px rgba(0, 0, 0, 0.333);
+    border-radius: 5px;
+  }
+  
+  .imge {
+    height: 70px;
+    background-color: var(--primary-card-color);
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: center;
+    border-radius: 5px 5px 0 0;
+  }
+  
+  .imge .Usericon {
+    background-color: #414141;
+    width: 50px;
+    height: 50px;
+    border-radius: 5px;
+    margin: 0 0 0 5px;
+  }
+  
+  .UserData{
+    display: flex;
+    flex-flow: column nowrap;
+    height: 50px;
+    padding: 0 0 0 5px;
+  }
+
+  .imge .UserName {
+    width: auto;
+    height: 15px;
+    color: #fff;
+    font-size: 15px;
+    margin: 0 0 5px 0;
+  }
+  
+  .imge .Id {
+    width: auto;
+    height: 15px;
+    color: #ddd;
+    font-size: 15px;
+  }
+  
+  .Description {
+    border-color: #141414;
+    background-color: #414141;
+    width: auto;
+    min-height: 150px;
+    height: auto;
+    border-radius: 5px;
+    margin: 5px;
+  }
+  
+  /*______Social Media______*/
+  .socialmedia {
+    width: auto;
+    height: auto;
+    display: flex;
+  }
+  
+
+
+  /*    STARS     */
+  .ratingstarscontainer {
+    width: 100%;
+    height: 30px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+    justify-content: center;
+  }
+  .starlabel svg {
+    fill: rgb(210, 210, 210);
+    width: 20px;
+    height: auto;
+  }
+  .ratingstarscontainer > input {
+    appearance: unset;
+  }
+  .ratingstarscontainer > input:hover ~ .starlabel svg {
+    fill: rgb(255, 204, 185);
+  }
+  .ratingstarscontainer > input:checked ~ .starlabel svg {
+    fill: rgb(255, 102, 47);
+    animation: slide-in-fwd-center 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+  }
+  @keyframes slide-in-fwd-center {
+    0% {
+      transform: scale(1.6);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  
+  
+ 

@@ -1,11 +1,9 @@
-import { useState } from "react";
 import styles from "./home.module.css";
 import UIhome from "./uihome.jsx";
 import CustomerLogin from '../customer/customerLogin.jsx';
 import WorkerLogin from '../worker/workerLogin.jsx';
 
-const Home = () => {
-    const [formToShow, setFormToShow] = useState(null);
+const Home = ({ formToShow, setFormToShow }) => {
 
     const handleCustomerLogin = () => {
         setFormToShow("customer");

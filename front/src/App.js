@@ -1,28 +1,34 @@
 import './App.css';
+import { useState } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+//import Register from './views/register/register.jsx';
 import Home from './views/home/home.jsx';
-import CustomerLogin from './views/customer/customerLogin.jsx';
+import NavbarGlobal from './views/partials/navbarGlobal.jsx';
 import CustomerRegister from './views/customer/customerFormRegister.jsx';
 import CustomerPanel from './views/customer/customerPanel.jsx';
-import NavbarGlobal from './views/partials/navbarGlobal.jsx';
-import Register from './views/register/register.jsx';
 import WorkerRegister from './views/worker/workerFormRegister.jsx';
-import WorkerLogin from './views/worker/workerLogin.jsx';
+import WorkerPanel from './views/worker/workerPanel.jsx';
+import LandingPage from './views/home/LandingPage.jsx';
+
 
 function App() {
+  const [formToShow, setFormToShow] = useState(null);
+
+  const handleNavClick = () => {
+      setFormToShow(null); // Oculta los formularios al hacer clic en un enlace del navbar
+  }
+
   return (
     <div className="App">
         <BrowserRouter>
-          <NavbarGlobal />
+          <NavbarGlobal onNavClick={handleNavClick} />
           <Routes>
-            <Route path='/' element={<Home />} />
-            <Route path='/home' element={<Home />} />
+            <Route path='/' element={<Home formToShow={formToShow} setFormToShow={setFormToShow} />} />
+            <Route path='/registercustomer' element={<CustomerRegister />} />
             <Route path='/customerpanel' element={<CustomerPanel />} />
-            <Route path='/customerregister' element={<CustomerRegister />} />
             <Route path='/registerworker' element={<WorkerRegister />} />
-            {/*<Route path='/customerlogin' element={<CustomerLogin />} />
-            <Route path='/workerlogin' element={<WorkerLogin />} />
-            <Route path='/Register' element={<Register />} />*/}
+            <Route path='/workerpanel' element={<WorkerPanel />} />
+            <Route path='/landingpage' element={<LandingPage />} />
           </Routes>
         </BrowserRouter>
     </div>

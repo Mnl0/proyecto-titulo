@@ -1,0 +1,37 @@
+@font-face {
+	font-family: "Play-Regular";
+	src: url("../../fonts/Play-Regular.ttf");
+}
+
+p, h1, h2{
+    margin: 0;
+    padding: 0;
+}
+
+.panelContainer{
+    width: 100%;
+    min-height: 85vh;
+    height: 90%;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
+    font-family: 'Play-Regular', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+}
+
+.card {
+    flex: 1;
+    height: auto;
+    /*background-color: #40A2E3;
+    background-color: #0093E9;
+    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);*/
+    color: #000;
+    display: flex;
+    padding: 20px 0 0 0;
+    flex-flow: column nowrap;
+}
+
+.userDataContainer{
+    display: flex;
+    flex-flow: column nowrap;
+    text-align: center;
+}

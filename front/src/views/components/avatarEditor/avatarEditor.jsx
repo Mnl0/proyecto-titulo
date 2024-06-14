@@ -12,11 +12,15 @@ const MyAvatarEditor = ({user}) => {
   const [imgUser, setImgUser] = useState('');
 
   useEffect(()=>{
+    
     const img = new Image();
-    const userImageURL = user.imgURL ? `http://localhost:3000/storage/${user.imgURL}.png` : userMaleAvatar;
+    const userImageURL = user.imageProfile ? `http://localhost:3000/storage/${user.imageProfile}` : userMaleAvatar;
+    //const userImageURL = user.imageProfile //? `http://localhost:3000/storage/${user.imgURL}.png` : userMaleAvatar;
     img.src = userImageURL;
     img.onload = () => setImgUser(userImageURL);
     img.onerror = () => setImgUser(userMaleAvatar);
+    //console.log('img', img)
+    //console.log('userImageURL: ', userImageURL)
   }, [])
 
   useEffect(() => {
@@ -32,6 +36,7 @@ const MyAvatarEditor = ({user}) => {
   };
 
   const handleSave = async () => {
+
     if (editorRef.current) {
         // Obtener el canvas con la imagen editada
         const canvas = editorRef.current.getImage();
@@ -46,9 +51,11 @@ const MyAvatarEditor = ({user}) => {
         const blob = base64ToBlob(dataURLScaled, 'image/png');  // Convertir base64 a Blob
         const success = await uploadImage(blob);  // Enviar la imagen al servidor
 
+        console.log('succes ', success)
+        
         if(success){
           const blobUrl = URL.createObjectURL(blob); // Crear una URL a partir del Blob
-          await setImageURL(blobUrl);
+          setImgUser(blobUrl);
         }
         
         setOpen(false); // Cerrar el diálogo después de guardar
@@ -81,7 +88,7 @@ const MyAvatarEditor = ({user}) => {
               },
               body: blob
           });
-          
+          console.log(response)
 
           if (!response.ok) {
               throw new Error('Error en la carga de la imagen en el servidor(Fetch)');
