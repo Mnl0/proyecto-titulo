@@ -20,7 +20,8 @@ export const workerController = {
 			email: item.wr_email,
 			cellPhone: item.wr_cellPhone,
 			address: item.wr_address,
-			id: item.wr_id
+			id: item.wr_id,
+			imageProfile: item.wr_imagePath,
 		};
 		res.status(200).json(itemProfile);
 	},
@@ -95,19 +96,27 @@ export const workerController = {
 		if (!state) {
 			return res.sendStatus(400);
 		}
-		const imageFront = getImageFromServer(id, 'wr');
-		res.status(200).sendfile(imageFront);
+		res.status(200);
 	},
 
 	addImageOrEditInDb: async (req, res) => {
 		const { id } = req.params;
 		let image = req.body;
 		let newFoto = await addImageOrEditInBd(image, id, 'wr');
+		if (newFoto === 0) {
+			return res.sendStatus(400);
+		}
 		res.status(200).send(newFoto);
 	},
 
 	getAllForOccupation: (req, res) => {
 		console.log('llege al controlador obtener todos los trbajadores por categoria')
+		const { id } = req.params
+
+
+
+
+		res.send(id)
 	},
 
 

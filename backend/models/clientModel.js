@@ -97,7 +97,7 @@ export async function searchForId(id, nameColumn) {
 export async function updateProfile(id) {
 	return await searchForId(id, 'id');
 }
-/*=================esta demas esta funcion===============*/
+
 export async function addImageOrEditInServer(image, id, pref) {
 	return await addImageOrEditInServerForModel(image, id, pref, ClientSchema);
 }

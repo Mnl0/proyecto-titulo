@@ -24,3 +24,7 @@ export const recoverPass = object({
 	password: string().required()
 })
 
+export const idParams = object({
+	id: string().required()
+})
+

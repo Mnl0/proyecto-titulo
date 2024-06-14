@@ -94,7 +94,7 @@ export async function searchForId(id, nameColumn) {
 }
 
 export function addImageOrEditInServer(image, id, pref) {
-	return addImageOrEditInServerForModel(image, id, pref);
+	return addImageOrEditInServerForModel(image, id, pref, WorkerSchema);
 }
 
 export function getImageFromServer(id, pref) {

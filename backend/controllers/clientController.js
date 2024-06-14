@@ -26,7 +26,7 @@ export const clientController = {
 		}
 		res.status(200).json(itemProfile)
 	},
-	/*==========Enviar del body el tipo cl o wr y pasar como argumento al searchEmail=====================*/
+
 	create: async (req, res) => {
 		const { email, firstName, password, lastName, cellPhone, address } = req.validateBody;
 
@@ -114,42 +114,8 @@ export const clientController = {
 		if (newFoto === 0) {
 			return res.sendStatus(400);
 		}
-		let imageProfile = await searchForId(id, 'id');
-		let imageBuffer = Buffer.from(imageProfile.cl_imageProfile, 'base64');
-		res.status(200).send(imageBuffer);
+		res.status(200);
 	},
-
-	//almacenar ruta en bsd y enviar solo la ruta de la imagen
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 	//=====no delete cambiar por desactivar=======//
 	delete: (req, res) => {
