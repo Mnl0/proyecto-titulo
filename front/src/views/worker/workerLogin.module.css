@@ -5,6 +5,10 @@
 
 :root{
     --primary-worker-color: #83B4FF;
+    --secondary-worker-color: #277691;
+    --tertiary-worker-color: #4CCD99;
+    --Quaternary-worker-color: #007F73;
+    --Quinary-worker-color: #007F73;
 }
 
 .globalworker{
@@ -82,6 +86,15 @@
     box-shadow: 0 8px 24px 0 rgb(255 235 167 / 20%);
     transition: all .3s ease-in-out;
     cursor: pointer;
+}
+
+.globalworker > .card > form > .success{
+    background-color: var(--Quaternary-worker-color);
+    color: #fff;
+}
+.globalworker > .card > form > .success:hover{
+    background-color: var(--tertiary-worker-color);
+    color: #fff;
 }
 
 .globalworker .btnLink {

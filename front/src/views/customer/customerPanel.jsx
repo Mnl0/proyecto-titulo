@@ -109,7 +109,7 @@ const CustomerPanel = () => {
                 user === null ? (
                     <div>
                         <h2>Lo sentimos, debes iniciar sesión.</h2>
-                        <Link to='/login'>Iniciar Sesión</Link>
+                        <Link to='/'>Iniciar Sesión</Link>
                     </div>
                 ) : (
                     <div className={styles.panelContainer}>

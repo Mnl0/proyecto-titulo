@@ -61,7 +61,8 @@ const WorkerRegister = () => {
                         <input onChange={handleValues} id="password" placeholder="Contraseña" className={styles.inputField} name="password" type="password" />
                     </div>
 
-                    <button  className={styles.btn} type="submit">Registrarse</button>
+                    <button  className={`${styles.btn} ${styles.success}`} type="submit">Iniciar Sesión</button>
+                    <Link to="/registerworker"  className={styles.btn} type="submit">Crear Cuenta</Link>
                     <a href="#" className={styles.btnLink}>Olvidaste tu contraseña?</a>
                 </form>
             </div>

@@ -4,8 +4,11 @@
 }
 
 :root{
-    --primary-color: #BC5A94;
-    --secondary-color: #277691;
+    --primary-color-customer: #EF9C66;
+    --secondary-color-customer: #277691;
+    --tertiary-color: #4CCD99;
+    --Quaternary-color: #007F73;
+    --Quinary-color-customer: #007F73;
 }
 
 .globalcustomer{
@@ -26,7 +29,7 @@
     padding: 0 1.2rem 1rem 1.2rem;
     text-align: center;
     background: #2a2b38;
-    background: linear-gradient(315deg, var(--primary-color), var(--secondary-color));
+    background: linear-gradient(315deg, var(--primary-color-customer), var(--secondary-color-customer));
     background: rgba(255,255,255,.2);
     box-shadow: 0 0 10px rgba(0,0,0,0.25);
     backdrop-filter: blur(10px);
@@ -49,7 +52,7 @@
 .globalcustomer > .cardcustomer > form > .field > .inputIcon {
     height: 1.5em;
     width: 1.5em;
-    fill: var(--primary-color);
+    fill: var(--primary-color-customer);
 }
 
 .globalcustomer > .cardcustomer > form > .field > .inputField {
@@ -66,7 +69,7 @@
     margin-bottom: 1rem;
     font-size: 1.5em;
     font-weight: 500;
-    color: var(--primary-color);
+    color: var(--primary-color-customer);
 }
 
 /*Buttons*/
@@ -78,15 +81,23 @@
     font-size: .8em;
     text-transform: uppercase;
     padding: 0.6em 1.2em;
-    background-color: var(--primary-color);
-    color: #5e6681;
+    background-color: var(--primary-color-customer);
+    color: #fff;
     box-shadow: 0 8px 24px 0 rgb(255 235 167 / 20%);
     transition: all .3s ease-in-out;
     cursor: pointer;
 }
+.globalcustomer > .cardcustomer > form > .success{
+    background-color: var(--Quaternary-color);
+    color: #fff;
+}
+.globalcustomer > .cardcustomer > form > .success:hover{
+    background-color: var(--tertiary-color);
+    color: #fff;
+}
 
 .globalcustomer .btnLink {
-    color: var(--primary-color);
+    color: var(--primary-color-customer);
     display: block;
     font-size: .75em;
     transition: color .3s ease-out;
@@ -100,10 +111,10 @@
 
 .globalcustomer .btn:hover {
     background-color: #5e6681;
-    color: var(--primary-color);
+    color: var(--primary-color-customer);
     box-shadow: 0 8px 24px 0 rgb(16 39 112 / 20%);
 }
 
 .globalcustomer .btnLink:hover {
-    color: var(--primary-color);
+    color: var(--primary-color-customer);
 }
