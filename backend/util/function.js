@@ -70,11 +70,17 @@ export async function updateImageForModel(image, id, pref, schema) {
 	})
 }
 
-export function addImageOrEditInServerForModel(image, id, pref,) {
+export async function addImageOrEditInServerForModel(image, id, pref, schema) {
 	try {
 		const folderStorageImage = createDirectoryStorage();
 		fs.writeFileSync(`${folderStorageImage}/${pref}_${id}.png`, image);
-		return true;
+		const pathImage = getImageFromServerForModel(id, pref);
+
+		const urlImage = path.basename(pathImage);
+		console.log(urlImage)
+
+		await updateForColumnModel(urlImage, id, pref, schema);
+		return { success: true, urlImage };
 	} catch (err) {
 		return { success: false, error: err };
 	}
@@ -92,3 +98,11 @@ export function getImageFromServerForModel(id, pref) {
 	const folderStorageImage = createDirectoryStorage();
 	return path.join(folderStorageImage, `${pref}_${id}.png`);
 }
+
+//podria pasar columna y valor como argumento
+export async function updateForColumnModel(imagePath, id, pref, schema) {
+	return await schema.update({ [`${pref}_imagePath`]: imagePath }, {
+		where: { [`${pref}_id`]: id }
+	})
+}
+

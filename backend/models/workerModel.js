@@ -51,6 +51,10 @@ export const WorkerSchema = sequelize.define('worker', {
 		type: DataTypes.BLOB('long'),
 		allowNull: true,
 	},
+	wr_imagePath: {
+		type: DataTypes.STRING(100),
+		allowNull: true,
+	},
 },
 	{
 		/*=====se debe agregar el timestamps true cuando se puede eliminar de manera correcta cualquier elemento de esta tabla error con fk*/

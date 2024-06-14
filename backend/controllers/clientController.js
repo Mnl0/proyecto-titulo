@@ -21,7 +21,8 @@ export const clientController = {
 			email: item.cl_email,
 			cellPhone: item.cl_cellPhone,
 			address: item.cl_address,
-			id: item.cl_id
+			id: item.cl_id,
+			imageProfile: item.cl_imagePath,
 		}
 		res.status(200).json(itemProfile)
 	},
@@ -58,7 +59,6 @@ export const clientController = {
 			cellPhone: data.cl_cellPhone,
 			address: data.cl_address,
 			id: data.cl_id,
-			imageProfile: data.cl_imageProfile
 		}
 		res.status(200).json(objCreate);
 
@@ -80,6 +80,7 @@ export const clientController = {
 		res.sendStatus(200);
 	},
 
+	//===========ruta no se esta usando=================//
 	getProfileOnlyDb: async (req, res) => {
 		const { id } = req.params;
 		const item = await searchForId(id, 'id');
@@ -88,6 +89,7 @@ export const clientController = {
 		}
 		res.status(200).send(item.toJSON());
 	},
+
 	/*=======considerar obtener los datos y la imagen del servidor*/
 	getProfileImgServer: async (req, res) => {
 		const imageFront = getImageFromServer(id, 'cl');
@@ -97,13 +99,14 @@ export const clientController = {
 	addImageOrEditInServer: async (req, res) => {
 		const { id } = req.params;
 		let image = req.body;
-		let state = addImageOrEditInServer(image, id, 'cl');
-		if (!state) {
+		let state = await addImageOrEditInServer(image, id, 'cl');
+		if (!state.success) {
 			return res.sendStatus(400);
 		}
 		res.status(200);
 	},
 
+	//===========ruta no se esta usando=================//
 	addImageOrEditInDb: async (req, res) => {
 		const { id } = req.params;
 		let image = req.body;
@@ -112,9 +115,12 @@ export const clientController = {
 			return res.sendStatus(400);
 		}
 		let imageProfile = await searchForId(id, 'id');
-		console.log(imageProfile.cl_imageProfile)
-		res.status(200).send(imageProfile.cl_imageProfile);
+		let imageBuffer = Buffer.from(imageProfile.cl_imageProfile, 'base64');
+		res.status(200).send(imageBuffer);
 	},
+
+	//almacenar ruta en bsd y enviar solo la ruta de la imagen
+
 
 
 

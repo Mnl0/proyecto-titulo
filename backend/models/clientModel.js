@@ -51,6 +51,10 @@ export const ClientSchema = sequelize.define('client', {
 		type: DataTypes.BLOB('long'),
 		allowNull: true,
 	},
+	cl_imagePath: {
+		type: DataTypes.STRING(100),
+		allowNull: true,
+	},
 },
 
 	/*========configuracion tabla================*/
@@ -93,11 +97,11 @@ export async function searchForId(id, nameColumn) {
 export async function updateProfile(id) {
 	return await searchForId(id, 'id');
 }
-
-export function addImageOrEditInServer(image, id, pref) {
-	return addImageOrEditInServerForModel(image, id, pref);
+/*=================esta demas esta funcion===============*/
+export async function addImageOrEditInServer(image, id, pref) {
+	return await addImageOrEditInServerForModel(image, id, pref, ClientSchema);
 }
-
+/*=================esta demas esta funcion===============*/
 export function getImageFromServer(id, pref) {
 	return getImageFromServerForModel(id, pref);
 }

@@ -9,7 +9,7 @@ const database = process.env.DATABASE;
 const port = process.env.DB_PORT;
 
 export const sequelize = new Sequelize({
-	dialect: 'mysql',
+	dialect: 'mysql',//se pueden usar diferentes bases de datos
 	host: host,
 	username: user,
 	password: password,
