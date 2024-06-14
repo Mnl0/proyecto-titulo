@@ -3,43 +3,48 @@
 	src: url("../../fonts/Play-Regular.ttf");
 }
 
+p, h1, h2{
+    margin: 0;
+    padding: 0;
+}
+
 .panelContainer{
     width: 100%;
     min-height: 85vh;
     height: 90%;
     display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
     font-family: 'Play-Regular', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 .card {
-    flex: 1;
     height: auto;
-    background-color: #40A2E3;
+    width: 100%;
+    /*background-color: #40A2E3;
     background-color: #0093E9;
-    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
-    color: #fff;
+    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);*/
+    color: #000;
     display: flex;
-    padding: 20px 0 0 0;
-    flex-flow: column nowrap;
+    padding: 20px 0 20px 0;
+    flex-flow: row nowrap;
+    margin: 0 20px 20px 0;
+    border-bottom: 1px solid #ccc;
 }
 
 .userDataContainer{
+    flex: 1;
     display: flex;
     flex-flow: column nowrap;
     text-align: center;
 }
 
-.looker{
-    flex: 3;
-    background: linear-gradient(35deg, red, purple);
-    background-image: linear-gradient(to top, #f77062 0%, #fe5196 100%);
-    height: auto;
+.panelContainer > .card > .searchControll{
     display: flex;
     flex-flow: column nowrap;
-    padding: 20px;
+    flex: 3;
 }
-.looker > .title {
-    width: 100%;
+.panelContainer > .card > .searchControll > h2{
     margin: 0 0 20px 0;
-    color: #fff;
 }
+

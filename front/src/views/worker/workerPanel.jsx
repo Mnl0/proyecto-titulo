@@ -3,8 +3,6 @@ import styles from "./workerPanel.module.css";
 import { Link } from "react-router-dom";
 import { useAuth } from '../components/authContext.jsx';
 import MyAvatarEditor from "../components/avatarEditor/avatarEditor.jsx";
-import WorkerCard from '../components/card/WorkerCard.jsx';
-
 
 const WorkerPanel = () => {
     const {user} = useAuth();
@@ -52,7 +50,7 @@ const WorkerPanel = () => {
     return (
         <div >
             {
-                user2 === null ? (
+                user === null ? (
                     <div>
                         <h2>Lo sentimos, debes iniciar sesión.</h2>
                         <Link to='/'>Iniciar Sesión</Link>
@@ -61,13 +59,13 @@ const WorkerPanel = () => {
                     <div className={styles.panelContainer}>
                         <div className={styles.card}>
                             <div className={styles.userDataContainer}>
-                                <MyAvatarEditor user={user2}/>
-                                <h2 className={styles.userName}>{user2.name}</h2>
-                                <p className={styles.userEmail}>{user2.email}</p>
+                                <MyAvatarEditor user={user} userType="worker" />
+                                <h2 className={styles.userName}>{user.name}</h2>
+                                <p className={styles.userEmail}>{user.email}</p>
                             </div>
                         </div>
                         <div>
-                            <WorkerCard />
+                            
                         </div>
                     </div>
                 ) 

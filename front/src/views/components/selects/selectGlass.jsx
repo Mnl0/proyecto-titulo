@@ -5,8 +5,8 @@ const SelectGlass = ({ onSelect, categories }) => {
     const [selectedOption, setSelectedOption] = useState(0);
 
     const handleChange = (event) => {
-        console.log(categories)
-        console.log(typeof categories)
+        //console.log(categories)
+        //console.log(typeof categories)
         const selectedValue = event.target.value; //Toma el índice.
         const selectedText = event.target.options[event.target.selectedIndex].text; // Obtener el texto de la opción seleccionada
         setSelectedOption(selectedValue);

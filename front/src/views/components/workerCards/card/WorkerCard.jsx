@@ -1,21 +1,54 @@
 import React from "react";
 import styles from './WorkerCard.module.css';
+import userMaleAvatar from '../../avatarEditor/userMaleAvatar.jpeg';
+import PublicationSlider from '../../carousel/Carousel.jsx';
 
 const WorkerCard = (props) => {
+    const userImageURL = props.user.photo ? `http://localhost:3000/storage/${props.user.photo}` : userMaleAvatar; 
 
+    const publications = [
+        {
+            title: "Corrección filtración.",
+            description: "Muy buen trabajo. Recomendado!",
+            photo: 'https://cdn.pixabay.com/photo/2023/11/23/12/28/water-8407954_1280.jpg'
+        },
+        {
+            title: "Pintura Casa de material.",
+            description: "Muy buen maestro. Recomendadísimo.",
+            photo: 'https://cdn.pixabay.com/photo/2016/09/25/16/42/gun-1694106_960_720.jpg'
+        },
+        {
+            title: "Construcción Mueble",
+            description: "Es muy profesional, creo que le llamare otra vez.",
+            photo: 'https://cdn.pixabay.com/photo/2019/12/08/09/26/prune-4680692_1280.jpg'
+        },
+        {
+            title: "Jardinería Hogar",
+            description: "Tiene mucho talento. Es arte lo que hizo con mi jardín :)",
+            photo: 'https://cdn.pixabay.com/photo/2015/07/31/12/06/box-hedge-topiary-869073_1280.jpg'
+        },
+        {
+            title: "Instalación Lava platos.",
+            description: "Quedó Impecable! Recomendado!",
+            photo: 'https://cdn.pixabay.com/photo/2013/12/13/21/13/plumber-228010_960_720.jpg'
+        }
+    ]
+    
     return (
 
-        <div>
+        <div className={styles.cardContainer}>
             <div className={styles.card}>
                 <div className={styles.imge}>
-                    <div className={styles.Usericon}></div>
+                    <div className={styles.Usericon} style={{ backgroundImage: `url(${userImageURL})`, backgroundSize:'cover' }}></div>
                     <div className={styles.UserData}>
-                        <p className={styles.UserName}>{props.name}</p>
-                        <p className={styles.Id}>{props.category}</p>
+                        <p className={styles.UserName}>{props.user.name}</p>
+                        <p className={styles.Id}>{props.user.category}</p>
                     </div>
                 </div>
 
-                <div className={styles.Description}></div>
+                <div className={styles.Description}>
+                    <PublicationSlider  publications={publications} />
+                </div>
 
                 <div className={styles.socialmedia}>
 
