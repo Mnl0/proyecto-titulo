@@ -6,7 +6,7 @@ import { useAuth } from '../components/authContext.jsx';
 import SelectGlass from '../components/selects/selectGlass.jsx';
 import { ButtonGoogle } from "../components/buttons/buttonGoogle.jsx";
 import MyAvatarEditor from "../components/avatarEditor/avatarEditor.jsx";
-import TableUsers from '../components/listUsers/listUsers.jsx';
+import WorkerCards from '../components/workerCards/WorkerCards.jsx';
 
 const CustomerPanel = () => {
     const {user} = useAuth();
@@ -16,10 +16,6 @@ const CustomerPanel = () => {
     const [category, setCategory] = useState(""); // Estado para almacenar la categoría seleccionada
     const [dataTestFront, setDataTestFront] = useState([]);
     const [categories, setCategories] = useState([]);
-
-    useEffect(() => {
-        console.log(category)
-    }, [category])
 
     const [userLocation, setUserLocation] = useState({
         ltd: -36.8341573,
@@ -78,8 +74,8 @@ const CustomerPanel = () => {
             //Implementacion para pruebas...
             await setDataTestFront(
                 [
-                    { photo: null, name: 'Juan Pedraza', category: 'Gasfitería', rate: 4.5 },
-                    { photo: null, name: 'Luis Jara', category: 'Pintura', rate: 3.5 },
+                    { photo: 'wr_8d69a45b-c671-49eb-92ff-f26ee8b0445d.png', name: 'Juan Pedraza', category: 'Gasfitería', rate: 4.5 },
+                    { photo: 'cl_5f1ac2fc-6b7e-4eb0-a377-d4c28d26ad4e.png', name: 'Luis Jara', category: 'Pintura', rate: 3.5 },
                     { photo: null, name: 'Naya Difícil', category: 'Carpintería', rate: 4.5 },
                     { photo: null, name: 'Nelson Mauri', category: 'Jardinería', rate: 4.5 },
                     { photo: null, name: 'Antonio Ríos', category: 'Gasfitería', rate: 4.5 }
@@ -115,20 +111,35 @@ const CustomerPanel = () => {
                     <div className={styles.panelContainer}>
                         <div className={styles.card}>
                             <div className={styles.userDataContainer}>
-                                <MyAvatarEditor user={user}/>
+                                <MyAvatarEditor user={user} userType="client" />
                                 <h2 className={styles.userName}>{user.name}</h2>
                                 <p className={styles.userEmail}>{user.email}</p>
                             </div>
+                            <div className={styles.searchControll}>
+                                <h2 className={styles.title}>Bienvenid@ { user.firstName + ' ' + user.lastName}</h2>
+                                <h3>¿Qué servicio buscas?</h3>
+                                <div className={styles.searchContent}>
+                                    <input className={styles.inpAddress} type="text" placeholder="Ingresa la dirección" />
+                                    <input className={styles.inpFile} type="file" placeholder="Sube una evidencia" />
+                                </div>
+                                <textarea
+                                    className={styles.textarea}
+                                    id="serviceDescription"
+                                    name="serviceDescription"
+                                    rows="5"
+                                    placeholder="Describe detalladamente el servicio que necesitas..."
+                                />
+                                <SelectGlass onSelect={setCategory} categories={categories} />
+                                <ButtonGoogle clicEvent={handleSearch}/> {/* Botón para buscar trabajadores */}
+                            </div>
                         </div>
 
-                        <div className={styles.looker}>
-                            <h2 className={styles.title}>Bienvenid@, buscas un Trabajador?</h2>
-                            <SelectGlass onSelect={setCategory} categories={categories} />
-                            <ButtonGoogle clicEvent={handleSearch}/> {/* Botón para buscar trabajadores */}
+                        <div >
                             {loading && <p>Cargando...</p>} {/* Mostrar mensaje de carga si loading es true */}
                             {!loading && errorMessage && <p>{errorMessage}</p>} {/* Mostrar mensaje de error si hay un error */}
-                            {showTable && !loading && !errorMessage && <TableUsers people={dataTestFront} />} {/* Mostrar TableUsers solo si showTable es true y no hay ni carga ni error */}
+                            {showTable && !loading && !errorMessage && <WorkerCards workers={dataTestFront} />} {/* Mostrar TableUsers solo si showTable es true y no hay ni carga ni error */}
                         </div>
+
                     </div>
                 ) 
             }

@@ -3,43 +3,138 @@
 	src: url("../../fonts/Play-Regular.ttf");
 }
 
+:root {
+    --arrow-bg: #c9d4eb80;
+    --option-bg: #3c7dae;
+    --select-bg: rgba(255, 255, 255, 0.2);
+    --text-options-color: #17161680;
+  }
+
+p, h1, h2{
+    margin: 0;
+    padding: 0;
+}
+
 .panelContainer{
     width: 100%;
     min-height: 85vh;
     height: 90%;
     display: flex;
+    flex-flow: column nowrap;
+    align-items: center;
     font-family: 'Play-Regular', 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
 }
 
 .card {
-    flex: 1;
     height: auto;
-    background-color: #40A2E3;
+    width: 100%;
+    /*background-color: #40A2E3;
     background-color: #0093E9;
-    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);
-    color: #fff;
+    background-image: linear-gradient(160deg, #0093E9 0%, #80D0C7 100%);*/
+    color: #000;
     display: flex;
-    padding: 20px 0 0 0;
-    flex-flow: column nowrap;
+    padding: 20px 0 20px 0;
+    flex-flow: row wrap;
+    margin: 0 20px 20px 0;
+    border-bottom: 1px solid #ccc;
 }
 
 .userDataContainer{
+    flex: 1;
     display: flex;
     flex-flow: column nowrap;
     text-align: center;
+    margin: 0 5px;
+}
+.userDataContainer > p{
+    margin: 0 0 20px 0;
+    font-weight: bold;
+    letter-spacing: 2px;
 }
 
-.looker{
-    flex: 3;
-    background: linear-gradient(35deg, red, purple);
-    background-image: linear-gradient(to top, #f77062 0%, #fe5196 100%);
-    height: auto;
+.panelContainer > .card > .searchControll{
     display: flex;
     flex-flow: column nowrap;
-    padding: 20px;
+    flex: 3;
+    padding: 0 20px 0 40px;
 }
-.looker > .title {
-    width: 100%;
+.panelContainer > .card > .searchControll > h2{
     margin: 0 0 20px 0;
+}
+
+.panelContainer > .card > .searchControll > h3{
+    margin: 0 0 20px 0;
+}
+
+.searchContent{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+.inpAddress {
+    flex: 2;
+    appearance: none;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    max-height: 50px;
+    padding: 1rem 0 1rem 1rem;
+    color: #000;
+    border-radius: 0.25em;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2),
+                2px 0 .8em 0 rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    margin: 0 0 20px 0;
+}
+
+.inpFile {
+    flex: 1;
+    appearance: none;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    padding: .5rem;
+    color: #000;
+    border-radius: 0.25em;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2),
+                2px 0 0.8em 0 rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    margin: 0 0 20px 0px;
+    background-color: #fff; /* Fondo blanco para que destaque */
+    width: auto; /* Ajusta el tamaño según sea necesario */
+    max-height: 80px; /* Mantén una altura máxima coherente */
+    overflow: hidden; /* Oculta el contenido desbordante */
+}
+
+.inpFile::-webkit-file-upload-button {
+    padding: .6rem;
+    color: #000;
+    background-color: var(--arrow-bg);
+    border: none;
+    border-radius: 0.25em;
+    cursor: pointer;
+}
+
+.inpFile:hover::-webkit-file-upload-button {
+    background-color: var(--option-bg); /* Color de fondo al pasar el mouse */
     color: #fff;
+}
+
+
+
+.textarea{
+    appearance: none;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    width: auto;
+    padding: '0.5rem';
+    border-radius: '0.5rem';
+    resize: vertical;
+    border-radius: 0.25em;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2),
+                2px 0 .8em 0 rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    margin: 0 0 20px 0;
 }

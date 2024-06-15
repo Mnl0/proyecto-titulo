@@ -4,7 +4,7 @@ import { Button, Dialog, DialogActions, DialogContent, DialogTitle } from '@mui/
 import userMaleAvatar from './userMaleAvatar.jpeg'; // Ajusta la ruta según sea necesario
 import style from './avatarEditor.module.css';
 
-const MyAvatarEditor = ({user}) => {
+const MyAvatarEditor = ({user, userType}) => {
   const editorRef = useRef(null);
   const [imageURL, setImageURL] = useState(userMaleAvatar); // Estado para almacenar la URL de la imagen
   const [open, setOpen] = useState(false); // Estado para controlar el diálogo
@@ -36,7 +36,7 @@ const MyAvatarEditor = ({user}) => {
   };
 
   const handleSave = async () => {
-
+    console.log('dentro del handleSave')
     if (editorRef.current) {
         // Obtener el canvas con la imagen editada
         const canvas = editorRef.current.getImage();
@@ -51,7 +51,7 @@ const MyAvatarEditor = ({user}) => {
         const blob = base64ToBlob(dataURLScaled, 'image/png');  // Convertir base64 a Blob
         const success = await uploadImage(blob);  // Enviar la imagen al servidor
 
-        console.log('succes ', success)
+        console.log('Success:', success);
         
         if(success){
           const blobUrl = URL.createObjectURL(blob); // Crear una URL a partir del Blob
@@ -81,14 +81,14 @@ const MyAvatarEditor = ({user}) => {
 
   const uploadImage = async (blob) => {
       try {
-          const response = await fetch('http://localhost:3000/api/client/addImageOrEditInServer/'+user.id, {
+          const response = await fetch(`http://localhost:3000/api/${userType}/addImageOrEditInServer/`+user.id, {
               method: 'PUT',
               headers: {
               'Content-Type': 'image/png',
               },
               body: blob
           });
-          console.log(response)
+          console.log('Response status:', response.status)
 
           if (!response.ok) {
               throw new Error('Error en la carga de la imagen en el servidor(Fetch)');
@@ -98,6 +98,7 @@ const MyAvatarEditor = ({user}) => {
           return true;
       } catch (error) {
           console.error('Error al cargar la imagen(Fetch):', error);
+          return false;
       }
   };
 

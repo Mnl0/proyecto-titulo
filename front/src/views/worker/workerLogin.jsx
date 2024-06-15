@@ -32,7 +32,7 @@ const WorkerRegister = () => {
             if(response.ok){
                 const user = await response.json();
                 login(user);
-                navigate('/');
+                navigate('/workerpanel');
                 
             }else{
                 console.error('Error de autenticación', response.statusText);
