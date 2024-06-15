@@ -14,9 +14,9 @@ export function searchForModel(value, schema, pref, nameColumn) {
 	})
 }
 
-export function createForModel(schema, user) {
+export function createForModel(schema, data) {
 	return new Promise((resolve, rejec) => {
-		const newUser = schema.create(user);
+		const newUser = schema.create(data);
 		if (newUser) {
 			resolve(newUser);
 		} else {

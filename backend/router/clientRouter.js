@@ -17,7 +17,7 @@ clientRouter.get('/profile/:id', middlewareValidateParams(idParams), clientContr
 clientRouter.put('/addImageOrEditInServer/:id', middlewareValidateHeader(), clientController.addImageOrEditInServer);
 clientRouter.put('/addImageOrEditInDb/:id', middlewareValidateHeader(), clientController.addImageOrEditInDb);
 
-clientController.post('getService', clientController.getService);
+clientRouter.post('getService', clientController.getService);
 
 clientRouter.delete('/delete/:id', clientController.delete)//puede
 
