@@ -50,5 +50,7 @@ async function crear() {
 //crear()
 
 export async function getAll() {
-	return await CategorySchema.findAll();
+	return await CategorySchema.findAll({
+		attributes: [['cat_id', 'id'], ['cat_name', 'name'], ['cat_description', 'description']]
+	});
 }

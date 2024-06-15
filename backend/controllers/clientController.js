@@ -117,6 +117,13 @@ export const clientController = {
 		res.sendStatus(200);
 	},
 
+	getService: (req, res) => {
+		console.log('llege al controlador')
+		//aca deberia recibir el id del trabajador
+		//crear un id para  el servicio y pasar el id del cliente
+		//asi dejar un historial de los servicios tanto para el cliente como el trabajador
+	},
+
 	//=====no delete cambiar por desactivar=======//
 	delete: (req, res) => {
 		const { id } = req.params
