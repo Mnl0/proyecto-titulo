@@ -105,8 +105,10 @@ export async function updateForColumnModel(imagePath, id, pref, schema) {
 
 export function searchAllForModel(value, schema, pref, nameColumn) {
 	return new Promise((resolve, reject) => {
-		const searchItem = schema.findAll({ where: { [`${pref}_${nameColumn}`]: value } }
-		)
+		const searchItem = schema.findAll({
+			attributes: ['wr_firstName', 'wr_lastName', 'wr_email', 'wr_cellPhone', 'wr_address', 'wr_imagePath', 'wr_category'],
+			where: { [`${pref}_${nameColumn}`]: value }
+		})
 		if (!searchItem) {
 			reject(null)
 		} else {
