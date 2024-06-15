@@ -1,4 +1,4 @@
-import { searchEmail, create, validatePassword, hashingPassword, searchBeforeRecover, updatePassword, searchForId, addImageOrEditInBd, addImageOrEditInServer, getImageFromServer } from "../models/workerModel.js";
+import { searchEmail, create, validatePassword, hashingPassword, searchBeforeRecover, updatePassword, searchForId, addImageOrEditInBd, addImageOrEditInServer, getAllForOccupation } from "../models/workerModel.js";
 
 export const workerController = {
 	auth: async (req, res) => {
@@ -27,7 +27,7 @@ export const workerController = {
 	},
 
 	create: async (req, res) => {
-		const { firstName, lastName, email, password, cellPhone, address } = req.validateBody;
+		const { firstName, lastName, email, password, cellPhone, address, category } = req.validateBody;
 
 		const item = await searchEmail(email, 'email');
 		if (item) {
@@ -44,6 +44,7 @@ export const workerController = {
 			wr_lastName: lastName,
 			wr_cellPhone: cellPhone,
 			wr_address: address,
+			wr_category: category
 		}
 
 		const data = await create(newItem);
@@ -79,13 +80,13 @@ export const workerController = {
 		res.sendStatus(200);
 	},
 
+	//==============nose esta usando===========\\
 	getProfile: async (req, res) => {
 		const { id } = req.params;
 		const item = await searchForId(id, 'id');
 		if (!item) {
 			return res.sendStatus(400);
 		}
-		//devolver imagen si es que tiene una con su id
 		res.status(200).send(item.toJSON());
 	},
 
@@ -93,10 +94,10 @@ export const workerController = {
 		const { id } = req.params;
 		let image = req.body;
 		let state = addImageOrEditInServer(image, id, 'wr');
-		if (!state) {
+		if (!state.success) {
 			return res.sendStatus(400);
 		}
-		res.status(200);
+		res.sendStatus(200);
 	},
 
 	addImageOrEditInDb: async (req, res) => {
@@ -109,14 +110,13 @@ export const workerController = {
 		res.status(200).send(newFoto);
 	},
 
-	getAllForOccupation: (req, res) => {
+	getAllForOccupation: async (req, res) => {
 		console.log('llege al controlador obtener todos los trbajadores por categoria')
+		//id de la categoria
 		const { id } = req.params
-
-
-
-
-		res.send(id)
+		const a = await getAllForOccupation('Gasfiteria', 'wr');
+		//eliminar atributos que estan demas 
+		res.send(a)
 	},
 
 

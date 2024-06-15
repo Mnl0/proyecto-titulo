@@ -25,21 +25,29 @@ export const CategorySchema = sequelize.define('category', {
 })
 /*=========funcion crear cuando habilitemos panel de administracion==========*/
 async function crear() {
-	const newCategory = {
-		cat_name: "Carpinteria",
-		cat_description: "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups."
-	}
-	const data = await get(newCategory.cat_name);
-	if (data) {
-		return
-	}
-	await CategorySchema.create(newCategory);
+	const newCategory = [
+
+		{
+			cat_name: "Gasfiteria",
+			cat_description: "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups."
+		},
+		{
+			cat_name: "Albanileria",
+			cat_description: "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups."
+		},
+		{
+			cat_name: "Electricista",
+			cat_description: "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups."
+		},
+		{
+			cat_name: "Carpinteria",
+			cat_description: "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups."
+		}
+	]
+	await CategorySchema.bulkCreate(newCategory);
+
 }
 //crear()
-//cat_name: "Gasfiteria",
-//cat_name: "Albanileria",
-//cat_name: "Electricista",
-//cat_name: "Carpinteria",
 
 export async function getAll() {
 	return await CategorySchema.findAll();

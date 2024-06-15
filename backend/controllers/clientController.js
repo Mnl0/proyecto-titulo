@@ -103,7 +103,7 @@ export const clientController = {
 		if (!state.success) {
 			return res.sendStatus(400);
 		}
-		res.status(200);
+		res.sendStatus(200);
 	},
 
 	//===========ruta no se esta usando=================//
@@ -114,7 +114,7 @@ export const clientController = {
 		if (newFoto === 0) {
 			return res.sendStatus(400);
 		}
-		res.status(200);
+		res.sendStatus(200);
 	},
 
 	//=====no delete cambiar por desactivar=======//

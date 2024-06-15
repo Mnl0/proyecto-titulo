@@ -14,18 +14,18 @@ export const SpecialtySchema = sequelize.define('specialty', {
 	sp_wr_id: {
 		type: DataTypes.UUID,
 		allowNull: true,
-		references: {
-			model: 'tb_worker',
-			key: 'wr_id',
-		}
+		// references: {
+		// 	model: 'tb_worker',
+		// 	key: 'wr_id',
+		// }
 	},
 	sp_cat_id: {
 		type: DataTypes.UUID,
 		allowNull: true,
-		references: {
-			model: 'tb_category',
-			key: 'cat_id',
-		}
+		// references: {
+		// 	model: 'tb_category',
+		// 	key: 'cat_id',
+		// }
 	},
 }, {
 	timestamps: true,

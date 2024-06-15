@@ -21,18 +21,18 @@ export const JobSchema = sequelize.define('job', {
 	jb_wr_id: {
 		type: DataTypes.UUID,
 		allowNull: true,
-		references: {
-			model: 'tb_worker',
-			key: 'wr_id',
-		}
+		// references: {
+		// 	model: 'tb_worker',
+		// 	key: 'wr_id',
+		// }
 	},
 	jb_nec_id: {
 		type: DataTypes.UUID,
 		allowNull: true,
-		references: {
-			model: 'tb_necessity',
-			key: 'nec_id',
-		}
+		// references: {
+		// 	model: 'tb_necessity',
+		// 	key: 'nec_id',
+		// }
 	},
 	jb_puntaje: {
 		type: DataTypes.INTEGER,//verificar o string mejor?

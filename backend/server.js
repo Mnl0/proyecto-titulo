@@ -27,6 +27,7 @@ app.use((req, res, next) => {
 
 export const __filename = fileURLToPath(import.meta.url);
 export const __dirname = path.dirname(__filename);
+app.use('/storage', express.static(path.join(__dirname, 'storage')));
 
 //ruta completa seria
 //http://localhost:3000/api/[controller]/[metodo]
