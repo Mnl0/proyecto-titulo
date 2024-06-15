@@ -9,6 +9,7 @@ import CustomerPanel from './views/customer/customerPanel.jsx';
 import WorkerRegister from './views/worker/workerFormRegister.jsx';
 import WorkerPanel from './views/worker/workerPanel.jsx';
 import LandingPage from './views/home/LandingPage.jsx';
+import About from './views/about/about.jsx';
 
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
             <Route path='/registerworker' element={<WorkerRegister />} />
             <Route path='/workerpanel' element={<WorkerPanel />} />
             <Route path='/landingpage' element={<LandingPage />} />
+            <Route path='/about' element={<About />} />
           </Routes>
         </BrowserRouter>
     </div>

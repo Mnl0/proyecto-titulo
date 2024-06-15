@@ -35,3 +35,7 @@ p, h1, h2{
     flex-flow: column nowrap;
     text-align: center;
 }
+.userDataContainer > p{
+    font-weight: bold;
+    letter-spacing: 2px;
+}

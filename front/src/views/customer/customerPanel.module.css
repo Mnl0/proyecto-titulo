@@ -3,6 +3,13 @@
 	src: url("../../fonts/Play-Regular.ttf");
 }
 
+:root {
+    --arrow-bg: #c9d4eb80;
+    --option-bg: #3c7dae;
+    --select-bg: rgba(255, 255, 255, 0.2);
+    --text-options-color: #17161680;
+  }
+
 p, h1, h2{
     margin: 0;
     padding: 0;
@@ -27,7 +34,7 @@ p, h1, h2{
     color: #000;
     display: flex;
     padding: 20px 0 20px 0;
-    flex-flow: row nowrap;
+    flex-flow: row wrap;
     margin: 0 20px 20px 0;
     border-bottom: 1px solid #ccc;
 }
@@ -37,14 +44,97 @@ p, h1, h2{
     display: flex;
     flex-flow: column nowrap;
     text-align: center;
+    margin: 0 5px;
+}
+.userDataContainer > p{
+    margin: 0 0 20px 0;
+    font-weight: bold;
+    letter-spacing: 2px;
 }
 
 .panelContainer > .card > .searchControll{
     display: flex;
     flex-flow: column nowrap;
     flex: 3;
+    padding: 0 20px 0 40px;
 }
 .panelContainer > .card > .searchControll > h2{
     margin: 0 0 20px 0;
 }
 
+.panelContainer > .card > .searchControll > h3{
+    margin: 0 0 20px 0;
+}
+
+.searchContent{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+}
+
+.inpAddress {
+    flex: 2;
+    appearance: none;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    max-height: 50px;
+    padding: 1rem 0 1rem 1rem;
+    color: #000;
+    border-radius: 0.25em;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2),
+                2px 0 .8em 0 rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    margin: 0 0 20px 0;
+}
+
+.inpFile {
+    flex: 1;
+    appearance: none;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    padding: .5rem;
+    color: #000;
+    border-radius: 0.25em;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2),
+                2px 0 0.8em 0 rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    margin: 0 0 20px 0px;
+    background-color: #fff; /* Fondo blanco para que destaque */
+    width: auto; /* Ajusta el tamaño según sea necesario */
+    max-height: 80px; /* Mantén una altura máxima coherente */
+    overflow: hidden; /* Oculta el contenido desbordante */
+}
+
+.inpFile::-webkit-file-upload-button {
+    padding: .6rem;
+    color: #000;
+    background-color: var(--arrow-bg);
+    border: none;
+    border-radius: 0.25em;
+    cursor: pointer;
+}
+
+.inpFile:hover::-webkit-file-upload-button {
+    background-color: var(--option-bg); /* Color de fondo al pasar el mouse */
+    color: #fff;
+}
+
+
+
+.textarea{
+    appearance: none;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    width: auto;
+    padding: '0.5rem';
+    border-radius: '0.5rem';
+    resize: vertical;
+    border-radius: 0.25em;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2),
+                2px 0 .8em 0 rgba(0, 0, 0, 0.5);
+    cursor: pointer;
+    margin: 0 0 20px 0;
+}

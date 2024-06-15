@@ -1,8 +1,9 @@
 :root {
-    --arrow-bg: rgba(234, 225, 225, 0.5);
+    --arrow-bg: #c9d4eb80;
     --arrow-icon: url('../../../icons/down-solid.svg');
     --option-bg: rgb(201, 69, 69);
     --select-bg: rgba(255, 255, 255, 0.2);
+    --text-options-color: #17161680;
   }
 
 .selectGlass {
@@ -10,7 +11,7 @@
     border: 0;
     outline: 0;
     font: inherit;
-    width: 100%;
+    width: auto;
     max-height: 80px;
     padding: 1rem 4rem 1rem 1rem;
     background: var(--arrow-icon) no-repeat right 0.8em center / 1em,
@@ -26,7 +27,7 @@
     fill: #fff;
 }
 .selectGlass option{
-    color: #555;
+    color: var(--text-options-color);
     background: linear-gradient(to left, var(--arrow-bg) 3em, var(--select-bg) 3em);
 }
   

@@ -116,7 +116,19 @@ const CustomerPanel = () => {
                                 <p className={styles.userEmail}>{user.email}</p>
                             </div>
                             <div className={styles.searchControll}>
-                                <h2 className={styles.title}>Bienvenid@, buscas un Trabajador?</h2>
+                                <h2 className={styles.title}>Bienvenid@ { user.firstName + ' ' + user.lastName}</h2>
+                                <h3>¿Qué servicio buscas?</h3>
+                                <div className={styles.searchContent}>
+                                    <input className={styles.inpAddress} type="text" placeholder="Ingresa la dirección" />
+                                    <input className={styles.inpFile} type="file" placeholder="Sube una evidencia" />
+                                </div>
+                                <textarea
+                                    className={styles.textarea}
+                                    id="serviceDescription"
+                                    name="serviceDescription"
+                                    rows="5"
+                                    placeholder="Describe detalladamente el servicio que necesitas..."
+                                />
                                 <SelectGlass onSelect={setCategory} categories={categories} />
                                 <ButtonGoogle clicEvent={handleSearch}/> {/* Botón para buscar trabajadores */}
                             </div>
