@@ -75,10 +75,7 @@ export async function addImageOrEditInServerForModel(image, id, pref, schema) {
 		const folderStorageImage = createDirectoryStorage();
 		fs.writeFileSync(`${folderStorageImage}/${pref}_${id}.png`, image);
 		const pathImage = getImageFromServerForModel(id, pref);
-
 		const urlImage = path.basename(pathImage);
-		console.log(urlImage)
-
 		await updateForColumnModel(urlImage, id, pref, schema);
 		return { success: true, urlImage };
 	} catch (err) {
@@ -106,3 +103,16 @@ export async function updateForColumnModel(imagePath, id, pref, schema) {
 	})
 }
 
+export function searchAllForModel(value, schema, pref, nameColumn) {
+	return new Promise((resolve, reject) => {
+		const searchItem = schema.findAll({
+			attributes: ['wr_firstName', 'wr_lastName', 'wr_email', 'wr_cellPhone', 'wr_address', 'wr_imagePath', 'wr_category'],
+			where: { [`${pref}_${nameColumn}`]: value }
+		})
+		if (!searchItem) {
+			reject(null)
+		} else {
+			resolve(searchItem)
+		}
+	})
+}

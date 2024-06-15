@@ -26,7 +26,7 @@ export const clientController = {
 		}
 		res.status(200).json(itemProfile)
 	},
-	/*==========Enviar del body el tipo cl o wr y pasar como argumento al searchEmail=====================*/
+
 	create: async (req, res) => {
 		const { email, firstName, password, lastName, cellPhone, address } = req.validateBody;
 
@@ -103,7 +103,7 @@ export const clientController = {
 		if (!state.success) {
 			return res.sendStatus(400);
 		}
-		res.status(200);
+		res.sendStatus(200);
 	},
 
 	//===========ruta no se esta usando=================//
@@ -114,42 +114,15 @@ export const clientController = {
 		if (newFoto === 0) {
 			return res.sendStatus(400);
 		}
-		let imageProfile = await searchForId(id, 'id');
-		let imageBuffer = Buffer.from(imageProfile.cl_imageProfile, 'base64');
-		res.status(200).send(imageBuffer);
+		res.sendStatus(200);
 	},
 
-	//almacenar ruta en bsd y enviar solo la ruta de la imagen
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+	getService: (req, res) => {
+		console.log('llege al controlador')
+		//aca deberia recibir el id del trabajador
+		//crear un id para  el servicio y pasar el id del cliente
+		//asi dejar un historial de los servicios tanto para el cliente como el trabajador
+	},
 
 	//=====no delete cambiar por desactivar=======//
 	delete: (req, res) => {

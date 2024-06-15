@@ -29,18 +29,18 @@ export const NecessitySchema = sequelize.define('necessity', {
 	nec_cl_id: {
 		type: DataTypes.UUID,
 		allowNull: true,
-		references: {
-			model: 'tb_client',
-			key: 'cl_id'
-		}
+		// references: {
+		// 	model: 'tb_client',
+		// 	key: 'cl_id'
+		// }
 	},
 	nec_cat_id: {
 		type: UUID,
 		allowNull: true,
-		references: {
-			model: 'tb_category',
-			key: 'cat_id',
-		}
+		// references: {
+		// 	model: 'tb_category',
+		// 	key: 'cat_id',
+		// }
 	}
 
 }, {
