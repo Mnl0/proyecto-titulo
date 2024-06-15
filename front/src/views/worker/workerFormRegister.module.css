@@ -104,9 +104,9 @@
 }
 
 /*         SELECT             */
-.select{
+.select, select{
     cursor: pointer;
-    height: 100%;
+   
 }
 .select option{
     color: #000 !important;

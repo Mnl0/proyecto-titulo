@@ -14,8 +14,9 @@ const CustomerPanel = () => {
     const [loading, setLoading] = useState(false); // Estado para controlar el estado de carga
     const [errorMessage, setErrorMessage] = useState(""); // Estado para almacenar mensajes de error
     const [category, setCategory] = useState(""); // Estado para almacenar la categoría seleccionada
-    const [dataTestFront, setDataTestFront] = useState([]);
     const [categories, setCategories] = useState([]);
+    const [dataTestFront, setDataTestFront] = useState([]);
+    const [users, setUsers] = useState([]);
 
     const [userLocation, setUserLocation] = useState({
         ltd: -36.8341573,
@@ -67,11 +68,7 @@ const CustomerPanel = () => {
     const handleSearch = async () => {
         setLoading(true); // Iniciar el estado de carga
         try {
-            // Simular una llamada a la base de datos para obtener trabajadores con la categoría seleccionada
-            //const response = await fetch(`https://api.example.com/workers?category=${category}`);
-            //const data = await response.json();
-
-            //Implementacion para pruebas...
+            /*
             await setDataTestFront(
                 [
                     { photo: 'wr_8d69a45b-c671-49eb-92ff-f26ee8b0445d.png', name: 'Juan Pedraza', category: 'Gasfitería', rate: 4.5 },
@@ -80,7 +77,13 @@ const CustomerPanel = () => {
                     { photo: null, name: 'Nelson Mauri', category: 'Jardinería', rate: 4.5 },
                     { photo: null, name: 'Antonio Ríos', category: 'Gasfitería', rate: 4.5 }
                 ]
-            )         
+            )*/
+
+            /*
+            const response = await fetch('http://localhost:3000/api/category/getAll');
+            if (!response.ok) throw new Error('No se pudieron cargar las categorías');
+            const data = await response.json();
+            setCategories(data);*/
 
             // Si hay datos, mostrar la tabla de usuarios
             if (dataTestFront.length > 0) {

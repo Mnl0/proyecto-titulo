@@ -4,11 +4,12 @@
 }
 
 :root{
-    --primary-worker-color: #83B4FF;
+    --primary-worker-color: #102C57;
     --secondary-worker-color: #277691;
     --tertiary-worker-color: #4CCD99;
     --Quaternary-worker-color: #007F73;
     --Quinary-worker-color: #007F73;
+    --icon-color: #fff;
 }
 
 .globalworker{
@@ -52,7 +53,7 @@
 .globalworker .inputIcon {
     height: 1.5em;
     width: 1.5em;
-    fill: var(--primary-worker-color);
+    fill: var(--icon-color);
 }
 
 .globalworker .inputField {
@@ -82,7 +83,7 @@
     text-transform: uppercase;
     padding: 0.6em 1.2em;
     background-color: var(--primary-worker-color);
-    color: #5e6681;
+    color: #fff;
     box-shadow: 0 8px 24px 0 rgb(255 235 167 / 20%);
     transition: all .3s ease-in-out;
     cursor: pointer;
@@ -90,10 +91,6 @@
 
 .globalworker > .card > form > .success{
     background-color: var(--Quaternary-worker-color);
-    color: #fff;
-}
-.globalworker > .card > form > .success:hover{
-    background-color: var(--tertiary-worker-color);
     color: #fff;
 }
 
@@ -105,13 +102,18 @@
 }
 
 /*Hover & focus*/
+.globalworker > .card > form > .success:hover{
+    background-color: var(--tertiary-worker-color);
+    color: #fff;
+}
+
 .globalworker .field input:focus::placeholder {
     opacity: 0;
     transition: opacity .3s;
 }
 
 .globalworker .btn:hover {
-    background-color: #5e6681;
+    background-color: #71c4ff;
     color: var(--primary-worker-color);
     box-shadow: 0 8px 24px 0 rgb(16 39 112 / 20%);
 }

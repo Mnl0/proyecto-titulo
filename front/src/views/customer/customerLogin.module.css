@@ -4,11 +4,12 @@
 }
 
 :root{
-    --primary-color-customer: #EF9C66;
+    --primary-color-customer: #102C57;
     --secondary-color-customer: #277691;
     --tertiary-color: #4CCD99;
     --Quaternary-color: #007F73;
     --Quinary-color-customer: #007F73;
+    --icon-color: #fff;
 }
 
 .globalcustomer{
@@ -52,7 +53,7 @@
 .globalcustomer > .cardcustomer > form > .field > .inputIcon {
     height: 1.5em;
     width: 1.5em;
-    fill: var(--primary-color-customer);
+    fill: var(--icon-color);
 }
 
 .globalcustomer > .cardcustomer > form > .field > .inputField {
@@ -91,10 +92,6 @@
     background-color: var(--Quaternary-color);
     color: #fff;
 }
-.globalcustomer > .cardcustomer > form > .success:hover{
-    background-color: var(--tertiary-color);
-    color: #fff;
-}
 
 .globalcustomer .btnLink {
     color: var(--primary-color-customer);
@@ -104,13 +101,18 @@
 }
 
 /*Hover & focus*/
+.globalcustomer > .cardcustomer > form > .success:hover{
+    background-color: var(--tertiary-color);
+    color: #fff;
+}
+
 .globalcustomer .field input:focus::placeholder {
     opacity: 0;
     transition: opacity .3s;
 }
 
 .globalcustomer .btn:hover {
-    background-color: #5e6681;
+    background-color: #71c4ff;
     color: var(--primary-color-customer);
     box-shadow: 0 8px 24px 0 rgb(16 39 112 / 20%);
 }

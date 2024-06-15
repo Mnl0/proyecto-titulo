@@ -80,7 +80,7 @@ const WorkerFormRegister = () => {
                         <select value={selectedOption} onChange={ev => {handleChange(ev); handleValues(ev);}} id="category" name="category" className={styles.inputField}>
                             <option value="0">Selecciona una especialidad</option>
                             {categories.map((category, index) => (
-                                <option key={index} value={category.cat_name}>{category.cat_name}</option>
+                                <option key={index} value={category.name}>{category.name}</option>
                             ))}
                         </select>
                     </div>
