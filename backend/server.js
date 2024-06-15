@@ -4,11 +4,9 @@ import { connection_DB } from './database/connection.js'
 import { clientRouter } from './router/clientRouter.js'
 import { workerRouter } from './router/workerRouter.js'
 import { categoryRouter } from './router/categoryRouter.js'
-import { necessityRouter } from './router/necessityRouter.js'
-import { jobRouter } from './router/jobRouter.js'
-import { specialtyRouter } from './router/specialtyRouter.js'
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { jobHistoryRouter } from './router/jobHistoryRouter.js';
 
 dotenv.config()
 
@@ -34,10 +32,7 @@ app.use('/storage', express.static(path.join(__dirname, 'storage')));
 app.use('/api/client', clientRouter)
 app.use('/api/worker', workerRouter)
 app.use('/api/category', categoryRouter)
-
-app.use('/get/necessity', necessityRouter)
-app.use('/get/job', jobRouter)
-app.use('/get/specialty', specialtyRouter)
+app.use('/api/jobHistory', jobHistoryRouter)
 
 connection_DB;
 
