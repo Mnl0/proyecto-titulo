@@ -111,13 +111,12 @@ export const workerController = {
 	},
 
 	getAllForOccupation: async (req, res) => {
-		console.log('llege al controlador obtener todos los trbajadores por categoria')
-		//id de la categoria
 		const { id } = req.params
-		const a = await getAllForOccupation('Gasfiteria', 'wr');
-		//eliminar atributos que estan demas 
-		res.send(a)
+		const { category } = req.body;
+		const data = await getAllForOccupation(category, 'wr');
+		if (data === null) {
+			res.sendStatus(400);
+		}
+		res.send(data);
 	},
-
-
 }

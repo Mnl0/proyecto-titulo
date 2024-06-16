@@ -14,4 +14,4 @@ workerRouter.post('/recover', middlewareValidateBody(recoverPass), workerControl
 workerRouter.get('/profile/:id', workerController.getProfile);
 workerRouter.put('/addImageOrEditInServer/:id', workerController.addImageOrEditInServer);
 workerRouter.put('/addImageOrEditInDb/:id', workerController.addImageOrEditInDb);
-workerRouter.get('/getAllForOccupation/:id', workerController.getAllForOccupation);
+workerRouter.get('/getAllForOccupation', workerController.getAllForOccupation);

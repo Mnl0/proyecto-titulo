@@ -17,6 +17,7 @@ export const JobHistorySchema = sequelize.define('jobHistory', {
 		type: DataTypes.UUID,
 		allowNull: true,
 	},
+	//arreglo imagenes
 	jh_image: {
 		type: DataTypes.BLOB('long'),
 		allowNull: true,
@@ -34,10 +35,23 @@ export const JobHistorySchema = sequelize.define('jobHistory', {
 		type: DataTypes.DATE,
 		allowNull: true,
 	},
-	jh_score: {
+	jh_score_worker: {
 		type: DataTypes.INTEGER(10),
 		allowNull: true,
 	},
+	jh_score_client: {
+		type: DataTypes.INTEGER(10),
+		allowNull: true,
+	},
+	//arreglo estados
+	jh_state: {
+		type: DataTypes.STRING(250),
+		allowNull: true,
+	},
+	jh_comment_client: {
+		type: DataTypes.STRING(250),
+		allowNull: true,
+	}
 },
 	{
 		timestamps: false,

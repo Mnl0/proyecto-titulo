@@ -61,7 +61,6 @@ export const WorkerSchema = sequelize.define('worker', {
 		allowNull: true,
 	},
 },
-
 	{
 		/*=====se debe agregar el timestamps true cuando se puede eliminar de manera correcta cualquier elemento de esta tabla error con fk*/
 		timestamps: false,
