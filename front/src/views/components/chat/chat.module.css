@@ -1,0 +1,123 @@
+:root{
+  --bg-color-btnClose-hover: #C80036;
+}
+
+.chatContainer{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.9);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.cardcontainer {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 15px;
+    margin: 20px;
+    display: flex;
+    flex-direction: column;
+    width: 80%;
+    position: relative;
+  }
+  
+  .cardcontainer > .cardheader {
+    display: flex;
+    align-items: center;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #ccc;
+  }
+  
+  .cardheader .imgavatar {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    margin-right: 20px;
+    background-color: #333;
+  }
+  
+  .cardheader .textchat {
+    color: black;
+    margin: 0;
+    font-size: 20px;
+  }
+  
+  .cardbody {
+    flex: 1;
+    overflow-y: auto;
+  }
+  
+  .messagescontainer {
+    padding: 15px;
+  }
+  
+  .messagebox {
+    padding: 10px;
+    margin-bottom: 5px;
+    border-radius: 10px;
+  }
+  
+  .messagebox.left {
+    background-color: #f1f1f1;
+    color: black;
+    font-size: 13px;
+    left: 0;
+  }
+  
+  .messagebox.right {
+    background-color: #333;
+    color: #fff;
+    font-size: 13px;
+    right: 0;
+  }
+  
+  .messageinput {
+    padding: 5px;
+    border-top: 1px solid #ccc;
+  }
+  
+  .messageinput .messagesend {
+    width: 90%;
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    resize: none;
+  }
+  
+  .messageinput .buttonsend {
+    background-color: #3678b2;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    cursor: pointer;
+    margin: 20px 0;
+    border-radius: 10px;
+    font-size: 13px;
+  }
+  
+  .messageinput .buttonsend:hover {
+    background-color: #333;
+    color: #fff;
+  }
+  
+  .closeButton{
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 10px;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: .2s;
+    box-sizing: border-box;
+  }
+  .closeButton:hover{
+    background-color: var(--bg-color-btnClose-hover);
+    border: none;
+    padding: 12px 17px;
+  }

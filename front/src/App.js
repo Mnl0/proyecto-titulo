@@ -10,6 +10,7 @@ import WorkerRegister from './views/worker/workerFormRegister.jsx';
 import WorkerPanel from './views/worker/workerPanel.jsx';
 import LandingPage from './views/home/LandingPage.jsx';
 import About from './views/about/about.jsx';
+import Chat from './views/components/chat/chat2.jsx';
 
 
 function App() {
@@ -31,6 +32,7 @@ function App() {
             <Route path='/workerpanel' element={<WorkerPanel />} />
             <Route path='/landingpage' element={<LandingPage />} />
             <Route path='/about' element={<About />} />
+            <Route path='/chat' element={<Chat />} />
           </Routes>
         </BrowserRouter>
     </div>

@@ -4,6 +4,8 @@ import { useState } from "react";
 import { useAuth } from '../components/authContext.jsx';  // importar authcontext desde su ubicación
 import { Link, useNavigate } from "react-router-dom";
 
+import { io } from 'socket.io-client';
+
 const WorkerRegister = () => {
     const [inputValues, setInputValues] = useState({});
 
@@ -17,10 +19,11 @@ const WorkerRegister = () => {
         }));
     };
 
+    const socket = io('http://localhost:3000');
+
     const handleSubmit = async (e) => {
         e.preventDefault();
         try{
-            console.log(inputValues)
             const response = await fetch('http://localhost:3000/api/worker/auth', {
                 method: 'POST',
                 headers: {
@@ -31,6 +34,8 @@ const WorkerRegister = () => {
 
             if(response.ok){
                 const user = await response.json();
+                // En el cliente (trabajador)
+                socket.emit('login', user.id);
                 login(user);
                 navigate('/workerpanel');
                 

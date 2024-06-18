@@ -68,8 +68,12 @@ p, h1, h2{
 
 .searchContent{
     display: flex;
-    flex-flow: row wrap;
+    flex-flow: column wrap;
     justify-content: space-between;
+}
+
+.searchContent > div{
+    display: flex;
 }
 
 .inpAddress {
@@ -118,6 +122,11 @@ p, h1, h2{
 .inpFile:hover::-webkit-file-upload-button {
     background-color: var(--option-bg); /* Color de fondo al pasar el mouse */
     color: #fff;
+}
+
+.searchContent > div > .amount{
+    flex: 1;
+    margin-left: 5px;
 }
 
 .textarea{

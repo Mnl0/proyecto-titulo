@@ -3,6 +3,7 @@ import styles from "./workerPanel.module.css";
 import { Link } from "react-router-dom";
 import { useAuth } from '../components/authContext.jsx';
 import MyAvatarEditor from "../components/avatarEditor/avatarEditor.jsx";
+import { io } from 'socket.io-client';
 
 const WorkerPanel = () => {
     const {user} = useAuth();
@@ -46,6 +47,23 @@ const WorkerPanel = () => {
         console.log(msg);
     }
 
+    useEffect(() => {
+        const socket = io('http://localhost:3000');
+
+        if (user !== null) {
+            socket.on('connect', () => {
+                const userId = user.id === null;
+                if(userId)  return;
+                socket.emit('login', user.id);
+            });
+        }
+
+        return () => {
+            socket.emit('worker_disconnect'); // Emitir evento personalizado al servidor
+            // Desconectar el socket cuando el componente se desmonta
+            socket.disconnect();
+        };
+    }, []);
 
     return (
         <div >

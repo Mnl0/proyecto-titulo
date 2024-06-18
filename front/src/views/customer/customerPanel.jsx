@@ -8,15 +8,19 @@ import { ButtonGoogle } from "../components/buttons/buttonGoogle.jsx";
 import MyAvatarEditor from "../components/avatarEditor/avatarEditor.jsx";
 import WorkerCards from '../components/workerCards/WorkerCards.jsx';
 
+import Modal from '../components/modal/ModalChatRequest.jsx';
+import Chat from '../components/chat/chat2.jsx';
+import { io } from 'socket.io-client';
+
 const CustomerPanel = () => {
     const {user} = useAuth();
-    const [showTable, setShowTable] = useState(false); // Estado para controlar la visibilidad de TableUsers
+    const [showWorkers, setShowWorkers] = useState(false); // Estado para controlar la visibilidad de TableUsers
     const [loading, setLoading] = useState(false); // Estado para controlar el estado de carga
     const [errorMessage, setErrorMessage] = useState(""); // Estado para almacenar mensajes de error
     const [category, setCategory] = useState(""); // Estado para almacenar la categoría seleccionada
     const [categories, setCategories] = useState([]);
-    const [dataTestFront, setDataTestFront] = useState([]);
-    const [users, setUsers] = useState([]);
+    const [workers, setWorkers] = useState([]);
+    const [connectedUsers, setConnectedUsers] = useState([]); // Para almacenar los IDs de usuarios conectados
 
     const [userLocation, setUserLocation] = useState({
         ltd: -36.8341573,
@@ -65,33 +69,35 @@ const CustomerPanel = () => {
         fetchCategories();
       }, []);
 
-    const handleSearch = async () => {
+
+    const handleSearch = async (e) => {
+        e.preventDefault();
         setLoading(true); // Iniciar el estado de carga
         try {
-            /*
-            await setDataTestFront(
-                [
-                    { photo: 'wr_8d69a45b-c671-49eb-92ff-f26ee8b0445d.png', name: 'Juan Pedraza', category: 'Gasfitería', rate: 4.5 },
-                    { photo: 'cl_5f1ac2fc-6b7e-4eb0-a377-d4c28d26ad4e.png', name: 'Luis Jara', category: 'Pintura', rate: 3.5 },
-                    { photo: null, name: 'Naya Difícil', category: 'Carpintería', rate: 4.5 },
-                    { photo: null, name: 'Nelson Mauri', category: 'Jardinería', rate: 4.5 },
-                    { photo: null, name: 'Antonio Ríos', category: 'Gasfitería', rate: 4.5 }
-                ]
-            )*/
+            console.log(category)
+            const response = await fetch('http://localhost:3000/api/worker/getAllForOccupation', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({category})
+            });
 
-            /*
-            const response = await fetch('http://localhost:3000/api/category/getAll');
-            if (!response.ok) throw new Error('No se pudieron cargar las categorías');
+            if (!response.ok) throw new Error('No se pudieron cargar los trabajadores.');
             const data = await response.json();
-            setCategories(data);*/
-
-            // Si hay datos, mostrar la tabla de usuarios
-            if (dataTestFront.length > 0) {
-                setShowTable(true);
+            // Si hay datos, mostrar trabajadores
+            if (data.length > 0) {
+              
+                // Actualizar el estado de los trabajadores con el atributo 'online' agregado
+                setWorkers(data);
+                console.log('workers With Online Status', data)
+                //setWorkers(data);
+                setShowWorkers(true);
                 setErrorMessage("");
             } else {
                 // Si no hay datos, mostrar un mensaje de que no se encontraron registros
-                setShowTable(false);
+                setWorkers([])
+                setShowWorkers(false);
                 setErrorMessage("No se encontraron registros.");
             }
         } catch (error) {
@@ -101,6 +107,60 @@ const CustomerPanel = () => {
             setLoading(false); // Finalizar el estado de carga
         }
     };
+
+    const [selectedWorker, setSelectedWorker] = useState(null); // Estado para el trabajador seleccionado
+    const [showModal, setShowModal] = useState(false); // Estado para la visibilidad del modal
+    const [showChat, setShowChat] = useState(false); // Estado para la visibilidad del chat
+
+    const handleWorkerClick = (worker) => {
+        setSelectedWorker(worker);
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+    };
+
+    const handleConfirmChat = () => {
+        // Lógica para iniciar el chat con el trabajador seleccionado
+        setShowModal(false);
+        setShowChat(true);
+    };
+
+    useEffect(() => {
+        const socket = io('http://localhost:3000');
+
+        if (user !== null) {
+            socket.on('connect', () => {
+                const userId = user.id;
+                if(userId === null) return;
+                socket.emit('login', user.id);
+            });
+        }
+
+        socket.on('worker_status', (status) => {
+            console.log(`El trabajador ${status.workerId} está ahora ${status.online ? 'conectado' : 'desconectado'}.`);
+            // Actualizar el estado de los trabajadores cuando cambia su estado
+            setWorkers(prevWorkers =>
+                prevWorkers.map(worker =>
+                    worker.id === status.workerId ? { ...worker, online: status.online } : worker
+                )
+            );
+        });
+
+        socket.on('connected_users', (connUsers) => {
+            // Actualizar el estado de los usuarios conectados
+            console.log('connUsers',connUsers)
+            console.log('workers',workers)
+            setConnectedUsers(connUsers);
+            console.log('workers',workers)
+        });
+
+        return () => {
+            // Desconectar el socket cuando el componente se desmonta
+            socket.disconnect();
+        };
+    }, []);
 
     return (
         <div >
@@ -118,31 +178,47 @@ const CustomerPanel = () => {
                                 <h2 className={styles.userName}>{user.name}</h2>
                                 <p className={styles.userEmail}>{user.email}</p>
                             </div>
-                            <div className={styles.searchControll}>
+                            <form className={styles.searchControll}>
                                 <h2 className={styles.title}>Bienvenid@ { user.firstName + ' ' + user.lastName}</h2>
-                                <h3>¿Qué servicio buscas?</h3>
+                                <h3>Detalla lo que necesitas a continuación:</h3>
                                 <div className={styles.searchContent}>
-                                    <input className={styles.inpAddress} type="text" placeholder="Ingresa la dirección" />
-                                    <input className={styles.inpFile} type="file" placeholder="Sube una evidencia" />
+                                    <input className={styles.inpAddress} type="text" placeholder="Ingresa la dirección." />
+                                    <div>
+                        
+                                        <input id="fileInput" className={styles.inpFile} type="file" />
+                                      
+                                        <input className={`${styles.inpAddress} ${styles.amount}`} type="number" placeholder="Ingresa el monto que ofreces" />
+                                    </div>
                                 </div>
                                 <textarea
                                     className={styles.textarea}
                                     id="serviceDescription"
                                     name="serviceDescription"
                                     rows="5"
-                                    placeholder="Describe detalladamente el servicio que necesitas..."
+                                    placeholder="Describe el servicio que necesitas..."
                                 />
                                 <SelectGlass onSelect={setCategory} categories={categories} />
                                 <ButtonGoogle clicEvent={handleSearch}/> {/* Botón para buscar trabajadores */}
-                            </div>
+                            </form>
                         </div>
 
                         <div >
                             {loading && <p>Cargando...</p>} {/* Mostrar mensaje de carga si loading es true */}
-                            {!loading && errorMessage && <p>{errorMessage}</p>} {/* Mostrar mensaje de error si hay un error */}
-                            {showTable && !loading && !errorMessage && <WorkerCards workers={dataTestFront} />} {/* Mostrar TableUsers solo si showTable es true y no hay ni carga ni error */}
+                            {!loading && errorMessage != "" && <p>{errorMessage}</p>} {/* Mostrar mensaje de error si hay un error */}
+                            {showWorkers && !loading && !errorMessage && <WorkerCards workers={workers} onWorkerClick={handleWorkerClick} />} {/* Mostrar TableUsers solo si showWorkers es true y no hay ni carga ni error */}
                         </div>
 
+                        {showModal && (
+                            <Modal onClose={handleCloseModal}>
+                                <h2>¿Deseas hablar con {selectedWorker.firstName} {selectedWorker.lastName}?</h2>
+                                <button onClick={handleConfirmChat}>Confirmar</button>
+                                <button onClick={handleCloseModal}>Cancelar</button>
+                            </Modal>
+                        )}
+
+                        {showChat && selectedWorker && (
+                            <Chat worker={selectedWorker} onClose={() => setShowChat(false)} />
+                        )}
                     </div>
                 ) 
             }
