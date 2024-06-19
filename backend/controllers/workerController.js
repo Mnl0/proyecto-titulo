@@ -1,5 +1,7 @@
 import { searchEmail, create, validatePassword, hashingPassword, searchBeforeRecover, updatePassword, searchForId, addImageOrEditInBd, addImageOrEditInServer, getAllForOccupation } from "../models/workerModel.js";
 
+import { connectedWorkers } from '../server.js';
+
 export const workerController = {
 	auth: async (req, res) => {
 		const { email, password } = req.validateBody;
@@ -117,6 +119,14 @@ export const workerController = {
 		if (data === null) {
 			res.sendStatus(400);
 		}
-		res.send(data);
+
+		// Mapeamos los trabajadores para agregarles el estado de conexión
+		const nuevaData = data.map(worker => ({
+			...worker.dataValues,
+			online: connectedWorkers.some(connectedWorker => connectedWorker.id === worker.dataValues.id)
+		  }));
+		  
+		  console.log('nueva data', nuevaData)
+		res.send(nuevaData);
 	},
 }

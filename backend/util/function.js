@@ -113,7 +113,8 @@ export function searchAllForModel(value, schema, pref, nameColumn) {
 				['wr_cellPhone', 'cellPhone'],
 				['wr_address', 'address'],
 				['wr_imagePath', 'imagePath'],
-				['wr_category', 'category']
+				['wr_category', 'category'],
+				['wr_id', 'id']
 			],
 			where: { [`${pref}_${nameColumn}`]: value }
 		})

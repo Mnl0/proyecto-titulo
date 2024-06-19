@@ -15,3 +15,4 @@ workerRouter.get('/profile/:id', workerController.getProfile);
 workerRouter.put('/addImageOrEditInServer/:id', workerController.addImageOrEditInServer);
 workerRouter.put('/addImageOrEditInDb/:id', workerController.addImageOrEditInDb);
 workerRouter.get('/getAllForOccupation', workerController.getAllForOccupation);
+workerRouter.post('/getAllForOccupation', workerController.getAllForOccupation);

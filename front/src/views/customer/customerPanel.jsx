@@ -8,7 +8,7 @@ import { ButtonGoogle } from "../components/buttons/buttonGoogle.jsx";
 import MyAvatarEditor from "../components/avatarEditor/avatarEditor.jsx";
 import WorkerCards from '../components/workerCards/WorkerCards.jsx';
 
-import Modal from '../components/modal/ModalChatRequest.jsx';
+import Modal from '../components/modals/modal/ModalChatRequest.jsx';
 import Chat from '../components/chat/chat2.jsx';
 import { io } from 'socket.io-client';
 

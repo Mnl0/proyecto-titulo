@@ -16,7 +16,7 @@ export const io = new Server(server, {
 	cors: {
 		origin: '*',
 		methods: ['GET, POST, PUT, DELETE, OPTIONS, PATCH'],
-		allowedHeaders: ['Cntent-Type']
+		allowedHeaders: ['Content-Type']
 	}
 })
 const PORT = process.env.PORT;
@@ -44,19 +44,66 @@ app.use('/api/jobHistory', jobHistoryRouter)
 
 connection_DB;
 
+// Array para almacenar trabajadores conectados
+let connectedWorkers = [];
+// Exportar el objeto connectedWorkers para usarlo en el controlador
+export { connectedWorkers };
+
+// socket.io
 io.on('connection', (socket) => {
-	socket.on('join', (roomId) => {
-		socket.join(roomId);
-		console.log(`Cliente unido a la sala: ${roomId}`);
-	})
-	socket.on('chat-privado', ({ roomId, message, id }) => {
-		console.log(`Mensaje en sala ${roomId}: ${message}, ${id}`);
-		io.to(roomId).emit('chat-privado', message);
-	})
-	socket.on('disconnect', () => {
-		console.log('Cliente desconetado');
-	})
-})
+    let workerId;
+
+    // Manejar el evento de login
+    socket.on('login', (id) => {
+		workerId = id;
+        // Actualizar el estado del trabajador como en línea
+        const workerIndex = connectedWorkers.findIndex(worker => worker.id === workerId);
+        if (workerIndex !== -1) {
+			connectedWorkers[workerIndex].online = true;
+            io.emit('worker_status', { workerId, online: true });
+			io.emit('connected_users', Array.from(connectedWorkers));
+        } else {
+			// Si el trabajador no está en la lista, agregarlo
+            connectedWorkers.push({ id: workerId, online: true });
+            io.emit('worker_status', { workerId, online: true });
+			io.emit('connected_users', Array.from(connectedWorkers));
+        }
+		console.log(connectedWorkers)
+		console.log(`El trabajador ${workerId} se ha conectado.`);
+    });
+
+    // Manejar el evento de desconexión
+    socket.on('disconnect', () => {
+        // Si hay un id de trabajador, actualizar su estado a offline
+        if (workerId) {
+            const workerIndex = connectedWorkers.findIndex(worker => worker.id === workerId);
+            if (workerIndex !== -1) {
+                connectedWorkers[workerIndex].online = false;
+				connectedWorkers.splice(workerIndex, 1);
+                io.emit('worker_status', { workerId, online: false });
+				io.emit('connected_users', Array.from(connectedWorkers));
+				console.log(`El trabajador ${workerId} se ha desconectado.`);
+            }
+        }
+    });
+
+	// Escuchar cambios en el estado de los trabajadores
+    socket.on('worker_status', (status) => {
+        console.log(`El trabajador ${status.workerId} está ahora ${status.online ? 'conectado' : 'desconectado'}.`);
+    });
+
+    // Establecer un tiempo de espera para desconexión automática si no hay interacción
+	/*
+    const timeout = setTimeout(() => {
+        socket.disconnect();
+    }, 60000); // Desconectar después de 60 segundos de inactividad
+
+    // Limpiar el timeout cuando el trabajador se desconecta explícitamente
+    socket.on('disconnect', () => {
+        clearTimeout(timeout);
+    });*/
+});
+
 // msg {mensaje / id }
 // traer todos los mensaje de un chat ordenados por id
 // controlador chat

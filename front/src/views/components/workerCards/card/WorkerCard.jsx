@@ -5,7 +5,7 @@ import PublicationSlider from '../../carousel/Carousel.jsx';
 
 const WorkerCard = ( { user , onWorkerClick }) => {
     const userImageURL = user.imagePath ? `http://localhost:3000/storage/${user.imagePath}` : userMaleAvatar; 
-    console.log(user.online)
+    console.log(user)
 
     const publications = [
         {
