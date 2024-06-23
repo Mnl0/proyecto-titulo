@@ -7,8 +7,7 @@ import SelectGlass from '../components/selects/selectGlass.jsx';
 import { ButtonGoogle } from "../components/buttons/buttonGoogle.jsx";
 import MyAvatarEditor from "../components/avatarEditor/avatarEditor.jsx";
 import WorkerCards from '../components/workerCards/WorkerCards.jsx';
-
-import Modal from '../components/modals/modal/ModalChatRequest.jsx';
+import CommonModal from '../components/modals/commonModal/CommonModal.jsx';
 import Chat from '../components/chat/chat2.jsx';
 import { io } from 'socket.io-client';
 
@@ -55,6 +54,40 @@ const CustomerPanel = () => {
         console.log(msg);
     }
 
+    const [service, setService] = useState({});
+    const [formData, setFormData] = useState({});
+    const handleInputChange = (e) => {
+        setFormData(prevState => ({
+            ...prevState,
+            idCliente: user.id,
+            [e.target.name]: e.target.value
+        }));
+        storageItem(formData)
+    };
+    const sendFormData = async () => {
+        try {
+            const response = await fetch('http://localhost:3000/api/jobHistory/add', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            });
+    
+            if (!response.ok) {
+                throw new Error('Error al guardar los datos del servicio.');
+            }
+    
+            const data = await response.json();
+            await setService(data)
+            console.log('Datos del servicio guardados correctamente.', data);
+        } catch (error) {
+            console.error('Error al guardar los datos del servicio:', error);
+            // Aquí podrías manejar el error de alguna manera, como mostrando un mensaje al usuario
+        }
+    };
+        
+
     useEffect(() => {
         const fetchCategories = async () => {
           try {
@@ -67,14 +100,45 @@ const CustomerPanel = () => {
           }
         };
         fetchCategories();
-      }, []);
+    }, []);
 
+    function storageItem(item) {
+        const i = item;
+        localStorage.setItem("service", JSON.stringify(i));
+    }
+    function retrieveStoredItem(item) {
+        const isItem = localStorage.getItem(item);
+        if (isItem) {
+            const storedItem = JSON.parse(isItem);
+            return storedItem;
+        } 
+        return false;
+    }
+    function deleteStoredItem(item) {
+        localStorage.removeItem(item);
+    }
+
+    useEffect(() => {
+        const retrieveService = retrieveStoredItem('service');
+        if (retrieveService) {
+            setFormData({
+                ...formData,
+                description: retrieveService.description, // Establece la descripción del servicio desde localStorage
+                amount: retrieveService.amount,
+                userLocation: retrieveService.userLocation
+            });
+        }
+    }, []);
 
     const handleSearch = async (e) => {
         e.preventDefault();
         setLoading(true); // Iniciar el estado de carga
         try {
-            console.log(category)
+           /* // Enviar los datos del formulario al servidor primero
+            await sendFormData();
+            console.log(formData)*/
+            storageItem(formData)
+
             const response = await fetch('http://localhost:3000/api/worker/getAllForOccupation', {
                 method: 'POST',
                 headers: {
@@ -85,17 +149,11 @@ const CustomerPanel = () => {
 
             if (!response.ok) throw new Error('No se pudieron cargar los trabajadores.');
             const data = await response.json();
-            // Si hay datos, mostrar trabajadores
             if (data.length > 0) {
-              
-                // Actualizar el estado de los trabajadores con el atributo 'online' agregado
                 setWorkers(data);
-                console.log('workers With Online Status', data)
-                //setWorkers(data);
                 setShowWorkers(true);
                 setErrorMessage("");
             } else {
-                // Si no hay datos, mostrar un mensaje de que no se encontraron registros
                 setWorkers([])
                 setShowWorkers(false);
                 setErrorMessage("No se encontraron registros.");
@@ -107,6 +165,7 @@ const CustomerPanel = () => {
             setLoading(false); // Finalizar el estado de carga
         }
     };
+
 
     const [selectedWorker, setSelectedWorker] = useState(null); // Estado para el trabajador seleccionado
     const [showModal, setShowModal] = useState(false); // Estado para la visibilidad del modal
@@ -126,6 +185,19 @@ const CustomerPanel = () => {
         setShowModal(false);
         setShowChat(true);
     };
+    useEffect(() => {
+        if(showChat){
+            const socket = io('http://localhost:3000');
+            socket.emit('start_chat', {
+                workerId: selectedWorker.id,
+                id: user.id,
+                firstName: user.firstName,
+                lastName: user.lastName,
+                chatRequest: showChat,
+                service: formData ?? {}
+            });
+        }
+    }, [showChat])
 
     useEffect(() => {
         const socket = io('http://localhost:3000');
@@ -139,7 +211,6 @@ const CustomerPanel = () => {
         }
 
         socket.on('worker_status', (status) => {
-            console.log(`El trabajador ${status.workerId} está ahora ${status.online ? 'conectado' : 'desconectado'}.`);
             // Actualizar el estado de los trabajadores cuando cambia su estado
             setWorkers(prevWorkers =>
                 prevWorkers.map(worker =>
@@ -150,11 +221,9 @@ const CustomerPanel = () => {
 
         socket.on('connected_users', (connUsers) => {
             // Actualizar el estado de los usuarios conectados
-            console.log('connUsers',connUsers)
-            console.log('workers',workers)
             setConnectedUsers(connUsers);
-            console.log('workers',workers)
         });
+
 
         return () => {
             // Desconectar el socket cuando el componente se desmonta
@@ -182,20 +251,22 @@ const CustomerPanel = () => {
                                 <h2 className={styles.title}>Bienvenid@ { user.firstName + ' ' + user.lastName}</h2>
                                 <h3>Detalla lo que necesitas a continuación:</h3>
                                 <div className={styles.searchContent}>
-                                    <input className={styles.inpAddress} type="text" placeholder="Ingresa la dirección." />
+                                    <input value={formData.userLocation || ''} onChange={handleInputChange} className={styles.inpAddress} name="userLocation" type="text" placeholder="Ingresa la dirección." />
                                     <div>
                         
                                         <input id="fileInput" className={styles.inpFile} type="file" />
                                       
-                                        <input className={`${styles.inpAddress} ${styles.amount}`} type="number" placeholder="Ingresa el monto que ofreces" />
+                                        <input value={formData.amount || ''} onChange={handleInputChange} className={`${styles.inpAddress} ${styles.amount}`} name="amount" type="number" placeholder="Ingresa el monto que ofreces" />
                                     </div>
                                 </div>
                                 <textarea
                                     className={styles.textarea}
                                     id="serviceDescription"
-                                    name="serviceDescription"
+                                    name="description"
                                     rows="5"
                                     placeholder="Describe el servicio que necesitas..."
+                                    onChange={handleInputChange}
+                                    value={formData.description || ''}
                                 />
                                 <SelectGlass onSelect={setCategory} categories={categories} />
                                 <ButtonGoogle clicEvent={handleSearch}/> {/* Botón para buscar trabajadores */}
@@ -209,15 +280,11 @@ const CustomerPanel = () => {
                         </div>
 
                         {showModal && (
-                            <Modal onClose={handleCloseModal}>
-                                <h2>¿Deseas hablar con {selectedWorker.firstName} {selectedWorker.lastName}?</h2>
-                                <button onClick={handleConfirmChat}>Confirmar</button>
-                                <button onClick={handleCloseModal}>Cancelar</button>
-                            </Modal>
+                            <CommonModal onClose={handleCloseModal} onConfirm={handleConfirmChat} user={selectedWorker} />
                         )}
 
                         {showChat && selectedWorker && (
-                            <Chat worker={selectedWorker} onClose={() => setShowChat(false)} />
+                            <Chat from={user} to={selectedWorker} onClose={() => setShowChat(false)} />
                         )}
                     </div>
                 ) 

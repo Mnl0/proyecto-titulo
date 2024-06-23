@@ -54,25 +54,28 @@
   
   .messagescontainer {
     padding: 15px;
+    display: flex;
+    flex-flow: column nowrap;
   }
   
   .messagebox {
-    padding: 10px;
+    padding: 10px 20px;
     margin-bottom: 5px;
     border-radius: 10px;
+    
   }
   
   .messagebox.left {
     background-color: #f1f1f1;
     color: black;
-    font-size: 13px;
+    font-size: 18px;
     left: 0;
   }
   
   .messagebox.right {
     background-color: #333;
     color: #fff;
-    font-size: 13px;
+    font-size: 18px;
     right: 0;
   }
   
@@ -121,3 +124,21 @@
     border: none;
     padding: 12px 17px;
   }
+
+  /* chat.module.css */
+.messageboxFrom {
+  background-color: #d1e7dd;
+  align-self: flex-start;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+  width: auto;
+}
+
+.messageboxTo {
+  background-color: #f8d7da;
+  align-self: flex-end;
+  margin: 10px;
+  padding: 10px;
+  border-radius: 10px;
+}

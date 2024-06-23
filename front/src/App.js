@@ -11,7 +11,7 @@ import WorkerPanel from './views/worker/workerPanel.jsx';
 import LandingPage from './views/home/LandingPage.jsx';
 import About from './views/about/about.jsx';
 import Chat from './views/components/chat/chat2.jsx';
-import Modal from './views/components/chat/chat2.jsx';
+import Modal from './views/components/modals/commonModal/CommonModal.jsx';
 
 
 function App() {

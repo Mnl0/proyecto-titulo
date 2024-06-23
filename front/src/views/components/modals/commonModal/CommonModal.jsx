@@ -1,24 +1,21 @@
-import React from "react";
+import {React, useState} from "react";
+import styles from './CommonModal.module.css';
 
 
-const CommonModal = () => {
-    const [showModal, setShowModal] = useState(false); // Estado para la visibilidad del modal
+const CommonModal = ({ onClose, onConfirm, user }) => {
+    const [selectedWorker, setSelectedWorker] = useState(user);
 
-    const handleCloseModal = () => {
-        setShowModal(false);
-    };
-    
-    const handleConfirmChat = () => {
-        // Lógica para iniciar el chat con el trabajador seleccionado
-        setShowModal(false);
-        setShowChat(true);
-    };
 
     return (
-        <div onClose={handleCloseModal}>
-            <h2>¿Deseas hablar con {selectedWorker.firstName} {selectedWorker.lastName}?</h2>
-            <button onClick={handleConfirmChat}>Confirmar</button>
-            <button onClick={handleCloseModal}>Cancelar</button>
+        <div  className={styles.modalBackdrop} >
+            <div className={styles.modalContent}>
+                <button className={styles.closeButton} onClick={onClose}>X</button>
+                <div className={styles.modalBody}>
+                    <h2>¿Deseas hablar con {selectedWorker.firstName} {selectedWorker.lastName}?</h2>
+                    <button onClick={onConfirm}>Confirmar</button>
+                    <button onClick={onClose}>Cancelar</button>
+                </div>
+            </div>
         </div>
     )
 }
