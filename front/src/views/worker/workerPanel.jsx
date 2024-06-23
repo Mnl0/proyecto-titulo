@@ -12,6 +12,7 @@ const WorkerPanel = () => {
     const [showModal, setShowModal] = useState(false);
     const [clientInfo, setClientInfo] = useState(null);
     const [showChat, setShowChat] = useState(false);
+    const [currentService, setCurrentService] = useState(null);
 
     const [userLocation, setUserLocation] = useState({
         ltd: -36.8341573,
@@ -71,7 +72,6 @@ const WorkerPanel = () => {
                             description: data.service.description,
                             amount: data.service.amount,
                             userLocation: data.service.userLocation
-                            // Asegúrate de incluir todas las propiedades necesarias de service
                         }
                     }
                     // Verificar si la solicitud ya existe en el estado de requests
@@ -85,6 +85,10 @@ const WorkerPanel = () => {
                 }
             })
         }
+
+        socket.on('updateService', (data) => {
+            if(data) setCurrentService(data);
+        })
 
         return () => {
             // Desconectar el socket cuando el componente se desmonta
@@ -106,6 +110,7 @@ const WorkerPanel = () => {
     //onClick={() => handleAcceptChat(request)}
     const handleAcceptChat = (request) => {
         setClientInfo(request);
+        setCurrentService(request.service)
         setShowChat(true);
         /*
         const socket = io('http://localhost:3000');
@@ -176,7 +181,7 @@ const WorkerPanel = () => {
             )}
 
             {showChat && clientInfo && (
-                <Chat from={user} to={clientInfo} onClose={() => setShowChat(false)} />
+                <Chat from={user} to={clientInfo} onClose={() => setShowChat(false)} service={currentService} />
             )}
         </div>
     )

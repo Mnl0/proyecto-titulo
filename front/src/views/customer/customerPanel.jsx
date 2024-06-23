@@ -54,7 +54,6 @@ const CustomerPanel = () => {
         console.log(msg);
     }
 
-    const [service, setService] = useState({});
     const [formData, setFormData] = useState({});
     const handleInputChange = (e) => {
         setFormData(prevState => ({
@@ -79,7 +78,7 @@ const CustomerPanel = () => {
             }
     
             const data = await response.json();
-            await setService(data)
+           
             console.log('Datos del servicio guardados correctamente.', data);
         } catch (error) {
             console.error('Error al guardar los datos del servicio:', error);
@@ -185,17 +184,20 @@ const CustomerPanel = () => {
         setShowModal(false);
         setShowChat(true);
     };
+    const [service, setService] = useState({});
     useEffect(() => {
         if(showChat){
             const socket = io('http://localhost:3000');
-            socket.emit('start_chat', {
+            const obj = {
                 workerId: selectedWorker.id,
                 id: user.id,
                 firstName: user.firstName,
                 lastName: user.lastName,
                 chatRequest: showChat,
                 service: formData ?? {}
-            });
+            }
+            setService(obj)
+            socket.emit('start_chat', obj);
         }
     }, [showChat])
 
@@ -269,7 +271,7 @@ const CustomerPanel = () => {
                                     value={formData.description || ''}
                                 />
                                 <SelectGlass onSelect={setCategory} categories={categories} />
-                                <ButtonGoogle clicEvent={handleSearch}/> {/* Botón para buscar trabajadores */}
+                                <ButtonGoogle clicEvent={handleSearch} text="Buscar Trabajador" /> {/* Botón para buscar trabajadores */}
                             </form>
                         </div>
 
@@ -284,7 +286,7 @@ const CustomerPanel = () => {
                         )}
 
                         {showChat && selectedWorker && (
-                            <Chat from={user} to={selectedWorker} onClose={() => setShowChat(false)} />
+                            <Chat from={user} to={selectedWorker} onClose={() => setShowChat(false)} service={service.service} />
                         )}
                     </div>
                 ) 
