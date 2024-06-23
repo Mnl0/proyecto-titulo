@@ -14,10 +14,13 @@ const app = express()
 const server = createServer(app);
 export const io = new Server(server, {
 	cors: {
-		origin: '*',
-		methods: ['GET, POST, PUT, DELETE, OPTIONS, PATCH'],
-		allowedHeaders: ['Content-Type']
-	}
+		origin: 'http://localhost:3001',
+		methods: ['GET, POST'],
+		allowedHeaders: ['Content-Type'],
+        transports: ['websocket', 'polling'],
+        credentials: true
+	},
+    allowEIO3: true
 })
 const PORT = process.env.PORT;
 
@@ -68,12 +71,12 @@ io.on('connection', (socket) => {
             io.emit('worker_status', { workerId, online: true });
 			io.emit('connected_users', Array.from(connectedWorkers));
         }
-		console.log(connectedWorkers)
-		console.log(`El trabajador ${workerId} se ha conectado.`);
+		//console.log(`El trabajador ${workerId} se ha conectado.`);
     });
 
     // Manejar el evento de desconexión
     socket.on('disconnect', () => {
+        console.log('A user has disconnected!')
         // Si hay un id de trabajador, actualizar su estado a offline
         if (workerId) {
             const workerIndex = connectedWorkers.findIndex(worker => worker.id === workerId);
@@ -82,7 +85,7 @@ io.on('connection', (socket) => {
 				connectedWorkers.splice(workerIndex, 1);
                 io.emit('worker_status', { workerId, online: false });
 				io.emit('connected_users', Array.from(connectedWorkers));
-				console.log(`El trabajador ${workerId} se ha desconectado.`);
+				//console.log(`El trabajador ${workerId} se ha desconectado.`);
             }
         }
     });
@@ -91,6 +94,24 @@ io.on('connection', (socket) => {
     socket.on('worker_status', (status) => {
         console.log(`El trabajador ${status.workerId} está ahora ${status.online ? 'conectado' : 'desconectado'}.`);
     });
+
+    socket.on('start_chat', (data) => {
+        const { workerId, id, firstName, lastName, chatRequest } = data;
+        //console.log(`Iniciando chat entre cliente ${clientId} y trabajador ${workerId}`);
+        io.emit(`chat${workerId}`, data)
+    });
+
+    socket.on('join_private_chat', (r) => {
+        const room = `room_${r}`;
+        console.log(room)
+        socket.join(room);
+        io.to(socket.id).emit('room_joined', room);
+    });
+
+    socket.on('private message', ({ room, message, sender }) => {
+        io.to(room).emit('private message', { message, sender });
+    });
+
 
     // Establecer un tiempo de espera para desconexión automática si no hay interacción
 	/*

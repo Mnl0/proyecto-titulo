@@ -3,6 +3,11 @@
 	src: url("../../fonts/Play-Regular.ttf");
 }
 
+:root{
+	--bg-btn-chat: #059212;
+	--bg-btn-rej: #E72929;
+}
+
 p, h1, h2{
     margin: 0;
     padding: 0;
@@ -10,8 +15,7 @@ p, h1, h2{
 
 .panelContainer{
     width: 100%;
-    min-height: 85vh;
-    height: 90%;
+    height: auto;
     display: flex;
     flex-flow: column nowrap;
     align-items: center;
@@ -39,3 +43,160 @@ p, h1, h2{
     font-weight: bold;
     letter-spacing: 2px;
 }
+
+/*___________TABLE______________*/
+
+.tableContainer {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+}
+
+.tableContainer > table {
+	width: 800px;
+	border-collapse: collapse;
+	overflow: hidden;
+	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+ th,
+td {
+	padding: 15px;
+	background-color: rgba(255,255,255,0.2);
+	color: #000;
+}
+
+th {
+	text-align: left;
+}
+
+thead {
+	th {
+		background-color: rgb(16, 44, 87);
+		color: #fff;
+		letter-spacing: 1px;
+	}
+}
+
+tbody {
+	tr {
+		&:hover {
+			background-color: rgba(255,255,255,0.3);
+		}
+	}
+	td {
+		position: relative;
+		&:hover {
+			&:before {
+				content: "";
+				position: absolute;
+				left: 0;
+				right: 0;
+				top: -9999px;
+				bottom: -9999px;
+				background-color: rgba(255,255,255,0.2);
+				z-index: -1;
+			}
+		}
+	}
+}
+
+/*_________ ICON CONTAINER____________*/
+.actionContainer{
+	display: flex;
+	justify-content: center;
+}
+.actionTdContainer{
+	display: flex;
+	justify-content: center;
+	flex-flow: row wrap;
+}
+
+.chatButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 15px;
+	gap: 15px;
+	background-color: var(--bg-btn-chat);
+	outline: 3px #181717 solid;
+	outline-offset: -3px;
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	transition: 400ms;
+	margin: 0 10px 0 0;
+  }
+  
+  .chatButton .text {
+	color: white;
+	font-weight: 700;
+	font-size: 1em;
+	transition: 400ms;
+  }
+  
+  .chatButton > svg  {
+	width: 2rem;
+	fill: #fff;
+  }
+
+  .chatButton > svg path {
+	transition: 400ms;
+  }
+  
+  .chatButton:hover {
+	background-color: transparent;
+  }
+  
+  .chatButton:hover .text {
+	color: #181717;
+  }
+  
+  .chatButton:hover svg path {
+	fill: #000;
+  }
+
+  /*----*/
+  .rejButton {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 10px 15px;
+	gap: 15px;
+	background-color: var(--bg-btn-rej);
+	outline: 3px #181717 solid;
+	outline-offset: -3px;
+	border-radius: 5px;
+	border: none;
+	cursor: pointer;
+	transition: 400ms;
+  }
+  
+  .rejButton .text {
+	color: white;
+	font-weight: 700;
+	font-size: 1em;
+	transition: 400ms;
+  }
+  
+  .rejButton > svg  {
+	width: 2rem;
+	fill: #fff;
+  }
+
+  .rejButton > svg path {
+	transition: 400ms;
+  }
+  
+  .rejButton:hover {
+	background-color: transparent;
+  }
+  
+  .rejButton:hover .text {
+	color: #181717;
+  }
+  
+  .rejButton:hover svg path {
+	fill: #000;
+  }

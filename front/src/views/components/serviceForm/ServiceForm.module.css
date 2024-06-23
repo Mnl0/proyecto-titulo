@@ -1,0 +1,64 @@
+.searchControll{
+    display: flex;
+    flex-flow: column nowrap;
+    padding: 20px 40px;
+    width: 80%;
+    background-color: #fff;
+    border-radius: 10px;
+    margin: 20px 0;
+}
+.searchControll > h2{
+    margin: 0 0 20px 0;
+}
+
+.searchControll > h3{
+    margin: 0 0 20px 0;
+}
+
+.searchContent{
+    display: flex;
+    flex-flow: column wrap;
+    justify-content: space-between;
+}
+
+.searchContent > div{
+    display: flex;
+}
+
+.inpAddress {
+    flex: 2;
+    appearance: none;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    max-height: 50px;
+    padding: 1rem 0 1rem 1rem;
+    color: #fff;
+    border-radius: 0.25em;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2),
+                2px 0 .8em 0 rgba(0, 0, 0, 0.5);
+    margin: 0 0 20px 0;
+    background-color: black;
+}
+
+.searchContent > div > .amount{
+    flex: 1;
+    margin-left: 5px;
+}
+
+.textarea{
+    appearance: none;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    width: auto;
+    padding: '0.5rem';
+    border-radius: '0.5rem';
+    resize: vertical;
+    border-radius: 0.25em;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2),
+                2px 0 .8em 0 rgba(0, 0, 0, 0.5);
+    margin: 0 0 20px 0;
+    background-color: black;
+    color: #fff;
+}

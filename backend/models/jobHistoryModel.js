@@ -51,7 +51,11 @@ export const JobHistorySchema = sequelize.define('jobHistory', {
 	jh_comment_client: {
 		type: DataTypes.STRING(250),
 		allowNull: true,
-	}
+	},
+	jh_amount: {
+		type: DataTypes.INTEGER(10),
+		allowNull: true,
+	},
 },
 	{
 		timestamps: false,

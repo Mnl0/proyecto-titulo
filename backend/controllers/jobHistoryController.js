@@ -13,6 +13,6 @@ export const jobHistoryController = {
 		if (data === null) {
 			res.sendStatus(400);
 		}
-		res.sendStatus(200);
+		res.json(data);
 	}
 }

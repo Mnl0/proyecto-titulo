@@ -126,7 +126,6 @@ export const workerController = {
 			online: connectedWorkers.some(connectedWorker => connectedWorker.id === worker.dataValues.id)
 		  }));
 		  
-		  console.log('nueva data', nuevaData)
 		res.send(nuevaData);
 	},
 }
