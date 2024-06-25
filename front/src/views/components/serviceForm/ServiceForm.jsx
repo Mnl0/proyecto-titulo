@@ -41,7 +41,7 @@ const ServiceForm = ({ customer, worker }) => {
             <div className={styles.searchContent}>
                 <input value={formData.userLocation || ''} onChange={handleInputChange} className={styles.inpAddress} name="userLocation" type="text" placeholder="Ingresa la dirección." />
                 <div>
-                    <input value={formData.amount || ''} onChange={handleInputChange} className={`${styles.inpAddress} ${styles.amount}`} name="amount" type="number" placeholder="Ingresa el monto que ofreces" />
+                    <input value={formData.amount || ''} onChange={handleInputChange} className={`${styles.inpAmount} ${styles.amount}`} name="amount" type="number" placeholder="Ingresa el monto que ofreces" />
                 </div>
             </div>
             <textarea

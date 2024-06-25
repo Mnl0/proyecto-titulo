@@ -1,3 +1,9 @@
+:root{
+    --bg-color-input: #686D76;
+    --bg-color-input2: #01204E;
+    --bg-color-input3: #26355D;
+}
+
 .searchControll{
     display: flex;
     flex-flow: column nowrap;
@@ -6,6 +12,7 @@
     background-color: #fff;
     border-radius: 10px;
     margin: 20px 0;
+    color: #fff;
 }
 .searchControll > h2{
     margin: 0 0 20px 0;
@@ -25,7 +32,7 @@
     display: flex;
 }
 
-.inpAddress {
+.searchControll > div > .inpAddress {
     flex: 2;
     appearance: none;
     border: 0;
@@ -38,7 +45,29 @@
     box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2),
                 2px 0 .8em 0 rgba(0, 0, 0, 0.5);
     margin: 0 0 20px 0;
-    background-color: black;
+    background-color: var(--bg-color-input);
+}
+.searchControll > div > .inpAddress::placeholder{
+    color: #fff;
+}
+
+.searchControll > div > div > .inpAmount {
+    flex: 2;
+    appearance: none;
+    border: 0;
+    outline: 0;
+    font: inherit;
+    max-height: 50px;
+    padding: 1rem 0 1rem 1rem;
+    color: #fff;
+    border-radius: 0.25em;
+    box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2),
+                2px 0 .8em 0 rgba(0, 0, 0, 0.5);
+    margin: 0 0 20px 0;
+    background-color: var(--bg-color-input);
+}
+.searchControll > div > div > .inpAmount::placeholder{
+    color: #fff;
 }
 
 .searchContent > div > .amount{
@@ -46,7 +75,7 @@
     margin-left: 5px;
 }
 
-.textarea{
+.searchControll > .textarea{
     appearance: none;
     border: 0;
     outline: 0;
@@ -59,6 +88,10 @@
     box-shadow: 0 0 1em 0 rgba(0, 0, 0, 0.2),
                 2px 0 .8em 0 rgba(0, 0, 0, 0.5);
     margin: 0 0 20px 0;
-    background-color: black;
+    background-color: var(--bg-color-input);
+    color: #fff;
+}
+
+.searchControll > .textarea::placeholder{
     color: #fff;
 }
