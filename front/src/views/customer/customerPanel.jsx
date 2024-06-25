@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import styles from "./customerPanel.module.css";
 //import { FaUser, FaPowerOff } from "react-icons/fa6";
 import { Link } from "react-router-dom";
@@ -10,9 +10,10 @@ import WorkerCards from '../components/workerCards/WorkerCards.jsx';
 import CommonModal from '../components/modals/commonModal/CommonModal.jsx';
 import Chat from '../components/chat/chat2.jsx';
 import { io } from 'socket.io-client';
+const url = process.env.REACT_APP_API_URL;
 
 const CustomerPanel = () => {
-    const {user} = useAuth();
+    const { user } = useAuth();
     const [showWorkers, setShowWorkers] = useState(false); // Estado para controlar la visibilidad de TableUsers
     const [loading, setLoading] = useState(false); // Estado para controlar el estado de carga
     const [errorMessage, setErrorMessage] = useState(""); // Estado para almacenar mensajes de error
@@ -26,10 +27,10 @@ const CustomerPanel = () => {
         lng: -73.0540712
     });
 
-    useEffect(()=>{
-        if(navigator.geolocation){
+    useEffect(() => {
+        if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(okey, error);
-        }else{
+        } else {
             console.log('Su dispositivo no soporta geolocalización.')
         }
     }, []);
@@ -42,10 +43,10 @@ const CustomerPanel = () => {
         setUserLocation(uLoc);
         //console.log(userLocation)   //Usar para el mapa.
     }
-    
+
     const error = (err) => {
         let msg = '';
-        switch(err.code){
+        switch (err.code) {
             case err.PERMISSION_DENIED: msg = 'No has permitido localizarte.'; break;
             case err.POSITION_UNAVAILABLE: msg = 'Tu posición no está disponible.'; break;
             case err.TIMEOUT: msg = 'Tiempo de espera superado. Vuelve a intentarlo.'; break;
@@ -65,38 +66,38 @@ const CustomerPanel = () => {
     };
     const sendFormData = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/jobHistory/add', {
+            const response = await fetch(`${url}/api/jobHistory/add`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(formData)
             });
-    
+
             if (!response.ok) {
                 throw new Error('Error al guardar los datos del servicio.');
             }
-    
+
             const data = await response.json();
-           
+
             console.log('Datos del servicio guardados correctamente.', data);
         } catch (error) {
             console.error('Error al guardar los datos del servicio:', error);
             // Aquí podrías manejar el error de alguna manera, como mostrando un mensaje al usuario
         }
     };
-        
+
 
     useEffect(() => {
         const fetchCategories = async () => {
-          try {
-            const response = await fetch('http://localhost:3000/api/category/getAll');
-            if (!response.ok) throw new Error('No se pudieron cargar las categorías');
-            const data = await response.json();
-            setCategories(data);
-          } catch (error) {
-            console.error('Error al obtener las categorías:', error);
-          }
+            try {
+                const response = await fetch(`${url}/api/category/getAll`);
+                if (!response.ok) throw new Error('No se pudieron cargar las categorías');
+                const data = await response.json();
+                setCategories(data);
+            } catch (error) {
+                console.error('Error al obtener las categorías:', error);
+            }
         };
         fetchCategories();
     }, []);
@@ -110,7 +111,7 @@ const CustomerPanel = () => {
         if (isItem) {
             const storedItem = JSON.parse(isItem);
             return storedItem;
-        } 
+        }
         return false;
     }
     function deleteStoredItem(item) {
@@ -133,17 +134,17 @@ const CustomerPanel = () => {
         e.preventDefault();
         setLoading(true); // Iniciar el estado de carga
         try {
-           /* // Enviar los datos del formulario al servidor primero
-            await sendFormData();
-            console.log(formData)*/
+            /* // Enviar los datos del formulario al servidor primero
+             await sendFormData();
+             console.log(formData)*/
             storageItem(formData)
 
-            const response = await fetch('http://localhost:3000/api/worker/getAllForOccupation', {
+            const response = await fetch(`${url}/api/worker/getAllForOccupation`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({category})
+                body: JSON.stringify({ category })
             });
 
             if (!response.ok) throw new Error('No se pudieron cargar los trabajadores.');
@@ -186,8 +187,8 @@ const CustomerPanel = () => {
     };
     const [service, setService] = useState({});
     useEffect(() => {
-        if(showChat){
-            const socket = io('http://localhost:3000');
+        if (showChat) {
+            const socket = io(`${url}`);
             const obj = {
                 workerId: selectedWorker.id,
                 id: user.id,
@@ -202,12 +203,12 @@ const CustomerPanel = () => {
     }, [showChat])
 
     useEffect(() => {
-        const socket = io('http://localhost:3000');
+        const socket = io(`${url}`);
 
         if (user !== null) {
             socket.on('connect', () => {
                 const userId = user.id;
-                if(userId === null) return;
+                if (userId === null) return;
                 socket.emit('login', user.id);
             });
         }
@@ -250,14 +251,14 @@ const CustomerPanel = () => {
                                 <p className={styles.userEmail}>{user.email}</p>
                             </div>
                             <form className={styles.searchControll}>
-                                <h2 className={styles.title}>Bienvenid@ { user.firstName + ' ' + user.lastName}</h2>
+                                <h2 className={styles.title}>Bienvenid@ {user.firstName + ' ' + user.lastName}</h2>
                                 <h3>Detalla lo que necesitas a continuación:</h3>
                                 <div className={styles.searchContent}>
                                     <input value={formData.userLocation || ''} onChange={handleInputChange} className={styles.inpAddress} name="userLocation" type="text" placeholder="Ingresa la dirección." />
                                     <div>
-                        
+
                                         <input id="fileInput" className={styles.inpFile} type="file" />
-                                      
+
                                         <input value={formData.amount || ''} onChange={handleInputChange} className={`${styles.inpAddress} ${styles.amount}`} name="amount" type="number" placeholder="Ingresa el monto que ofreces" />
                                     </div>
                                 </div>
@@ -289,7 +290,7 @@ const CustomerPanel = () => {
                             <Chat from={user} to={selectedWorker} onClose={() => setShowChat(false)} service={service.service} />
                         )}
                     </div>
-                ) 
+                )
             }
         </div>
     )

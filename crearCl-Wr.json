@@ -1,165 +1,192 @@
 [
 	{
-		"cl_firtName":"juanito",
+		"cl_firstName":"juanito",
 		"cl_lastName":"peres",
 		"cl_email":"email@email.cl",
 		"cl_password":"1234",
-		"cl_cellphone":"988776655",
+		"cl_cellPhone":"988776655",
 		"cl_latitude":"-36.788990",
-		"cl_longitude":"-73.110784"
+		"cl_longitude":"-73.110784",
+		"cl_address":"nueva imperial 123"
 	},
 	{
-		"cl_firtName":"pedro",
+		"cl_firstName":"pedro",
 		"cl_lastName":"paz",
 		"cl_email":"email2@email.cl",
-		"cl_password":"1234",
-		"cl_cellphone":"988776655",
+		"cl_password":"5678",
+		"cl_cellPhone":"988776655",
 		"cl_latitude":"-36.840239",
-		"cl_longitude":"-73.119806"
+		"cl_longitude":"-73.119806",
+		"cl_address":"belgica 123"
 	},
 	{
-		"cl_firtName":"cesar",
+		"cl_firstName":"cesar",
 		"cl_lastName":"toledo",
 		"cl_email":"email3@email.cl",
-		"cl_password":"1234",
-		"cl_cellphone":"988776655",
+		"cl_password":"0987",
+		"cl_cellPhone":"988776655",
 		"cl_latitude":"-36.851777",
-		"cl_longitude":"-73.142820"
+		"cl_longitude":"-73.142820",
+		"cl_address":"grecia 123"
 	},
 	{
-		"cl_firtName":"victo",
+		"cl_firstName":"victo",
 		"cl_lastName":"venega",
 		"cl_email":"email4@email.cl",
-		"cl_password":"1234",
-		"cl_cellphone":"988776655",
+		"cl_password":"7654",
+		"cl_cellPhone":"988776655",
 		"cl_latitude":"-36.833482",
-		"cl_longitude":"-73.058638"
+		"cl_longitude":"-73.058638",
+		"cl_address":"londres 123"
 	},
 	{
-		"cl_firtName":"leandro",
+		"cl_firstName":"leandro",
 		"cl_lastName":"venabidez",
 		"cl_email":"email5@email.cl",
-		"cl_password":"1234",
-		"cl_cellphone":"988776655",
+		"cl_password":"1212",
+		"cl_cellPhone":"988776655",
 		"cl_latitude":"-36.832994",
-		"cl_longitude":"-73.053635"
+		"cl_longitude":"-73.053635",
+		"cl_address":"peru"
 	},
 	{
-		"cl_firtName":"eduardo",
+		"cl_firstName":"eduardo",
 		"cl_lastName":"sandoval",
 		"cl_email":"email6@email.cl",
-		"cl_password":"1234",
-		"cl_cellphone":"988776655",
+		"cl_password":"1111",
+		"cl_cellPhone":"988776655",
 		"cl_latitude":"-36.830445",
-		"cl_longitude":"-73.053590"
+		"cl_longitude":"-73.053590",
+		"cl_address":"chile"
 	},
 	{
-		"cl_firtName":"luis",
+		"cl_firstName":"luis",
 		"cl_lastName":"munoz",
 		"cl_email":"email7@email.cl",
-		"cl_password":"1234",
-		"cl_cellphone":"988776655",
+		"cl_password":"2222",
+		"cl_cellPhone":"988776655",
 		"cl_latitude":"-36.829001",
-		"cl_longitude":"-73.056206"
+		"cl_longitude":"-73.056206",
+		"cl_address":"colombia"
 	},
 	{
-		"cl_firtName":"julian",
+		"cl_firstName":"julian",
 		"cl_lastName":"arana",
 		"cl_email":"email8@email.cl",
-		"cl_password":"1234",
-		"cl_cellphone":"988776655",
+		"cl_password":"3333",
+		"cl_cellPhone":"988776655",
 		"cl_latitude":"-36.826483",
-		"cl_longitude":"-73.050239"
+		"cl_longitude":"-73.050239",
+		"cl_address":"panama"
 	},
 	{
-		"cl_firtName":"gengar",
+		"cl_firstName":"gengar",
 		"cl_lastName":"paleta",
 		"cl_email":"email9@email.cl",
-		"cl_password":"1234",
-		"cl_cellphone":"988776655",
+		"cl_password":"5555",
+		"cl_cellPhone":"988776655",
 		"cl_latitude":"-36.817874",
-		"cl_longitude":"-73.021821"
+		"cl_longitude":"-73.021821",
+		"cl_address":"casino"
 	},
 
 	{
-		"wr_firtName":"angela",
+		"wr_firstName":"angela",
 		"wr_lastName":"wu",
 		"wr_email":"mail1@email.cl",
-		"wr_password":"1234",
-		"wr_cellphone":"988776655",
+		"wr_password":"6666",
+		"wr_cellPhone":"988776655",
 		"wr_latitude":"-36.815032",
-		"wr_longitude":"-73.029097"
+		"wr_longitude":"-73.029097",
+		"wr_address":"sweth",
+		"wr_category": "Albanileria"
 	},
 	{
-		"wr_firtName":"marite",
+		"wr_firstName":"marite",
 		"wr_lastName":"rosen",
 		"wr_email":"mail2@email.cl",
-		"wr_password":"1234",
-		"wr_cellphone":"988776655",
+		"wr_password":"7777",
+		"wr_cellPhone":"988776655",
 		"wr_latitude":"-36.777229",
-		"wr_longitude":"-73.023316"
+		"wr_longitude":"-73.023316",
+		"wr_address":"wite rose",
+		"wr_category": "Albanileria"
 	},
 	{
-		"wr_firtName":"jumbo",
+		"wr_firstName":"jumbo",
 		"wr_lastName":"cloud",
 		"wr_email":"mail3@email.cl",
-		"wr_password":"1234",
-		"wr_cellphone":"988776655",
+		"wr_password":"8888",
+		"wr_cellPhone":"988776655",
 		"wr_latitude":"-36.766764",
-		"wr_longitude":"-73.013313"
+		"wr_longitude":"-73.013313",
+		"wr_address":"big lasagna",
+		"wr_category": "Carpinteria"
 	},
 	{
-		"wr_firtName":"rosal",
+		"wr_firstName":"rosal",
 		"wr_lastName":"tuca",
 		"wr_email":"mail4@email.cl",
-		"wr_password":"1234",
-		"wr_cellphone":"988776655",
+		"wr_password":"9999",
+		"wr_cellPhone":"988776655",
 		"wr_latitude":"-36.743293",
-		"wr_longitude":"-73.104360"
+		"wr_longitude":"-73.104360",
+		"wr_address":"camaron",
+		"wr_category": "Carpinteria"
 	},
 	{
-		"wr_firtName":"tucapel",
+		"wr_firstName":"tucapel",
 		"wr_lastName":"amapola",
 		"wr_email":"mail5@email.cl",
-		"wr_password":"1234",
-		"wr_cellphone":"988776655",
+		"wr_password":"0000",
+		"wr_cellPhone":"988776655",
 		"wr_latitude":"-36.792198",
-		"wr_longitude":"-73.053403"
+		"wr_longitude":"-73.053403",
+		"wr_address":"hibridos",
+		"wr_category": "Gasfiteria"
 	},
 	{
-		"wr_firtName":"sabina",
+		"wr_firstName":"sabina",
 		"wr_lastName":"hurtado",
 		"wr_email":"mail16@email.cl",
-		"wr_password":"1234",
-		"wr_cellphone":"988776655",
+		"wr_password":"4141",
+		"wr_cellPhone":"988776655",
 		"wr_latitude":"-36.793916",
-		"wr_longitude":"-73.045464"
+		"wr_longitude":"-73.045464",
+		"wr_address":"casino marina",
+		"wr_category": "Gasfiteria"
 	},
 	{
-		"wr_firtName":"isabel",
+		"wr_firstName":"isabel",
 		"wr_lastName":"nova",
 		"wr_email":"mail7@email.cl",
-		"wr_password":"1234",
-		"wr_cellphone":"988776655",
+		"wr_password":"7272",
+		"wr_cellPhone":"988776655",
 		"wr_latitude":"-36.788314",
-		"wr_longitude":"-73.034306"
+		"wr_longitude":"-73.034306",
+		"wr_address":"mago nicolas",
+		"wr_category": "Electricista"
 	},
 	{
-		"wr_firtName":"pino",
+		"wr_firstName":"pino",
 		"wr_lastName":"valenzuela",
 		"wr_email":"mail8@email.cl",
-		"wr_password":"1234",
-		"wr_cellphone":"988776655",
+		"wr_password":"9292",
+		"wr_cellPhone":"988776655",
 		"wr_latitude":"-36.771403",
-		"wr_longitude":"-73.070741"
+		"wr_longitude":"-73.070741",
+		"wr_address":"magia",
+		"wr_category": "Electricista"
 	},
 	{
-		"wr_firtName":"guairao",
+		"wr_firstName":"guairao",
 		"wr_lastName":"mercedez",
 		"wr_email":"mail9@email.cl",
-		"wr_password":"1234",
-		"wr_cellphone":"988776655",
+		"wr_password":"7878",
+		"wr_cellPhone":"988776655",
 		"wr_latitude":"-36.777041",
-		"wr_longitude":"-73.053875"
+		"wr_longitude":"-73.053875",
+		"wr_address":"ruleta",
+		"wr_category": "Electricista"
 	}
 ]

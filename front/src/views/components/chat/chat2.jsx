@@ -2,6 +2,7 @@ import styles from './chat.module.css';
 import React, { useEffect, useState, useRef } from 'react';
 import { io } from 'socket.io-client';
 import ServiceForm from '../serviceForm/ServiceForm.jsx';
+const ulr = process.env.REACT_APP_API_URL;
 
 const Chat2 = ({ from, to, onClose, service }) => {
   const [messages, setMessages] = useState([]);
@@ -9,12 +10,12 @@ const Chat2 = ({ from, to, onClose, service }) => {
   const messagesContainerRef = useRef(null);
   const [customer, setCustomer] = useState(null);
 
-  useEffect(()=>{
+  useEffect(() => {
     setCustomer(from.category ?? null);
-  console.log('CUSTOMER',customer)
+    console.log('CUSTOMER', customer)
   }, [])
 
-  const socket = io('http://localhost:3000', {
+  const socket = io(`${ulr}`, {
     reconnection: true,
     transports: ['websocket', 'polling'],
     reconnectionAttempts: 5,
