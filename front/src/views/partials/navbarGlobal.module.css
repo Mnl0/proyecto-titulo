@@ -2,92 +2,230 @@
 	font-family: "Play-Regular";
 	src: url("../../fonts/Play-Regular.ttf");
 }
+
 .topNavbar {
 	background-color: #222;
 	display: flex;
-	padding: 0 100px;
+	padding: 1rem 100px;
 	/* width: 100vh; */
-	height: 55px;
+	height: 4rem;
 	box-shadow: 0 6px 10px rgba(0, 0, 0, 0.6);
+	z-index: 1;
 }
 
 /*==== LOGO NAV =========*/
 .topNavbar > div {
-	flex: 1;
 	line-height: 50px; /* Esta altura debe coincidir con la altura del topNavbar. */
 }
-.topNavbar > div > .enlace {
+.topNavbar > div > .link {
 	color: #fff;
 	font-weight: 600;
 	text-decoration: none;
 }
 
-/*==== GLOBAL LINKS =========*/
-.topNavbar > .globalLinks {
+.logoContainer{
 	display: flex;
-	flex: 2;
+	flex: 1;
+}
+
+.logoContainer > .linkLogo{
+	line-height: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.logoContainer > a > img{
+	height: 80%;
+}
+
+.contLinks{
+	display: flex;
+	flex: 3;
+	justify-content: space-around;
+}
+
+/*==== GLOBAL LINKS =========*/
+.topNavbar > .contLinks > .globalLinks {
+	display: flex;
 	align-items: center;
 	justify-content: start;
 }
-.topNavbar > .globalLinks > li {
+.topNavbar > .contLinks > .globalLinks > li {
 	list-style: none;
 	/* height: 100%; */
 	line-height: 50px; /* Esta altura debe coincidir con la altura del topNavbar. */
 }
-.topNavbar > .globalLinks > li > .enlace {
+.topNavbar > .contLinks > .globalLinks > li > .link {
 	color: #fff;
 	display: block;
 	padding: 0 20px;
 	letter-spacing: 2px;
-	font-size: 14px;
+	font-size: 15px;
 	font-weight: lighter;
 	transition: 0.5s;
 	text-decoration: none;
+	border-radius: 10px;
+	margin-right: 5px;
 }
-.topNavbar > .globalLinks > li > .enlace:hover {
+.topNavbar > .contLinks > .globalLinks > li > .link:hover {
 	color: #000;
 	background-color: #77c7f5;
 }
 
 /*==== SESION LINKS =========*/
-.topNavbar > .sesionLinks {
-	display: flex;
-	flex: 3;
-	align-items: center;
-	justify-content: end;
+.topNavbar > .contLinks > .sesionLinks {
+	display: flex;;
 	margin: 0px;
-
+	margin-left: auto;
 }
-.topNavbar > .sesionLinks > li {
+.topNavbar > .contLinks > .sesionLinks > li {
 	list-style: none;
-	height: 30px;
 	display: flex;
 	align-items: center;
-	padding: 8px 0;
+	padding: 0px 0;
 	margin: 0 10px 0 0;
 }
-.topNavbar > .sesionLinks > li > .enlace {
+.topNavbar > .contLinks > .sesionLinks > li > .link {
 	color: #000;
 	background-color: #eee;
-	height: auto;
 	display: flex;
 	align-items: center;
-	padding: 10px 15px;
-	border-radius: 25px;
+	padding: 15px 15px;
+	border-radius: 10px;
 	transition: 0.3s;
-	font-size: 13px;
+	font-size: 15px;
 	text-decoration: none;
+	line-height: normal;
 }
-.topNavbar > .sesionLinks > li > .enlace:hover {
+.topNavbar > .contLinks > .sesionLinks > li > .link:hover {
 	color: #fff;
 	background-color: #77c7f5;
 }
-.topNavbar > .sesionLinks > li:last-child .enlace {
+.topNavbar > .contLinks > .sesionLinks > li:last-child .link {
 	background-color: #222;
 	border: 2px solid #77c7f5;
 	color: #fff;
 }
-.topNavbar > .sesionLinks > li:last-child .enlace:hover {
+.topNavbar > .contLinks > .sesionLinks > li:last-child .link:hover {
 	background-color: #eee;
 	color: #2684bb;
+}
+
+.menuIconContainer{
+	display: none;
+}
+
+@media (max-width: 1100px) {
+	.topNavbar{
+		position: relative;
+	}
+	.topNavbar > .contLinks > .sesionLinks {
+		height: auto;
+		display: flex;
+		flex-flow: column nowrap;
+		visibility: hidden;
+		position: absolute;
+		right: 0;
+		top: -2%;
+		transition: .3s ease-in-out;
+		opacity: 0;
+	}
+	.topNavbar > .contLinks > .sesionLinks > li {
+		margin: 0 0 .2rem 0;
+		padding: 0;
+	}
+	.topNavbar > .contLinks > .sesionLinks > li > .link {
+		border-radius: 5px;
+		padding: 1rem 3rem;
+	}
+
+	.menuIconContainer{
+		max-width: 2.5rem;
+		cursor: pointer;
+		height: auto;
+		display: flex;
+		z-index: 100;
+	}
+	.menuIconContainer > svg{
+		fill: #fff;
+	}
+
+	.headerOpen{
+		width: 100%;
+		padding-bottom: 100px;
+		z-index: -2;
+	}
+	.headerOpen  .contLinks > .sesionLinks{
+		transform: translateY(105%);
+		visibility: visible;
+		opacity: 1;
+	}
+}
+
+@media (max-width: 850px) {
+	/*==== GLOBAL LINKS =========*/
+	.topNavbar{
+		z-index: 10;
+	}
+	.contLinks{
+		position: absolute;
+		left: 0;
+		top: 0;
+		width: 100%;
+		min-height: 100%;
+		display: flex;
+		flex-flow: column nowrap;
+		z-index: 0;
+		transform: translateY(-100%);
+		background-color: #222;
+		visibility: hidden;
+		opacity: 0;
+		transition: .3s ease-in-out;
+	}
+	.topNavbar > .contLinks > .globalLinks {
+		margin: 0;
+		padding: 0;
+		display: flex;
+		width: 100%;
+		flex-flow: column nowrap;
+	}
+	.topNavbar > .contLinks > .globalLinks > li {
+		width: 100%;
+		display: flex;
+		text-align: center;
+	}
+	.topNavbar > .contLinks > .globalLinks > li > .link {
+		padding: 0 20px;
+		width: 100%;
+	}
+
+	/*==== SESION LINKS =========*/
+	.topNavbar > .contLinks > .sesionLinks {
+		margin: 0;
+		padding: 0;
+		position: initial;
+		transform: initial;
+		display: flex;
+		flex-flow: row nowrap;
+	}
+	.topNavbar > .contLinks > .sesionLinks > li {
+		flex: 1;
+	}
+	.topNavbar > .contLinks > .sesionLinks > li > .link {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		background-color: #222;
+		color: #fff;
+	}
+	.topNavbar > .contLinks > .sesionLinks > li:last-child .link {
+		background-color: #222;
+		border: initial;
+		color: #fff;
+	}
+	.headerOpen  .contLinks{
+		transform: translateY(50%);
+		visibility: visible;
+		opacity: 1;
+	}
 }

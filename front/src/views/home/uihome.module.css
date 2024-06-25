@@ -1,5 +1,9 @@
 :root{
   --primary-uihome-color: #40A578;
+  --secondary-uihome-color: #1679AB;
+  --Third-uihome-color: #2C4E80;
+  --Fourth-uihome-color: #FEFAF6;
+  --Fifth-uihome-color: #000000;
 }
 
 .toast {
@@ -8,7 +12,7 @@
     right: 20px;
     background-color: #333;
     color: #fff;
-    padding: 10px;
+    padding: 20px;
     border-radius: 5px;
     box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
     display: flex;
@@ -17,10 +21,16 @@
     cursor: pointer;
     margin: 0 0 40px 0;
     transition: 0.3s;
+    font-size: 1.2rem;
+
+  }
+  .toast:nth-child(2){
+    background-color: var(--Third-uihome-color);
   }
   .toast:hover{
     box-shadow: 1px 1px 1px rgba(0,0,0,0.1), 2px 2px 2px rgba(0,0,0,0.2), 4px 4px 4px rgba(0,0,0,0.3), 0 16px 8px rgba(0,0,0,0.2), 0 32px 16px rgba(0,0,0,0.1);
-    background-color: black;
+    background-color: var(--Fourth-uihome-color);
+    color: var(--Fifth-uihome-color);
   }
   .toast:hover svg{
     fill: var(--primary-uihome-color);
@@ -36,9 +46,4 @@ a{
     fill: #fff;
   }
   
-  .toastContent {
-    font-family: Arial, sans-serif;
-    font-size: 14px;
-    color: #fff;
-  }
   

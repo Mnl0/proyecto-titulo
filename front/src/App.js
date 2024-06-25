@@ -24,9 +24,9 @@ function App() {
   return (
     <div className="App">
         <BrowserRouter>
-          <NavbarGlobal onNavClick={handleNavClick} />
+          <NavbarGlobal onNavClick={handleNavClick} className="navbarGlobal" />
           <Routes>
-            <Route path='/' element={<Home formToShow={formToShow} setFormToShow={setFormToShow} />} />
+            <Route path='/' element={<Home formToShow={formToShow} setFormToShow={setFormToShow} className="home" />} />
             <Route path='/registercustomer' element={<CustomerRegister />} />
             <Route path='/customerpanel' element={<CustomerPanel />} />
             <Route path='/registerworker' element={<WorkerRegister />} />

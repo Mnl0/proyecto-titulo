@@ -11,7 +11,7 @@ const About = () => {
                 </div>
                 <div className={styles.container}>
                     <h2>Nuestra Misión</h2>
-                    <p>Nuestra misión es resolver estos problemas mediante el desarrollo de una aplicación web que centralice todo el proceso de búsqueda y contratación de servicios particulares a domicilio. La aplicación funcionará de manera similar a Uber, permitiendo a los clientes encontrar trabajadores cercanos, verificar su experiencia y calidad de trabajo mediante perfiles con imágenes y calificaciones de otros clientes, y coordinar el trabajo de manera transparente y segura.</p>
+                    <p>Nuestra misión es simplificar la búsqueda y contratación de servicios a domicilio mediante una plataforma confiable en tiempo real. Permitimos a los clientes encontrar fácilmente trabajadores cercanos, verificar su experiencia y calidad de trabajo mediante perfiles detallados con imágenes y calificaciones de otros usuarios, coordinando trabajos de manera transparente para garantizar la satisfacción de todos.</p>
                 </div>
                 <div className={styles.container}>
                     <h2>Nuestro Equipo</h2>
