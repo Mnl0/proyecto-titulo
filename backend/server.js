@@ -12,14 +12,15 @@ import { createServer } from 'node:http'
 dotenv.config()
 const app = express()
 const server = createServer(app);
+const portSocketIo = process.env.PORT_SOCKET_IO;
 export const io = new Server(server, {
-	cors: {
-		origin: 'http://localhost:3001',
-		methods: ['GET, POST'],
-		allowedHeaders: ['Content-Type'],
+    cors: {
+        origin: portSocketIo,
+        methods: ['GET, POST'],
+        allowedHeaders: ['Content-Type'],
         transports: ['websocket', 'polling'],
         credentials: true
-	},
+    },
     allowEIO3: true
 })
 const PORT = process.env.PORT;
@@ -29,10 +30,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.raw({ type: 'image/*', limit: '100mb' }));
 
 app.use((req, res, next) => {
-	res.header('Access-Control-Allow-Origin', '*');
-	res.header('Access-Control-Allow-Headers', 'Content-Type');//Content-Disposition
-	res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
-	next();
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Headers', 'Content-Type');//Content-Disposition
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS, PATCH');
+    next();
 });
 
 export const __filename = fileURLToPath(import.meta.url);
@@ -58,20 +59,20 @@ io.on('connection', (socket) => {
 
     // Manejar el evento de login
     socket.on('login', (id) => {
-		workerId = id;
+        workerId = id;
         // Actualizar el estado del trabajador como en línea
         const workerIndex = connectedWorkers.findIndex(worker => worker.id === workerId);
         if (workerIndex !== -1) {
-			connectedWorkers[workerIndex].online = true;
+            connectedWorkers[workerIndex].online = true;
             io.emit('worker_status', { workerId, online: true });
-			io.emit('connected_users', Array.from(connectedWorkers));
+            io.emit('connected_users', Array.from(connectedWorkers));
         } else {
-			// Si el trabajador no está en la lista, agregarlo
+            // Si el trabajador no está en la lista, agregarlo
             connectedWorkers.push({ id: workerId, online: true });
             io.emit('worker_status', { workerId, online: true });
-			io.emit('connected_users', Array.from(connectedWorkers));
+            io.emit('connected_users', Array.from(connectedWorkers));
         }
-		//console.log(`El trabajador ${workerId} se ha conectado.`);
+        //console.log(`El trabajador ${workerId} se ha conectado.`);
     });
 
     // Manejar el evento de desconexión
@@ -82,15 +83,15 @@ io.on('connection', (socket) => {
             const workerIndex = connectedWorkers.findIndex(worker => worker.id === workerId);
             if (workerIndex !== -1) {
                 connectedWorkers[workerIndex].online = false;
-				connectedWorkers.splice(workerIndex, 1);
+                connectedWorkers.splice(workerIndex, 1);
                 io.emit('worker_status', { workerId, online: false });
-				io.emit('connected_users', Array.from(connectedWorkers));
-				//console.log(`El trabajador ${workerId} se ha desconectado.`);
+                io.emit('connected_users', Array.from(connectedWorkers));
+                //console.log(`El trabajador ${workerId} se ha desconectado.`);
             }
         }
     });
 
-	// Escuchar cambios en el estado de los trabajadores
+    // Escuchar cambios en el estado de los trabajadores
     socket.on('worker_status', (status) => {
         console.log(`El trabajador ${status.workerId} está ahora ${status.online ? 'conectado' : 'desconectado'}.`);
     });
@@ -114,7 +115,7 @@ io.on('connection', (socket) => {
 
 
     // Establecer un tiempo de espera para desconexión automática si no hay interacción
-	/*
+    /*
     const timeout = setTimeout(() => {
         socket.disconnect();
     }, 60000); // Desconectar después de 60 segundos de inactividad
@@ -131,7 +132,7 @@ io.on('connection', (socket) => {
 // ruta  id
 // arreglo chat en memoria o en db -> modelo pal chat
 server.listen(PORT, () => {
-	console.log(`servidor corriendo en el puerto ${PORT}`)
+    console.log(`servidor corriendo en el puerto ${PORT}`)
 })
 
 
